@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+let mongoose = require('mongoose');
 
-var UserSchema = new mongoose.Schema({
+let UserSchema = new mongoose.Schema({
     login : String,
     password : String,
     name : String,
@@ -8,7 +8,7 @@ var UserSchema = new mongoose.Schema({
     phoneId:String,
     car:[ { color: String, drive: String, make: String, model: String, number: String, transmission: String, year: String}] ,
     phone:String,
-    volunteer:String,
+    volunteer:Boolean,
     works:[{}],
     photo:String,
     position:[{lat:String,lng:String,direction:String}],
