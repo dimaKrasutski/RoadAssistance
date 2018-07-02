@@ -50,7 +50,7 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
     Problem.findById(req.body.problemUid,function (err,problem) {
         if(problem.helpingUser !== ""){
             User.findById(problem.helpingUser,function (err,user) {
-                 user.currentState[currentSolvingProblem] = ''
+                 user.currentState['currentSolvingProblem'] = ''
             })
         }
     })
