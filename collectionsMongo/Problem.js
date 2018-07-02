@@ -7,8 +7,11 @@ var ProblemSchema = new mongoose.Schema({
          lat: Number,
          lng:Number,
          problemType:Number,
+         helpingUser:String,
+         status: Number,
          requestingUser:String,
-         time: Date
+         time: Date,
+         versionKey:false
 
 });
 mongoose.model("Problem",ProblemSchema);

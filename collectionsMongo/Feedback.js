@@ -7,7 +7,8 @@ var FeedBackSchema = new mongoose.Schema({
     userAbout:String,
     content:String,
     rating:Number,
-    time:Date
+    time:Date,
+    versionKey:false
 });
 mongoose.model("Feedback",FeedBackSchema);
 

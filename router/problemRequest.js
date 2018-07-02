@@ -21,8 +21,9 @@ router.post('/create_problem',VerifyToken,function (req,res) {
             lng:req.body.lng,
             problemType:req.body.problemType,
             requestingUser:req.body.requestingUser,
-            time:new Date()
-
+            time:new Date(),
+            helpingUser:"",
+            status : ""
         },
         function (err, problem) {
             console.log(err);
@@ -32,5 +33,26 @@ router.post('/create_problem',VerifyToken,function (req,res) {
         });
 
 });
+
+router.post('/problem_cancel',VerifyToken,function (req,res) {
+
+    User.findById(req.body.userUid, function (err, user) {
+        if (err) return res.status(500).send('Error on the server.');
+        if (!user) return res.status(404).send('No user found.');
+
+        user.currentProblem = "";
+
+        user.save(function (err,updatedUser) {
+            if(err) return "Error!";
+        })
+
+    });
+    Problem.findByIdRemove(req.body.problemUid,function (err,problem) {
+        if (err) return res.status(500).send('Error on the server.');
+        if (!user) return res.status(404).send('Problem user found.');
+    })
+
+});
+
 
 module.exports = router;

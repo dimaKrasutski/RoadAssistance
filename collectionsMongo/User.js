@@ -15,7 +15,8 @@ let UserSchema = new mongoose.Schema({
     currentState:[{currentProblem:String,currentSolvingProblem:String}],
     currentProblem:String,
     history: [{historyHelps:String,historyProblems:String}],
-    rating:[{}]
+    rating:[{}],
+    versionKey:false
 });
 
 mongoose.model('User', UserSchema);

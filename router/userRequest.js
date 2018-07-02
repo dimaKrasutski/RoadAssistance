@@ -49,8 +49,6 @@ router.post('/user_create', function(req, res) {
         });
 });
 
-
-
 router.post('/login', function(req, res) {
     User.findOne({ login: req.body.login }, function (err, user) {
         if (err) return res.status(500).send('Error on the server.');
@@ -95,7 +93,6 @@ router.post('/user_edit_info',VerifyToken,function (req,res) {
         });
     });
 });
-
 
 router.post('/user_edit_photo', VerifyToken,function(req, res) {
     User.findById(req.body.uid, function (err, user) {
