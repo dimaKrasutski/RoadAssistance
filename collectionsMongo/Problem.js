@@ -13,7 +13,7 @@ var ProblemSchema = new mongoose.Schema({
          time: Date,
          versionKey:false
 
-});
+},{versionKey:false});
 mongoose.model("Problem",ProblemSchema);
 
 module.exports = mongoose.model('Problem');

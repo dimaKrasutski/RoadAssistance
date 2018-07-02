@@ -9,7 +9,7 @@ var FeedBackSchema = new mongoose.Schema({
     rating:Number,
     time:Date,
     versionKey:false
-});
+},{versionKey:false});
 mongoose.model("Feedback",FeedBackSchema);
 
 module.exports = mongoose.model('Feedback');

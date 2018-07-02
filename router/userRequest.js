@@ -21,7 +21,7 @@ router.post('/user_create', function(req, res) {
     var hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
     User.create({
-            versionKey:false,
+
             login : req.body.login,
             password : hashedPassword,
             name : req.body.name,
@@ -29,14 +29,14 @@ router.post('/user_create', function(req, res) {
             phoneId:req.body.phoneId, // IMEI телефона
             car: [{color:"", drive: '', make: '', model: '', number: '', transmission: '', year: ''}],
             phone:"",
-            volunteer:"",
+            volunteer:false,
             works:[],
             photo:'',
             position:[{lat:'',lng:'',direction:''}],
             currentState:[{currentProblem:'',currentSolvingProblem:''}],
             currentProblem:'',
             history: [{historyHelps:'',historyProblems:''}],
-            rating:[]
+            rating:[],
         },
         function (err, user) {
             if (err) return res.status(500).send(err);
