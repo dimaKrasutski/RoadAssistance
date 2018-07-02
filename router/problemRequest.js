@@ -47,6 +47,13 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
         })
 
     });
+    Problem.findById(req.body.problemUid,function (err,problem) {
+        if(problem.helpingUser !== ""){
+            User.findById(problem.helpingUser,function (err,user) {
+                 user.currentState[currentSolvingProblem] = ''
+            })
+        }
+    })
     Problem.findByIdRemove(req.body.problemUid,function (err,problem) {
         if (err) return res.status(500).send('Error on the server.');
         if (!user) return res.status(404).send('Problem user found.');
