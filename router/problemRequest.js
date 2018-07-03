@@ -81,8 +81,6 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
                 user.history[0]['historyProblems'] = problemUid;
                 user.save(function (err, updatedUser) {
                     if (err) return "Error!";
-                    console.log('First'+ updatedUser);
-
                 })
             });
 
@@ -95,11 +93,13 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
 
                 user.save(function (err, updatedUser) {
                     if (err) return "Error!";
-                    console.log("Second"+updatedUser);
-                    res.status(200).send({message: "Problem done!"});
                 })
 
             });
+            Problem.save(function (err) {
+                if (err) return "Error!";
+                res.status(200).send({message: "Problem done!"});
+            })
         });
 
 
