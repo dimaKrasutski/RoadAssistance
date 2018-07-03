@@ -96,7 +96,7 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
                 })
 
             });
-            Problem.save(function (err) {
+            problem.save(function (err) {
                 if (err) return "Error!";
                 res.status(200).send({message: "Problem done!"});
             })
