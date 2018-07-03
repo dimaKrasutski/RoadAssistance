@@ -78,7 +78,7 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
                 if (!user) return res.status(404).send('No user found 1');
 
                 user.currentState = '';
-                user.history[0]['historyProblems'].push(problemUid);
+                user.history.historyProblems.push(problemUid);
                 user.save(function (err, updatedUser) {
                     if (err) return "Error!";
                 })
@@ -89,7 +89,7 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
                 if (!user) return res.status(404).send('No user found 2');
 
                 user.currentState = '';
-                user.history[0]['historyHelps'].push(problemUid);
+                user.history.historyHelps.push(problemUid);
 
                 user.save(function (err, updatedUser) {
                     if (err) return "Error!";

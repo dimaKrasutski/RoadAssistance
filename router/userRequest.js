@@ -34,7 +34,7 @@ router.post('/user_create', function(req, res) {
             position:[{lat:'',lng:'',direction:''}],
             currentState:{currentProblem:'',currentSolvingProblem:''},
             currentProblem:'',
-            history: [{historyHelps:'',historyProblems:''}],
+            history: {historyHelps:[],historyProblems:[]},
             rating:[],
         },
         function (err, user) {
