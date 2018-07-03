@@ -21,7 +21,6 @@ router.post('/user_create', function(req, res) {
     var hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
     User.create({
-
             login : req.body.login,
             password : hashedPassword,
             name : req.body.name,
@@ -33,7 +32,7 @@ router.post('/user_create', function(req, res) {
             works:[],
             photo:'',
             position:[{lat:'',lng:'',direction:''}],
-            currentState:[{currentProblem:'',currentSolvingProblem:''}],
+            currentState:{currentProblem:'',currentSolvingProblem:''},
             currentProblem:'',
             history: [{historyHelps:'',historyProblems:''}],
             rating:[],
@@ -42,7 +41,7 @@ router.post('/user_create', function(req, res) {
             if (err) return res.status(500).send(err);
             // create a token
             var token = jwt.sign({ id: user._id }, config.secret, {
-                expiresIn: 86400 // expires in 24 hours
+                expiresIn: 200000 // expires in 24 hours
             });
             //  res.status(200).send({ auth: true, token: token });
             res.status(200).json({auth:true,token:token, message:"User Added",uid:user._id})

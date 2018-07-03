@@ -21,13 +21,13 @@ router.post('/create_problem',VerifyToken,function (req,res) {
             lng:req.body.lng,
             problemType:req.body.problemType,
             requestingUser:req.body.requestingUser,
-            time:new Date(),
             helpingUser:"",
+            time:new Date(),
+
             status : ""
         },
         function (err, problem) {
-            console.log(err);
-            console.log(problem);
+
             if (err) return res.status(500).send(err);
             res.status(200).json({message:"Problem Added",uid:problem._id})
         });
@@ -36,38 +36,77 @@ router.post('/create_problem',VerifyToken,function (req,res) {
 
 router.post('/problem_cancel',VerifyToken,function (req,res) {
 
-    User.findById(req.body.userUid, function (err, user) {
+    User.findById(req.body.uid, function (err, user) {
         if (err) return res.status(500).send('Error on the server.');
         if (!user) return res.status(404).send('No user found.');
 
-        user.currentProblem = "3e3e3";
+        user.currentProblem = "";
 
-        user.save(function (err,updatedUser) {
-            if(err) return "Error!"
+        user.save(function (err, updatedUser) {
+            if (err) return "Error Motherfucker!"
         })
 
-        Problem.findById(req.body.problemUid,function (err,problem) {
-            if(problem.helpingUser !== ""){
-                User.findById(problem.helpingUser,function (err,user) {
+        Problem.findById(req.body.problemUid, function (err, problem) {
+            if (problem.helpingUser !== "") {
+                User.findById(problem.helpingUser, function (err, user) {
                     user.currentState['currentSolvingProblem'] = ''
                 })
             }
         });
 
-        Problem.findByIdRemove(req.body.problemUid,function (err,problem) {
+        Problem.findByIdAndRemove(req.body.problemUid, function (err, problem) {
             if (err) return res.status(500).send('Error on the server.');
             if (!user) return res.status(404).send('Problem user found.');
 
-            res.status(200).json({message:'Problem Cancelled'})
+            res.status(200).json({message: 'Problem Cancelled'})
         })
 
 
     });
+})
+
+    router.post('/problem_done', VerifyToken,function (req, res) {
+        let problemUid =  req.body.problemUid;
+        let requesting,helping =0;
+
+        Problem.findById(problemUid, function (err, problem) {
+            helping = problem.helpingUser;
+            requesting = problem.requestingUser;
+
+            User.findById(requesting, function (err, user) {
+                if (err) return res.status(500).send('Error on the server 1');
+                if (!user) return res.status(404).send('No user found 1');
+
+                user.currentState = '';
+                user.history[0]['historyProblems'] = problemUid;
+                user.save(function (err, updatedUser) {
+                    if (err) return "Error!";
+                    console.log('First'+ updatedUser);
+
+                })
+            });
+
+            User.findById(helping, function (err, user) {
+                if (err) return res.status(500).send('Error on the server 2'), res.send(err);
+                if (!user) return res.status(404).send('No user found 2');
+
+                user.currentState = '';
+                user.history[0]['historyHelps'] = problemUid;
+
+                user.save(function (err, updatedUser) {
+                    if (err) return "Error!";
+                    console.log("Second"+updatedUser);
+                    res.status(200).send({message: "Problem done!"});
+                })
+
+            });
+        });
 
 
 
 
-});
+
+    });
 
 
 module.exports = router;
