@@ -26,7 +26,15 @@ router.post('/create_problem',VerifyToken,function (req,res) {
             status : 1
         },
         function (err, problem) {
+            User.findById(req.body.requestingUser, function (err, user) {
+                if (err) return res.status(500).send('Error on the server.');
+                if (!user) return res.status(404).send('No user found.');
 
+                user.currentProblem = problem._id;
+
+                user.save(function (err, updatedUser) {
+                    if (err) return "Error Motherfucker!"
+                })
             if (err) return res.status(500).send(err);
             res.status(200).json({message:"Problem Added",uid:problem._id})
         });
