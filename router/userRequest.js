@@ -113,7 +113,7 @@ router.get('/get_user',VerifyToken,function (req,res) {
         if (err) return res.status(500).send('Error on the server.');
         if (!user) return res.status(404).send('No user found.');
 
-            res.status(200).send({user});
+            res.status(200).json({currentUser:user});
         })
 
     });
