@@ -71,20 +71,20 @@ router.get('/user_logout', function(req, res) {
 router.post('/user_edit_info',VerifyToken,function (req,res) {
     User.findById(req.body.uid ,function (err, user) {
         if (err) return handleError(err);
-        var curr = user.car;
+        var curr = user.car[0];
         var requestBody = req.body;
 
         user.phone = req.body.phone;
         user.volunteer = req.body.volunteer;
         user.works = requestBody.works;
 
-        curr[0]['color'] = requestBody.color;
-        curr[0]['drive'] = requestBody.drive;
-        curr[0]['make'] = requestBody.make;
-        curr[0]['model']  = requestBody.model;
-        curr[0]['number'] = requestBody.number;
-        curr[0]['transmission'] = requestBody.transmission;
-        curr[0]['year'] = requestBody.year;
+        curr['color'] = requestBody.color;
+        curr['drive'] = requestBody.drive;
+        curr['make'] = requestBody.make;
+        curr['model']  = requestBody.model;
+        curr['number'] = requestBody.number;
+        curr['transmission'] = requestBody.transmission;
+        curr['year'] = requestBody.year;
 
         user.save(function (err, updatedUser) {
             if (err) return handleError(err);

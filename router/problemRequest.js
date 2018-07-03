@@ -23,8 +23,7 @@ router.post('/create_problem',VerifyToken,function (req,res) {
             requestingUser:req.body.requestingUser,
             helpingUser:"",
             time:new Date(),
-
-            status : ""
+            status : 1
         },
         function (err, problem) {
 
@@ -73,6 +72,7 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
             helping = problem.helpingUser;
             requesting = problem.requestingUser;
 
+            problem.status = -1;
             User.findById(requesting, function (err, user) {
                 if (err) return res.status(500).send('Error on the server 1');
                 if (!user) return res.status(404).send('No user found 1');
