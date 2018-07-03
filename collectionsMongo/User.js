@@ -6,16 +6,16 @@ let UserSchema = new mongoose.Schema({
     name : String,
     surname:String,
     phoneId:String,
-    car:[ { color: String, drive: String, make: String, model: String, number: String, transmission: String, year: String}] ,
+    car: { color: String, drive: String, make: String, model: String, number: String, transmission: String, year: String} ,
     phone:String,
     volunteer:Boolean,
-    works:[{}],
+    works:[],
     photo:String,
-    position:[{lat:String,lng:String,direction:String}],
-    currentState:[{currentProblem:String,currentSolvingProblem:String}],
+    position:{lat:String,lng:String,direction:String},
+    currentState:{currentProblem:String,currentSolvingProblem:String},
     currentProblem:String,
     history: {historyHelps:[],historyProblems:[]},
-    rating:[{}],
+    rating:[],
 }, {versionKey:false});
 
 mongoose.model('User', UserSchema);
