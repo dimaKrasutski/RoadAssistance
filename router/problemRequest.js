@@ -72,13 +72,13 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
             helping = problem.helpingUser;
             requesting = problem.requestingUser;
 
-            problem.status = -1;
+            problem.status = - 1;
             User.findById(requesting, function (err, user) {
                 if (err) return res.status(500).send('Error on the server 1');
                 if (!user) return res.status(404).send('No user found 1');
 
                 user.currentState = '';
-                user.history[0]['historyProblems'] = problemUid;
+                user.history[0]['historyProblems'].push(problemUid);
                 user.save(function (err, updatedUser) {
                     if (err) return "Error!";
                 })
@@ -89,7 +89,7 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
                 if (!user) return res.status(404).send('No user found 2');
 
                 user.currentState = '';
-                user.history[0]['historyHelps'] = problemUid;
+                user.history[0]['historyHelps'].push(problemUid);
 
                 user.save(function (err, updatedUser) {
                     if (err) return "Error!";

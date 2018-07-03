@@ -14,7 +14,7 @@ let UserSchema = new mongoose.Schema({
     position:[{lat:String,lng:String,direction:String}],
     currentState:[{currentProblem:String,currentSolvingProblem:String}],
     currentProblem:String,
-    history: [{historyHelps:String,historyProblems:String}],
+    history: [{historyHelps:[],historyProblems:[]}],
     rating:[{}],
 }, {versionKey:false});
 
