@@ -13,7 +13,6 @@ var Problem = require('../collectionsMongo/Problem');
 
 var VerifyToken = require('../auth/VerifyToken');
 
-
 router.post('/create_feedback',VerifyToken,function (req,res) {
 
     Feedback.create({
@@ -27,7 +26,6 @@ router.post('/create_feedback',VerifyToken,function (req,res) {
         },
         function (err, fb) {
             console.log(err);
-            console.log(fb)
             if (err) return res.status(500).send(err);
             res.status(200).json({message:"Feedback Added",uid:fb._id})
         });
