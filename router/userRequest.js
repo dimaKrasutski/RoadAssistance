@@ -71,7 +71,7 @@ router.get('/user_logout', function(req, res) {
 router.post('/user_edit_info',VerifyToken,function (req,res) {
     User.findById(req.body.uid ,function (err, user) {
         if (err) return handleError(err);
-        var curr = user.car[0];
+        var curr = user.car;
         var requestBody = req.body;
 
         user.phone = req.body.phone;
