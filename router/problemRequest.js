@@ -99,7 +99,7 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
             });
 
             User.findById(helping, function (err, user) {
-                if (err) return res.status(500).send('Error on the server 2'),
+                if (err) return res.status(500).send('Error on the server 2')
 
                 if (!user) return res.status(404).send('No user found 2');
 

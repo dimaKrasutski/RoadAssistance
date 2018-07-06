@@ -87,7 +87,7 @@ router.post('/user_edit_info',VerifyToken,function (req,res) {
         curr['year'] = requestBody.year;
 
         user.save(function (err, updatedUser) {
-            if (err) return handleError(err);
+          //  if (err) return handleError(err);
             res.status(200).send('User Update');
         });
     });
