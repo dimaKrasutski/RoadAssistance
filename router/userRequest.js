@@ -74,8 +74,8 @@ router.post('/user_edit_info',VerifyToken,function (req,res) {
         var curr = user.car;
         var requestBody = req.body;
 
-        user.phone = req.body.phone;
-        user.volunteer = req.body.volunteer;
+        user.phone = requestBody.phone;
+        user.volunteer = requestBody.volunteer;
         user.works = requestBody.works;
 
         curr['color'] = requestBody.color;
@@ -88,7 +88,7 @@ router.post('/user_edit_info',VerifyToken,function (req,res) {
 
         user.save(function (err, updatedUser) {
             if (err) return handleError(err);
-            res.send(updatedUser);
+            res.status(200).send('User Update');
         });
     });
 });
