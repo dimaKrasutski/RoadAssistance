@@ -40,6 +40,8 @@ router.post('/create_problem',VerifyToken,function (req,res) {
         });
 
 });
+    
+    });
 
 router.post('/problem_cancel',VerifyToken,function (req,res) {
 
@@ -114,4 +116,9 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
         });
     });
 
+<<<<<<< HEAD
 module.exports = router;
+=======
+
+module.exports = router;
+>>>>>>> 56662aea4b871baa141cdee1cca2138fb6095cad
