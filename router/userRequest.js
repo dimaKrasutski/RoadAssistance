@@ -88,7 +88,7 @@ router.post('/user_edit_info',VerifyToken,function (req,res) {
 
         user.save(function (err, updatedUser) {
             if (err) return res.status(500).send(err);
-            res.status(200).send('User Update');
+            res.status(200).send(message:"User Update");
         });
     });
 });
