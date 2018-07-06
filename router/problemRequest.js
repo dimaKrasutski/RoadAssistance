@@ -70,7 +70,7 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
 
 
     });
-})
+});
 
     router.post('/problem_done', VerifyToken,function (req, res) {
         let problemUid =  req.body.problemUid;
@@ -81,6 +81,10 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
             requesting = problem.requestingUser;
 
             problem.status = - 1;
+            problem.save(function (err) {
+                if (err) return "Error!";
+            });
+
             User.findById(requesting, function (err, user) {
                 if (err) return res.status(500).send('Error on the server 1');
                 if (!user) return res.status(404).send('No user found 1');
@@ -93,7 +97,8 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
             });
 
             User.findById(helping, function (err, user) {
-                if (err) return res.status(500).send('Error on the server 2'), res.send(err);
+                if (err) return res.status(500).send('Error on the server 2'),
+
                 if (!user) return res.status(404).send('No user found 2');
 
                 user.currentState = '';
@@ -101,20 +106,12 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
 
                 user.save(function (err, updatedUser) {
                     if (err) return "Error!";
+                    res.status(200).send({message: "Problem done!"});
                 })
 
             });
-            problem.save(function (err) {
-                if (err) return "Error!";
-                res.status(200).send({message: "Problem done!"});
-            })
+
         });
-
-
-
-
-
     });
-
 
 module.exports = router;
