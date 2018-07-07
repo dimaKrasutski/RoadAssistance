@@ -77,7 +77,10 @@ router.post('/user_edit_info',VerifyToken,function (req,res) {
         user.phone = requestBody.phone;
         user.volunteer = requestBody.volunteer;
         user.works = requestBody.works;
-
+//         Changed by Igor
+         user.name = requestBody.name;
+         user.surname = requestBody.surname;
+//         Changed by Igor
         curr['color'] = requestBody.color;
         curr['drive'] = requestBody.drive;
         curr['make'] = requestBody.make;
@@ -88,7 +91,8 @@ router.post('/user_edit_info',VerifyToken,function (req,res) {
 
         user.save(function (err, updatedUser) {
             if (err) return res.status(500).send(err);
-            res.status(200).send('User Update');
+            //         Changed by Igor
+            res.status(200).send({message:"User Update"});
         });
     });
 });
@@ -144,3 +148,4 @@ router.get('/get_user',VerifyToken,function (req,res) {
 //     });
 // });
 module.exports = router;
+;
