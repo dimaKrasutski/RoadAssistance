@@ -113,7 +113,7 @@ router.post('/user_edit_photo', VerifyToken,function(req, res) {
 });
 
 router.get('/get_user/',VerifyToken,function (req,res) {
-    User.findById(req.params[uid], function (err, user) {
+    User.findById(req.params['uid'], function (err, user) {
         if (err) return res.status(500).send('Error on the server.');
         if (!user) return res.status(404).send('No user found.');
         res.status(200).send({currentUser:user});
