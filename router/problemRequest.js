@@ -92,6 +92,7 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
                 if (!user) return res.status(404).send('No user found 1');
 
                 user.currentState = '';
+                user.currentProblem = '';
                 user.history.historyProblems.push(problemUid);
                 user.save(function (err, updatedUser) {
                     if (err) return "Error!";
@@ -99,7 +100,7 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
             });
 
             User.findById(helping, function (err, user) {
-                if (err) return res.status(500).send('Error on the server 2')
+                if (err) return res.status(500).send('Error on the server 2');
 
                 if (!user) return res.status(404).send('No user found 2');
 
@@ -119,5 +120,4 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
 module.exports = router;
 
 
-module.exports = router;
 
