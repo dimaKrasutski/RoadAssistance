@@ -125,16 +125,14 @@ router.get('/download_problems', VerifyToken,function (req, res) {
          let radius = req.body.radius;
          let types = [] = req.body.types;
 
-             getProblemsAndCompare();
 
-         function getProblemsAndCompare() {
              Problem.find({},function (err,users) {
                  if(err){
                      res.send('Something went wrong')
                  }
                  res.send(users)
              })
-         }
+         
 });
 module.exports = router;
 
