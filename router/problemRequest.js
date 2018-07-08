@@ -118,7 +118,7 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
     });
 
 
-router.post('/download_problems', VerifyToken,function (req, res) {
+router.get('/download_problems', VerifyToken,function (req, res) {
 
          let lat = req.body.lat;
          let lng = req.body.lng;
@@ -126,6 +126,7 @@ router.post('/download_problems', VerifyToken,function (req, res) {
          let types = [] = req.body.types;
 
              getProblemsAndCompare();
+
          function getProblemsAndCompare() {
              Problem.find({},function (err,users) {
                  if(err){
