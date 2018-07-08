@@ -117,6 +117,24 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
         });
     });
 
+
+router.post('/download_problems', VerifyToken,function (req, res) {
+
+         let lat = req.body.lat;
+         let lng = req.body.lng;
+         let radius = req.body.radius;
+         let types = [] = req.body.types;
+
+             getProblemsAndCompare();
+         function getProblemsAndCompare() {
+             Problem.find({},function (err,users) {
+                 if(err){
+                     res.send('Something went wrong')
+                 }
+                 res.send(users)
+             })
+         }
+});
 module.exports = router;
 
 
