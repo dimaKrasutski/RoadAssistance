@@ -146,7 +146,7 @@ var dist;
 
     // findDistance(31.771959,35.217018);
 
-    function findDistance (coordLat,coordLng){
+   var x =  function  (coordLat,coordLng){
 
         distanceService.get(
             {
@@ -161,7 +161,7 @@ var dist;
         return dist
     }
 
-    res.status(200).send( findDistance(31.771959,35.217018))
+    res.status(200).send( x(31.771959,35.217018))
 
 });
 module.exports = router;
