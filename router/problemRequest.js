@@ -124,7 +124,7 @@ router.get('/download_problems', VerifyToken,function (req, res) {
           let lng = req.body.lng;
           let radius = req.body.radius;
           let types = [] = req.body.types;
-
+ let dist =0;
     distance.get(
         {
             index: 1,
@@ -134,10 +134,9 @@ router.get('/download_problems', VerifyToken,function (req, res) {
         function(err, data) {
             if (err) return console.log(err);
             console.log(data);
-
+            dist = data
         });
-
-    res.send({data})
+    res.status(200).send({dist})
              //
              // Problem.find({},function (err,users) {
              //     if(err){
