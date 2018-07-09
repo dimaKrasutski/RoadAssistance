@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
+
 var User = require('../collectionsMongo/User');
 var Feedback = require('../collectionsMongo/Feedback');
 var Problem = require('../collectionsMongo/Problem');
@@ -121,13 +122,29 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
 router.post('/download_problems', VerifyToken,function (req, res) {
 
 var dist;
+
+
+    Problem.find({},function (err,problems) {
+
            let userLat = req.body.lat;
            let userLng = req.body.lng;
            let radius = req.body.radius;
            var problemsToClient = [];
           // let types = [] = req.body.types;
+                 if(err){
+                     res.send('Something went wrong')
+                 }
+                  for(let i=0;i<problems.length;i++){
+                     let currentProblem = problems[i];
+                  if( findDistance(userLat,userLng,currentProblem.lat,currentProblem.lng) * 1000 <= radius  ){
+                      problemsToClient.push(currentProblem)
+                  }
+                  }
+                 res.status(200).send(problemsToClient);
 
-    function findDistance (coordLat,coordLng){
+             })
+
+    function findDistance (userLat,userLng,coordLat,coordLng){
 
         distanceService.get(
             {
@@ -141,19 +158,6 @@ var dist;
             });
         return dist
     }
-             Problem.find({},function (err,problems) {
-                 if(err){
-                     res.send('Something went wrong')
-                 }
-                  for(let i=0;i<problems.length;i++){
-                     let currentProblem = problems[i];
-                  if( findDistance(currentProblem.lat,currentProblem.lng) * 1000 <= radius  ){
-                      problemsToClient.push(currentProblem)
-                  }
-                  }
-                 res.status(200).send(problemsToClient);
-
-             })
 
 });
 module.exports = router;
