@@ -124,32 +124,34 @@ router.post('/download_problems', VerifyToken,function (req, res) {
 var dist;
 
 
-    Problem.find({},function (err,problems) {
+   // Problem.find({},function (err,problems) {
 
            let userLat = req.body.lat;
            let userLng = req.body.lng;
            let radius = req.body.radius;
            var problemsToClient = [];
           // let types = [] = req.body.types;
-                 if(err){
-                     res.send('Something went wrong')
-                 }
-                  for(let i=0;i<problems.length;i++){
-                     let currentProblem = problems[i];
-                  if( findDistance(userLat,userLng,currentProblem.lat,currentProblem.lng) * 1000 <= radius  ){
-                      problemsToClient.push(currentProblem)
-                  }
-                  }
-                 res.status(200).send(problemsToClient);
+          //        if(err){
+          //            res.send('Something went wrong')
+          //        }
+          //         for(let i=0;i<problems.length;i++){
+          //            let currentProblem = problems[i];
+          //         if( findDistance(userLat,userLng,currentProblem.lat,currentProblem.lng) * 1000 <= radius  ){
+          //             problemsToClient.push(currentProblem)
+          //         }
+          //         }
+          //        res.status(200).send(problemsToClient);
+          //
+          //    })
 
-             })
+    findDistance(31.771959,35.217018);
 
-    function findDistance (userLat,userLng,coordLat,coordLng){
+    function findDistance (coordLat,coordLng){
 
         distanceService.get(
             {
                 index: 1,
-                origin: userLat,userLng,
+                origin: 32.109333,34.855499,
                 destination: coordLat,coordLng
             },
             function(err, data) {
@@ -158,6 +160,8 @@ var dist;
             });
         return dist
     }
+
+    res.status(200).send( findDistance(31.771959,35.217018))
 
 });
 module.exports = router;
