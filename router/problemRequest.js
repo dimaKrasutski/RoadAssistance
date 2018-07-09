@@ -151,7 +151,8 @@ var dist;
                       problemsToClient.push(currentProblem)
                   }
                   }
-                  res.status(200).send(problemsToClient);
+                 res.status(200).send(problemsToClient);
+
              })
 
 });
