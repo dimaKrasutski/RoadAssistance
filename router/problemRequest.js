@@ -144,7 +144,7 @@ var dist;
           //
           //    })
 
-    findDistance(31.771959,35.217018);
+    // findDistance(31.771959,35.217018);
 
     function findDistance (coordLat,coordLng){
 
