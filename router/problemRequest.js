@@ -120,10 +120,10 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
 
 router.get('/download_problems', VerifyToken,function (req, res) {
 
-          let lat = req.body.lat;
-          let lng = req.body.lng;
-          let radius = req.body.radius;
-          let types = [] = req.body.types;
+          // let lat = req.body.lat;
+          // let lng = req.body.lng;
+          // let radius = req.body.radius;
+          // let types = [] = req.body.types;
  let dist =0;
     distance.get(
         {
