@@ -126,10 +126,10 @@ var dist;
 
    // Problem.find({},function (err,problems) {
 
-           let userLat = req.body.lat;
-           let userLng = req.body.lng;
-           let radius = req.body.radius;
-           var problemsToClient = [];
+         //  let userLat = req.body.lat;
+          // let userLng = req.body.lng;
+           // let radius = req.body.radius;
+           // var problemsToClient = [];
           // let types = [] = req.body.types;
           //        if(err){
           //            res.send('Something went wrong')
@@ -151,7 +151,7 @@ var dist;
         distanceService.get(
             {
                 index: 1,
-                origin: 32.109333,34.855499,
+                origin: '32.109333,34.855499 ',
                 destination: coordLat,coordLng
             },
             function(err, data) {
