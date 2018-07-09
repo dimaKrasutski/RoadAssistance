@@ -118,7 +118,7 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
     });
 
 
-router.get('/download_problems', VerifyToken,function (req, res) {
+router.post('/download_problems', VerifyToken,function (req, res) {
 
 var dist;
            let userLat = req.body.lat;
