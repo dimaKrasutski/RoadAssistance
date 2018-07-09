@@ -126,7 +126,7 @@ router.get('/download_problems', VerifyToken,function (req, res) {
           // let radius = req.body.radius;
           // let types = [] = req.body.types;
 
-    distance.get(
+    distanceService.get(
         {
             index: 1,
             origin: '32.109333,34.855499',
