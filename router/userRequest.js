@@ -68,7 +68,7 @@ router.get('/user_logout', function(req, res) {
     res.status(200).send({ auth: false, token: null });
 });
 
-router.post('/user_edit_info',VerifyToken,function (req,res) {
+router.post('/user_edit_info',function (req,res) {
     User.findById(req.body.uid ,function (err, user) {
         if (err) return handleError(err);
         var curr = user.car;
@@ -97,7 +97,7 @@ router.post('/user_edit_info',VerifyToken,function (req,res) {
     });
 });
 
-router.post('/user_edit_photo', VerifyToken,function(req, res) {
+router.post('/user_edit_photo',function(req, res) {
     User.findById(req.body.uid, function (err, user) {
         if (err) return res.status(500).send('Error on the server.');
         if (!user) return res.status(404).send('No user found.');
@@ -112,7 +112,7 @@ router.post('/user_edit_photo', VerifyToken,function(req, res) {
     });
 });
 
-router.get('/get_user/',VerifyToken,function (req,res) {
+router.get('/get_user/',function (req,res) {
     User.findById(req.headers['uid'], function (err, user) {
         if (err) return res.status(500).send('Error on the server.');
         if (!user) return res.status(404).send('No user found.');

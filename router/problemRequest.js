@@ -15,7 +15,7 @@ var geodist = require('geodist')
 
 var VerifyToken = require('../auth/VerifyToken');
 
-router.post('/create_problem',VerifyToken,function (req,res) {
+router.post('/create_problem',function (req,res) {
 
     Problem.create({
             description: req.body.description,
@@ -47,7 +47,7 @@ router.post('/create_problem',VerifyToken,function (req,res) {
     
     });
 
-router.post('/problem_cancel',VerifyToken,function (req,res) {
+router.post('/problem_cancel',function (req,res) {
 
     User.findById(req.body.uid, function (err, user) {
         if (err) return res.status(500).send('Error on the server.');
@@ -78,7 +78,7 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
     });
 });
 
-router.post('/problem_done', VerifyToken,function (req, res) {
+router.post('/problem_done', function (req, res) {
         let problemUid =  req.body.problemUid;
         let requesting,helping =0;
 
@@ -120,10 +120,10 @@ router.post('/problem_done', VerifyToken,function (req, res) {
     });
 
 
-router.post('/download_problems', VerifyToken,function (req, res) {
+router.post('/download_problems', function (req, res) {
 
         var userPosition = {lat:req.body.lat,lon:req.body.lng}; let radius = req.body.radius;
-
+        var type  = req.body.type;
         Problem.find({},function (err,problems) {
 
            var problemsToClient = [];
@@ -132,7 +132,8 @@ router.post('/download_problems', VerifyToken,function (req, res) {
                  }
                   for(let i=0;i<problems.length;i++){
                      let currProblem = problems[i];
-                  if(  geodist(userPosition, {lat: currProblem.lat, lon: currProblem.lng },{unit:'km'}) <= radius/1000  ){
+                     let distance = geodist(userPosition, {lat: currProblem.lat, lon: currProblem.lng },{unit:'km'});
+                  if(  distance <= radius/1000  && currProblem.problemType == type && currProblem.status == 1){
                       problemsToClient.push(problems[i])
                   }
                   }

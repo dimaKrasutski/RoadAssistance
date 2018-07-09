@@ -13,7 +13,7 @@ var Problem = require('../collectionsMongo/Problem');
 
 var VerifyToken = require('../auth/VerifyToken');
 
-router.post('/create_feedback',VerifyToken,function (req,res) {
+router.post('/create_feedback',function (req,res) {
 
     Feedback.create({
             role:req.body.role,
