@@ -120,32 +120,38 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
 
 router.get('/download_problems', VerifyToken,function (req, res) {
 
-
-          // let lat = req.body.lat;
-          // let lng = req.body.lng;
-          // let radius = req.body.radius;
+var dist;
+           let userLat = req.body.lat;
+           let userLng = req.body.lng;
+           let radius = req.body.radius;
+           var problemsToClient = [];
           // let types = [] = req.body.types;
 
-    distanceService.get(
-        {
-            index: 1,
-            origin: '32.109333,34.855499',
-            destination: '31.771959,35.217018'
-        },
-        function(err, data) {
-            if (err) return console.log(err);
-        });
+    function findDistance (coordLat,coordLng){
 
-
+        distanceService.get(
+            {
+                index: 1,
+                origin: userLat,userLng,
+                destination: coordLat,coordLng
+            },
+            function(err, data) {
+                if (err) return console.log(err);
+                dist = data.distance;
+            });
+        return dist
+    }
              Problem.find({},function (err,problems) {
                  if(err){
                      res.send('Something went wrong')
                  }
-                 res.status(200).send(problems)
-                 // for(let i=0;i<problems.length;i++){
-                 //
-                 // }
-
+                  for(let i=0;i<problems.length;i++){
+                     let currentProblem = problems[i];
+                  if( findDistance(currentProblem.lat,currentProblem.lng) * 1000 <= radius  ){
+                      problemsToClient.push(currentProblem)
+                  }
+                  }
+                  res.status(200).send(problemsToClient);
              })
 
 });
