@@ -9,7 +9,7 @@ var User = require('../collectionsMongo/User');
 var Feedback = require('../collectionsMongo/Feedback');
 var Problem = require('../collectionsMongo/Problem');
 
-var distance = require('google-distance');
+var distanceService = require('google-distance');
 
 var VerifyToken = require('../auth/VerifyToken');
 
@@ -120,11 +120,12 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
 
 router.get('/download_problems', VerifyToken,function (req, res) {
 
+
           // let lat = req.body.lat;
           // let lng = req.body.lng;
           // let radius = req.body.radius;
           // let types = [] = req.body.types;
- 
+
     distance.get(
         {
             index: 1,
@@ -133,20 +134,19 @@ router.get('/download_problems', VerifyToken,function (req, res) {
         },
         function(err, data) {
             if (err) return console.log(err);
-            console.log(data);
-            res.status(200).send(data)
         });
 
-             //
-             // Problem.find({},function (err,users) {
-             //     if(err){
-             //         res.send('Something went wrong')
-             //     }
-             //     for(let i=0;i<users.length;i++){
-             //         users[i].lat
-             //     }
-             //
-             // })
+
+             Problem.find({},function (err,problems) {
+                 if(err){
+                     res.send('Something went wrong')
+                 }
+                 res.status(200).send(problems)
+                 // for(let i=0;i<problems.length;i++){
+                 //
+                 // }
+
+             })
 
 });
 module.exports = router;
