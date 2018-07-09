@@ -134,9 +134,10 @@ router.get('/download_problems', VerifyToken,function (req, res) {
         function(err, data) {
             if (err) return console.log(err);
             console.log(data);
-            res.send(data)
+
         });
 
+    res.send({data})
              //
              // Problem.find({},function (err,users) {
              //     if(err){
