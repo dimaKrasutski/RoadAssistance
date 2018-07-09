@@ -9,6 +9,8 @@ var User = require('../collectionsMongo/User');
 var Feedback = require('../collectionsMongo/Feedback');
 var Problem = require('../collectionsMongo/Problem');
 
+var distance = require('google-distance');
+
 var VerifyToken = require('../auth/VerifyToken');
 
 router.post('/create_problem',VerifyToken,function (req,res) {
@@ -111,27 +113,40 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
                     if (err) return "Error!";
                     res.status(200).send({message: "Problem done!"});
                 })
-
             });
-
         });
     });
 
 
 router.get('/download_problems', VerifyToken,function (req, res) {
-         //
-         // let lat = req.body.lat;
-         // let lng = req.body.lng;
-         // let radius = req.body.radius;
-         // let types = [] = req.body.types;
 
+          let lat = req.body.lat;
+          let lng = req.body.lng;
+          let radius = req.body.radius;
+          let types = [] = req.body.types;
 
-             Problem.find({},function (err,users) {
-                 if(err){
-                     res.send('Something went wrong')
-                 }
-                 res.send(users)
-             })
+    distance.get(
+        {
+            index: 1,
+            origin: '32.109333,34.855499',
+            destination: '31.771959,35.217018'
+        },
+        function(err, data) {
+            if (err) return console.log(err);
+            console.log(data);
+            res.send(data)
+        });
+
+             //
+             // Problem.find({},function (err,users) {
+             //     if(err){
+             //         res.send('Something went wrong')
+             //     }
+             //     for(let i=0;i<users.length;i++){
+             //         users[i].lat
+             //     }
+             //
+             // })
 
 });
 module.exports = router;
