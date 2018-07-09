@@ -10,7 +10,8 @@ var User = require('../collectionsMongo/User');
 var Feedback = require('../collectionsMongo/Feedback');
 var Problem = require('../collectionsMongo/Problem');
 
-var distanceService = require('google-distance');
+var geodist = require('geodist')
+
 
 var VerifyToken = require('../auth/VerifyToken');
 
@@ -77,7 +78,7 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
     });
 });
 
-    router.post('/problem_done', VerifyToken,function (req, res) {
+router.post('/problem_done', VerifyToken,function (req, res) {
         let problemUid =  req.body.problemUid;
         let requesting,helping =0;
 
@@ -121,48 +122,22 @@ router.post('/problem_cancel',VerifyToken,function (req,res) {
 
 router.post('/download_problems', VerifyToken,function (req, res) {
 
-var dist;
+        var userPosition = {lat:req.body.lat,lon:req.body.lng}; let radius = req.body.radius;
 
+        Problem.find({},function (err,problems) {
 
-   // Problem.find({},function (err,problems) {
-
-         //  let userLat = req.body.lat;
-          // let userLng = req.body.lng;
-           // let radius = req.body.radius;
-           // var problemsToClient = [];
-          // let types = [] = req.body.types;
-          //        if(err){
-          //            res.send('Something went wrong')
-          //        }
-          //         for(let i=0;i<problems.length;i++){
-          //            let currentProblem = problems[i];
-          //         if( findDistance(userLat,userLng,currentProblem.lat,currentProblem.lng) * 1000 <= radius  ){
-          //             problemsToClient.push(currentProblem)
-          //         }
-          //         }
-          //        res.status(200).send(problemsToClient);
-          //
-          //    })
-
-    // findDistance(31.771959,35.217018);
-
-   var x =  function  (coordLat,coordLng){
-
-        distanceService.get(
-            {
-                index: 1,
-                origin: '32.109333,34.855499 ',
-                destination: coordLat,coordLng
-            },
-            function(err, data) {
-                if (err) return console.log(err);
-                dist = data.distance;
-            });
-        return dist
-    }
-
-    res.status(200).send( x(31.771959,35.217018))
-
+           var problemsToClient = [];
+                 if(err){
+                     res.send('Something went wrong')
+                 }
+                  for(let i=0;i<problems.length;i++){
+                     let currProblem = problems[i];
+                  if(  geodist(userPosition, {lat: currProblem.lat, lon: currProblem.lng },{unit:'km'}) <= radius/1000  ){
+                      problemsToClient.push(problems[i])
+                  }
+                  }
+                 res.status(200).send(problemsToClient);
+    });
 });
 module.exports = router;
 
