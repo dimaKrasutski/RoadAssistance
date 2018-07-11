@@ -32,6 +32,29 @@ router.post('/create_feedback',function (req,res) {
 
 });
 
+router.post('/create_new_place',function (req,res) {
+
+
+    Places.create({
+
+        address: req.body.address,
+        email:req.body.email,
+        lat: req.body.lat,
+        lng:req.body.lng,
+        name:req.body.name,
+        phone:req.body.phone,
+        rating: 10,
+        shabbat:req.body.shabbat,
+        type: req.body.type,
+        workTime:req.body.workTime
+
+    }),
+        function (err, place) {
+            console.log(err);
+            if (err) return res.status(500).send(err);
+            res.status(200).json({message: "Place Added", uid: place._id})
+        };
+})
 
 
 

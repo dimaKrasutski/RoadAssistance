@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var PlaceSchema = new mongoose.Schema({
+var PlacesSchema = new mongoose.Schema({
     address: String,
     email:String,
     lat: Number,
@@ -8,11 +8,11 @@ var PlaceSchema = new mongoose.Schema({
     name:String,
     phone:String,
     rating: Number,
-    shabbat:Boolean,
+    shabbat:String,
     type: Number,
-    workTime:String
+    workTime:String,
+});
 
-},{versionKey:false});
-mongoose.model("Place",PlaceSchema);
+mongoose.model("Places",PlacesSchema);
 
-module.exports = mongoose.model('Place');
+module.exports = mongoose.model('Places');
