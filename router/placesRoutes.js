@@ -29,6 +29,7 @@ router.post('/create_place',function (req,res) {
             workTime:req.body.workTime
         },
         function (err, place){
+        console.log(err)
                 if (err) return res.status(500).send('err');
                 res.status(200).send({message:"Place Added",uid:place._id})
             });
