@@ -48,12 +48,12 @@ router.post('/create_new_place',function (req,res) {
         type: req.body.type,
         workTime:req.body.workTime
 
-    }),
+    },
         function (err, place) {
             console.log(err);
             if (err) return res.status(500).send(err);
             res.status(200).json({message: "Place Added", uid: place._id})
-        };
+        });
 })
 
 
