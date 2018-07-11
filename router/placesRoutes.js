@@ -16,6 +16,7 @@ var VerifyToken = require('../auth/VerifyToken');
 
 
 router.post('/create_place',function (req,res) {
+    
     Place.create({
             address: req.body.address,
             email:req.body.email,
