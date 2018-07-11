@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var PlaceSchema = new mongoose.Schema({
     address: String,
-    email:Number,
+    email:String,
     lat: Number,
     lng:Number,
     name:String,
@@ -13,6 +13,6 @@ var PlaceSchema = new mongoose.Schema({
     workTime:String
 
 },{versionKey:false});
-mongoose.model("Places",PlaceSchema);
+mongoose.model("Place",PlaceSchema);
 
-module.exports = mongoose.model('Places');
+module.exports = mongoose.model('Place');

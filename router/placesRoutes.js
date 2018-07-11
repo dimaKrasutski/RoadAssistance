@@ -9,11 +9,11 @@ router.use(bodyParser.json());
 var User = require('../collectionsMongo/User');
 var Feedback = require('../collectionsMongo/Feedback');
 var Problem = require('../collectionsMongo/Problem');
-var Place = require('../collectionsMongo/Places');
+var Place = require('../collectionsMongo/Place');
 var geodist = require('geodist')
 
-
 var VerifyToken = require('../auth/VerifyToken');
+
 
 router.post('/create_place',function (req,res) {
     Place.create({
@@ -29,10 +29,11 @@ router.post('/create_place',function (req,res) {
             workTime:req.body.workTime
         },
         function (err, place){
-                if (err) return res.status(500).send(err);
-                res.status(200).json({message:"Place Added",uid:place._id})
+                if (err) return res.status(500).send('err');
+                res.status(200).send({message:"Place Added",uid:place._id})
             });
-        })
+        });
+
 
 router.post('/download_places', function (req, res) {
 
