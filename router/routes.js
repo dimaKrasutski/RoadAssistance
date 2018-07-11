@@ -43,7 +43,7 @@ router.post('/create_new_place',function (req,res) {
         lng:req.body.lng,
         name:req.body.name,
         phone:req.body.phone,
-        rating: 10,
+        rating: '',
         shabbat:req.body.shabbat,
         type: req.body.type,
         workTime:req.body.workTime
