@@ -56,6 +56,27 @@ router.post('/create_new_place',function (req,res) {
         });
 })
 
+router.post('/download_places', function (req, res) {
+
+    let userPosition = {lat:req.body.lat,lon:req.body.lng}; let radius = req.body.radius;
+    let type  = req.body.type; let shabbat = req.body.shabbat;
+    Place.find({},function (err,places) {
+
+        var placesToClient = [];
+        if(err){
+            res.send('Something went wrong')
+        }
+        for(let i=0;i<places.length;i++){
+            let currPlace = places[i];
+            let distance = geodist(userPosition, {lat: currPlace.lat, lon: currPlace.lng },{unit:'km'});
+            if(  distance <= radius/1000  && currPlace.type == type && currPlace.shabbat == shabbat){
+                placesToClient.push(places[i])
+            }
+        }
+        res.status(200).send(placesToClient);
+    });
+});
+
 
 
 module.exports = router;
