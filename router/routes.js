@@ -8,7 +8,7 @@ router.use(bodyParser.json());
 var User = require('../collectionsMongo/User');
 var Feedback = require('../collectionsMongo/Feedback');
 var Problem = require('../collectionsMongo/Problem');
-
+var Place = require('../collectionsMongo/Places');
 
 
 var VerifyToken = require('../auth/VerifyToken');
@@ -35,7 +35,7 @@ router.post('/create_feedback',function (req,res) {
 router.post('/create_new_place',function (req,res) {
 
 
-    Places.create({
+    Place.create({
 
         address: req.body.address,
         email:req.body.email,
