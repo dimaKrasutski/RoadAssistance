@@ -8,7 +8,7 @@ var PlacesSchema = new mongoose.Schema({
     name:String,
     phone:String,
     rating: Number,
-    shabbat:String,
+    shabbat:Boolean,
     type: Number,
     workTime:String,
 });

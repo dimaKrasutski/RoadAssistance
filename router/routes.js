@@ -9,7 +9,7 @@ var User = require('../collectionsMongo/User');
 var Feedback = require('../collectionsMongo/Feedback');
 var Problem = require('../collectionsMongo/Problem');
 var Place = require('../collectionsMongo/Places');
-
+var geodist = require('geodist');
 
 var VerifyToken = require('../auth/VerifyToken');
 
@@ -60,6 +60,7 @@ router.post('/download_places', function (req, res) {
 
     let userPosition = {lat:req.body.lat,lon:req.body.lng}; let radius = req.body.radius;
     let type  = req.body.type; let shabbat = req.body.shabbat;
+
     Place.find({},function (err,places) {
 
         var placesToClient = [];
