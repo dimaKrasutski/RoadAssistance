@@ -91,7 +91,7 @@ router.post('/get_place', function (req, res) {
     Place.findById(req.headers['placeUid'], function (err, place) {
         if (err) return res.status(500).send('Error on the server.');
         if (!place) return res.status(404).send('No user found.');
-        res.status(200).send({place:place});
+        res.status(200).json({place:place});
     })
 })
 
