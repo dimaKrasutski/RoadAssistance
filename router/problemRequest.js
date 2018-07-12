@@ -173,11 +173,6 @@ router.post('/problems_map', function (req, res) {
         }).then(function () {
         res.status(200).send(problemsToClient);
     })
-
-
-
-
-
 })
 module.exports = router;
 
