@@ -63,8 +63,6 @@ router.post('/download_places', function (req, res) {
     let type  = req.body.type;
     let shabbat = req.body.shabbat;
 
-
-
     Place.find({},function (err,places) {
         var placesToClient = [];
 
@@ -88,7 +86,7 @@ router.post('/download_places', function (req, res) {
 
 router.get('/get_place', function (req, res) {
 
-    Place.findById(req.headers['placeUid'], function (err, place) {
+    Place.findById(req.headers['uid'], function (err, place) {
         if (err) return res.status(500).send('Error on the server.');
         if (!place) return res.status(404).send('No place found.');
         res.status(200).json({place:place});
