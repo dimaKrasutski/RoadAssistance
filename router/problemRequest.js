@@ -160,13 +160,13 @@ router.post('/problems_map', function (req, res) {
             let currProblem = problems[i];
             let distance = geodist(userPosition, {lat: currProblem.lat, lon: currProblem.lng },{unit:'km'});
             if(  distance <= radius/1000  && currProblem.problemType == type && currProblem.status == 1){
-                
-               delete problems[i].description;
-               delete problems[i].extra;
-               delete problems[i].requestingUser;
-               delete problems[i].helpingUser;
-               delete problems[i].time;
-               delete problems[i].status;
+
+               delete currProblem.description;
+               delete currProblem.extra;
+               delete currProblem.requestingUser;
+               delete currProblem.helpingUser;
+               delete currProblem.time;
+               delete currProblem.status;
 
                 problemsToClient.push(problems[i])
             }
