@@ -158,14 +158,14 @@ router.post('/problems_map', function (req, res) {
         }
         for(let i=0;i<problems.length;i++){
             let currProblem = problems[i];
+            delete currProblem.description;
+            delete currProblem.extra;
+            delete currProblem.requestingUser;
+            delete currProblem.helpingUser;
+            delete currProblem.time;
             let distance = geodist(userPosition, {lat: currProblem.lat, lon: currProblem.lng },{unit:'km'});
             if(  distance <= radius/1000  && currProblem.problemType == type && currProblem.status == 1){
-
-               delete currProblem.description;
-               delete currProblem.extra;
-               delete currProblem.requestingUser;
-               delete currProblem.helpingUser;
-               delete currProblem.time;
+                
                delete currProblem.status;
 
                 problemsToClient.push(currProblem)
