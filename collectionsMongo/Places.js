@@ -11,7 +11,7 @@ var PlacesSchema = new mongoose.Schema({
     shabbat:Boolean,
     type: Number,
     workTime:String,
-});
+},{versionKey:false});
 
 mongoose.model("Places",PlacesSchema);
 
