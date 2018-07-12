@@ -143,6 +143,38 @@ router.post('/download_problems', function (req, res) {
                  res.status(200).send(problemsToClient);
     });
 });
+
+router.post('/problems_map', function (req, res) {
+
+    var userPosition = {lat:req.body.lat,lon:req.body.lng};
+    let radius = req.body.radius;
+    var type  = req.body.type;
+
+    Problem.find({},function (err,problems) {
+
+        var problemsToClient = [];
+        if(err){
+            res.send('Something went wrong')
+        }
+        for(let i=0;i<problems.length;i++){
+            let currProblem = problems[i];
+            let distance = geodist(userPosition, {lat: currProblem.lat, lon: currProblem.lng },{unit:'km'});
+            if(  distance <= radius/1000  && currProblem.problemType == type && currProblem.status == 1){
+                
+               delete problems[i].description;
+               delete problems[i].extra;
+               delete problems[i].requestingUser;
+               delete problems[i].helpingUser;
+               delete problems[i].time;
+               delete problems[i].status;
+
+                problemsToClient.push(problems[i])
+            }
+        }
+
+        res.status(200).send(problemsToClient);
+    });
+});
 module.exports = router;
 
 
