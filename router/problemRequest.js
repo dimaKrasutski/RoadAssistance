@@ -188,6 +188,15 @@ router.post('/problems_map', function (req, res) {
         res.status(200).send(problemsToClient);
     })
 })
+
+router.get('/get_problem', function (req, res) {
+
+    Problem.findById(req.headers['uid'], function (err, problem) {
+        if (err) return res.status(500).send('Error on the server.');
+        if (!problem) return res.status(404).send('No problem found.');
+        res.status(200).json({currentProblem:problem});
+    })
+})
 module.exports = router;
 
 
