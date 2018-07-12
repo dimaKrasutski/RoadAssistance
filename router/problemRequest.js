@@ -146,35 +146,39 @@ router.post('/download_problems', function (req, res) {
 
 router.post('/problems_map', function (req, res) {
 
-    var userPosition = {lat:req.body.lat,lon:req.body.lng};
+    var userPosition = {lat: req.body.lat, lon: req.body.lng};
     let radius = req.body.radius;
-    var type  = req.body.type;
+    var type = req.body.type;
 
-    Problem.find({},function (err,problems) {
+    var problemsToClient = [];
+    Problem.find({},function (err, problems) {
 
-        var problemsToClient = [];
-        if(err){
-            res.send('Something went wrong')
-        }
-        for(let i=0;i<problems.length;i++){
+        if (err) {
+            res.send('Something went wrong')} 
+        for (let i = 0; i < problems.length; i++) {
             let currProblem = problems[i];
-            delete currProblem.description;
-            delete currProblem.extra;
-            delete currProblem.requestingUser;
-            delete currProblem.helpingUser;
-            delete currProblem.time;
-            let distance = geodist(userPosition, {lat: currProblem.lat, lon: currProblem.lng },{unit:'km'});
-            if(  distance <= radius/1000  && currProblem.problemType == type && currProblem.status == 1){
-                
-               delete currProblem.status;
-
+            let distance = geodist(userPosition, {lat: currProblem.lat, lon: currProblem.lng}, {unit: 'km'});
+            if (distance <= radius / 1000 && currProblem.problemType == type && currProblem.status == 1) {
                 problemsToClient.push(currProblem)
             }
-        }
-
+        }}).then(function (err,ok) {
+            for(let i=0;i<problemsToClient.length;i++){
+                 problemsToClient[i].description = undefined;
+                 problemsToClient[i].extra = undefined;
+                 problemsToClient[i].requestingUser = undefined;
+                 problemsToClient[i].time = undefined;
+                 problemsToClient[i].helpingUser = undefined;
+                 problemsToClient[i].status = undefined
+            }
+        }).then(function () {
         res.status(200).send(problemsToClient);
-    });
-});
+    })
+
+
+
+
+
+})
 module.exports = router;
 
 
