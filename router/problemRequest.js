@@ -168,7 +168,7 @@ router.post('/problems_map', function (req, res) {
                delete currProblem.time;
                delete currProblem.status;
 
-                problemsToClient.push(problems[i])
+                problemsToClient.push(currProblem)
             }
         }
 
