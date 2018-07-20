@@ -1,5 +1,6 @@
-var nr =require('newrelic')
-var app = require('./app');
+var newRelic =  require('newrelic');
+
+var app = require('./node_modules/@tyriar/app');
 var port = process.env.PORT || 3000;
 
 var server = app.listen(port, function() {
