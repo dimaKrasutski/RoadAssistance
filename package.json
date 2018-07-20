@@ -2,9 +2,6 @@
   "name": "Road Assistance Server NodeJs",
   "version": "1.0.0",
   "description": "",
-  "engines": {
-    "node": "8.11.3"
-  },
   "main": "app.js",
   "scripts": {
     "start": "node server",
