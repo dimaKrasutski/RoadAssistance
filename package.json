@@ -15,6 +15,7 @@
     "geodist": "^0.2.1",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.0.1",
+    "newrelic": "^4.5.1",
     "npm": "^6.2.0",
     "promise": "^8.0.1"
   }
