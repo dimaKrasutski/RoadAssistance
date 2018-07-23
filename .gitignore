@@ -6,4 +6,4 @@ variables.env
 .idea
 
 desktop.ini
-newrelic_agent.log
+.log
