@@ -126,23 +126,25 @@ router.post('/download_problems', function (req, res) {
         let radius = req.body.radius;
         var type  =[]= req.body.type;
 
+    let compare = false;
+    let problemsToClient = [];
+
         Problem.find({},function (err,problems) {
 
-           var problemsToClient = [];
                  if(err){res.send('Something went wrong')}
                   for(let i=0;i<problems.length;i++){
-                     let compare = false;
+
                                   let currProblem = problems[i];
                                   let distance = geodist(userPosition, {lat: currProblem.lat, lon: currProblem.lng },{unit:'km'});
-                                  var compareType = function () {
-                                      for (let i=0;i<type.length;i++){
-                                          if(type[i] == currProblem.problemType){
-                                              return compare = true;
-                                          }}};
+                      var compareType = function () {
+                          for (let i=0;i<type.length;i++){
+                              if(type[i] == currProblem.problemType){
+                                  return compare = true;
+                              }}};
                                if(  distance <= radius/1000 && currProblem.status == 1){
                                       compareType();
                                       if(compare)
-                                   problemsToClient.push(problems[i])
+                                   problemsToClient.push(currProblem)
                                }}
                  res.status(200).send(problemsToClient);
     });
@@ -154,16 +156,26 @@ router.post('/problems_map', function (req, res) {
     var userPosition = {lat: req.body.lat, lon: req.body.lng};
     let radius = req.body.radius;
     var type =[]= req.body.type;
-
+    let compare = false;
     var problemsToClient = [];
     Problem.find({},function (err, problems) {
         if (err) {
             res.send('Something went wrong')} 
         for (let i = 0; i < problems.length; i++) {
             let currProblem = problems[i];
+
+            var compareType = function () {
+                for (let i=0;i<type.length;i++){
+                    if(type[i] == currProblem.problemType){
+                        return compare = true;
+
+                    }}};
             let distance = geodist(userPosition, {lat: currProblem.lat, lon: currProblem.lng}, {unit: 'km'});
-            if (distance <= radius / 1000 && currProblem.problemType == type && currProblem.status == 1) {
-                problemsToClient.push(currProblem)
+            if (distance <= radius / 1000 && currProblem.status == 1) {
+                compareType();
+                if(compare){
+                    problemsToClient.push(currProblem)
+                }
             }
         }}).then(function (err,ok) {
             for(let i=0;i<problemsToClient.length;i++){
