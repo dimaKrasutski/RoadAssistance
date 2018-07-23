@@ -104,8 +104,8 @@ router.post('/problem_done', function (req, res) {
             });
 
             User.findById(helping, function (err, user) {
-                if (err) return res.status(500).send('Error on the server 2');
 
+                if (err) return res.status(500).send('Error on the server 2');
                 if (!user) return res.status(404).send('No user found 2');
 
                 user.currentState = '';
@@ -128,13 +128,8 @@ router.post('/download_problems', function (req, res) {
 
         Problem.find({},function (err,problems) {
 
-            console.log(type);
-
-
            var problemsToClient = [];
-                 if(err){
-                     res.send('Something went wrong')
-                 }
+                 if(err){res.send('Something went wrong')}
                   for(let i=0;i<problems.length;i++){
                      let compare = false;
                                   let currProblem = problems[i];
@@ -143,16 +138,12 @@ router.post('/download_problems', function (req, res) {
                                       for (let i=0;i<type.length;i++){
                                           if(type[i] == currProblem.problemType){
                                               return compare = true;
-                                          }
-                                      }
-                                  }
+                                          }}};
                                if(  distance <= radius/1000 && currProblem.status == 1){
                                       compareType();
                                       if(compare)
                                    problemsToClient.push(problems[i])
-                               }
-                               }
-
+                               }}
                  res.status(200).send(problemsToClient);
     });
 
@@ -162,11 +153,10 @@ router.post('/problems_map', function (req, res) {
 
     var userPosition = {lat: req.body.lat, lon: req.body.lng};
     let radius = req.body.radius;
-    var type = req.body.type;
+    var type =[]= req.body.type;
 
     var problemsToClient = [];
     Problem.find({},function (err, problems) {
-
         if (err) {
             res.send('Something went wrong')} 
         for (let i = 0; i < problems.length; i++) {
