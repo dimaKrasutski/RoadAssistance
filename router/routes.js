@@ -31,19 +31,20 @@ router.post('/create_feedback',function (req,res) {
         });
 
 });
-router.get('/get_feedbacks', function (req, res) {
+router.post('/get_feedbacks', function (req, res) {
+
     var fbs = [];
-    Feedback.findById(req.body.uid, function (err, feedback) {
+
+    Feedback.find({}, function (err, feedback) {
         if (err) return res.status(500).send('Error on the server.');
-        if (!user) return res.status(404).send('No place found.');
+        if (!feedback) return res.status(404).send('No feedback found.');
 
         for (let i=0;i<feedback.length;i++){
-            if(req.body.uid == feedback.userAbout )
-                fbs.push(feedback)
+            if(req.body.uid == feedback[i].userAbout )
+                fbs.push(feedback[i])
         }
-
-        res.status(200).json({feedbacks:fbs});
-    })
+        res.status(200).send(fbs);
+    });
 })
 router.post('/create_new_place',function (req,res) {
 
