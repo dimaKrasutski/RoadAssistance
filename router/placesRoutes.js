@@ -10,7 +10,7 @@ var User = require('../collectionsMongo/User');
 var Feedback = require('../collectionsMongo/Feedback');
 var Problem = require('../collectionsMongo/Problem');
 var Places = require('../collectionsMongo/Places');
-var geodist = require('geodist');
+
 
 var VerifyToken = require('../auth/VerifyToken');
 

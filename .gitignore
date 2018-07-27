@@ -6,3 +6,4 @@ variables.env
 .idea
 desktop.ini
 .log
+newrelic.js

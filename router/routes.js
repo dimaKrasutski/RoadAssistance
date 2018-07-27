@@ -69,7 +69,6 @@ router.post('/create_new_place',function (req,res) {
             res.status(200).json({message: "Place Added", uid: place._id})
         });
 })
-
 router.post('/download_places', function (req, res) {
 
     let userPosition = {lat:req.body.lat,lon:req.body.lng};
@@ -97,7 +96,6 @@ router.post('/download_places', function (req, res) {
     })
 
 });
-
 router.get('/get_place', function (req, res) {
 
     Place.findById(req.headers['uid'], function (err, place) {
