@@ -1,5 +1,5 @@
 var cluster = require('cluster');
-
+var app = require('./app');
 
 if (cluster.isMaster) {
 
@@ -12,17 +12,11 @@ if (cluster.isMaster) {
     }
 
     cluster.on('exit', function (worker) {
-
-        // Replace the dead worker,
-        // we're not sentimental
         console.log('Worker %d died :(', worker.id);
         cluster.fork();
-
-// Code to run if we're in a worker process
 })
 } else {
 
-    var app = require('./app');
     var port = process.env.PORT || 3000;
 
     var server = app.listen(port, function() {
