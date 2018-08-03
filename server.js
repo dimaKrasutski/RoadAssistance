@@ -10,7 +10,7 @@ if (cluster.isMaster) {
     for (var i = 0; i < cpuCount; i += 1) {
         cluster.fork();
     }
-
+    // делаем новый WORKER
     cluster.on('exit', function (worker) {
         console.log('Worker %d died :(', worker.id);
         cluster.fork();

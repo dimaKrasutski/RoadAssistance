@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
@@ -32,15 +33,17 @@ router.post('/create_problem',function (req,res) {
         function (err, problem) {
             User.findById(req.body.requestingUser, function (err, user) {
                 if (err) return res.status(500).send('Error on the server.');
+                console.log(err)
                 if (!user) return res.status(404).send('No user found.');
 
                 user.currentProblem = problem._id;
 
                 user.save(function (err, updatedUser) {
                     if (err) return "Error Motherfucker!"
-                })
+                });
+
             if (err) return res.status(500).send(err);
-            res.status(200).json({message:"Problem Added",uid:problem._id})
+                res.status(200).send({message:"Problem Added",uid:problem._id})
         });
 
 });
@@ -198,7 +201,50 @@ router.get('/get_problem', function (req, res) {
         if (!problem) return res.status(404).send('No problem found.');
         res.status(200).json({currentProblem:problem});
     })
-})
+});
+
+router.post('/agree_problem', function (req, res) {   //ПРЕДЛОЖЕНИЕ ХЕЛПЕРА ПОПАДАЕТ В OFFER-LIST
+
+
+    Problem.findById(req.body.uidProblem, function (err, problem) {
+
+        if (err) return res.status(500).send('Error on the server.');
+        console.log(err);
+        if (!problem) return res.status(404).send('No problem found.');
+
+        problem.offerList.push({answer:"",description:req.body.description,helper:req.body.uidHelper,price:req.body.price,problemName:req.body.uidProblem});
+        problem.save(function (err,updatedProblem) {
+            if(err) return "Error!";
+            res.status(200).send({message:"Offer added"});
+        })
+    })
+});
+
+router.post('/refuse_offer', function (req, res) { // ОТМЕНИТЬ ПРЕДЛОЖЕНИ HELPERA О ПОМОЩИ(ЕСЛИ ЕГО СОГЛАСИЕ ЕЩЕ НЕ ПОДТВЕРДИЛИ)
+
+
+    Problem.findById(req.body.uidProblem, function (err, problem) {
+
+        if (err) return res.status(500).send('Error on the server.');
+        console.log(err);
+        if (!problem) return res.status(404).send('No problem found.');
+
+         var list = problem.offerList;
+
+         for(let i=0;i<list.length;i++){
+             let currOffer = list[i];
+             console.log(currOffer + 'deded');
+               if (currOffer['helper'] == req.body.uidHelper ){
+                    list.splice(currOffer,1)
+               }
+         }
+        problem.save(function (err, updatedProblem) {
+            if (err) return "Error!";
+            res.status(200).send({msg:'Offer refused'});
+        })
+    })
+
+});
 module.exports = router;
 
 

@@ -11,6 +11,7 @@ var ProblemSchema = new mongoose.Schema({
          status: Number,
          requestingUser:String,
          time: Date,
+    offerList:[{},{}]
 
 },{versionKey:false});
 mongoose.model("Problem",ProblemSchema);
