@@ -68,7 +68,8 @@ router.post('/create_new_place',function (req,res) {
             if (err) return res.status(500).send(err);
             res.status(200).json({message: "Place Added", uid: place._id})
         });
-})
+});
+
 router.post('/download_places', function (req, res) {
 
     let userPosition = {lat:req.body.lat,lon:req.body.lng};

@@ -1,6 +1,28 @@
 var mongoose = require('mongoose');
+const MongooseTrigger = require('mongoose-trigger');
 
-var ProblemSchema = new mongoose.Schema({
+var OfferListSchema = new mongoose.Schema({
+
+    answer: Number,
+    description: String,
+    helper: String,
+    price: Number,
+    problemName: String
+
+});
+
+mongoose.model('OfferList',OfferListSchema);
+
+// const ProblemEvents = MongooseTrigger(ProblemSchema, {
+//     events: {
+//
+//         debug: false
+//     }});
+//
+// ProblemEvents.on('partial:offerList_event', data => console.log('[update] says:', data));
+
+
+    var ProblemSchema = new mongoose.Schema({
          description: String,
          direction:Number,
          extra:Number,
@@ -8,12 +30,13 @@ var ProblemSchema = new mongoose.Schema({
          lng:Number,
          problemType:Number,
          helpingUser:String,
-         status: Number,
-         requestingUser:String,
+        requestingUser:String,
+        offerList:[OfferListSchema],
          time: Date,
-    offerList:[{},{}]
+        status: Number,
 
 },{versionKey:false});
+
 mongoose.model("Problem",ProblemSchema);
 
-module.exports = mongoose.model('Problem');
+ module.exports = mongoose.model('Problem');

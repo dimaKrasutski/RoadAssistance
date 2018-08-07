@@ -1,20 +1,18 @@
-var express = require('express');
-var router = express.Router();
-var bodyParser = require('body-parser');
+var express = require('express'),
+    router = express.Router(),
+    bodyParser = require('body-parser');
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
-var VerifyToken = require('../auth/VerifyToken');
+var VerifyToken = require('../auth/VerifyToken'),
+    User = require('../collectionsMongo/User'),
+    Problem = require('../collectionsMongo/Problem');
+    Feedback = require('../collectionsMongo/Feedback');
 
-var User = require('../collectionsMongo/User');
-var Problem = require('../collectionsMongo/Problem');
-var Feedback = require('../collectionsMongo/Feedback');
-
-
-var jwt = require('jsonwebtoken');
-var bcrypt = require('bcryptjs');
-var config = require('../config');
+    var jwt = require('jsonwebtoken');
+     bcrypt = require('bcryptjs');
+     config = require('../config');
 
 router.post('/user_create', function(req, res) {
 
