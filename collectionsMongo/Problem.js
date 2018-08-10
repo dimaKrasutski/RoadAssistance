@@ -13,13 +13,13 @@ var OfferListSchema = new mongoose.Schema({
 
 mongoose.model('OfferList',OfferListSchema);
 
-// const ProblemEvents = MongooseTrigger(ProblemSchema, {
-//     events: {
-//
-//         debug: false
-//     }});
-//
-// ProblemEvents.on('partial:offerList_event', data => console.log('[update] says:', data));
+ const ProblemEvents = MongooseTrigger(ProblemSchema, {
+     events: {
+
+         debug: false
+     }});
+
+ ProblemEvents.on('update', data => console.log('[update] says:', data));
 
 
     var ProblemSchema = new mongoose.Schema({
