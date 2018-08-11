@@ -75,7 +75,7 @@ router.get('/get_offer_list',function (req,res) {
     })
 });
 
-router.post('/offer_accept',function (req,res) {
+router.post('/offer_accept',function (req,res) { //helper принимает чей то offer,offerList очищается,uid helpera в problem.helperUid
     Problem.findById(req.body.uidProblem, function (err, problem) {
         let helperUid;
         if (err) return res.status(500).send('Error on the server.');
@@ -96,6 +96,29 @@ router.post('/offer_accept',function (req,res) {
         res.status(200).json({msg:'Offer_accepted'});
     })
 })
+
+router.post('/offer_reject',function (req,res) { //helper отменяет чей то offer, этот offer удаляется из offerList
+
+    Problem.findById(req.body.uidProblem, function (err, problem) {
+
+        if (err) return res.status(500).send('Error on the server.');
+        if (!problem) return res.status(404).send('No problem found.');
+console.log(problem)
+        let offersArr = problem.offerList ;
+        for (let i=0;i<offersArr.length;i++){
+            if(req.body.uidOffer == offersArr[i]._id){
+                console.log(req.body.uidOffer)
+                 console.log(offersArr[i]._id);
+                offersArr.splice(i,1);
+                break;
+            }
+        }
+        problem.save(function (err, updatedProblem) {
+            if (err) return "Error!";
+        });
+        res.status(200).json({msg:'Offer_rejected'});
+    })
+});
 
 
 module.exports = router;

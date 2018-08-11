@@ -13,14 +13,19 @@ var OfferListSchema = new mongoose.Schema({
 
 mongoose.model('OfferList',OfferListSchema);
 
- const ProblemEvents = MongooseTrigger(ProblemSchema, {
-     events: {
-
-         debug: false
-     }});
-
- ProblemEvents.on('update', data => console.log('[update] says:', data));
-
+ // const ProblemEvents = MongooseTrigger(OfferListSchema, {
+ //     partials: [
+ //         {
+ //             eventName: 'custom_',
+ //             triggers: 'name email',
+ //             select: 'email',
+ //             populate: 'something'
+ //         }
+ //     ]
+ //     });
+ //
+ // ProblemEvents.on('update', problem => console.log('[update] says:', problem.offerList));
+ // ProblemEvents.on('remove', problem => console.log('[remove] says:', problem.offerList));
 
     var ProblemSchema = new mongoose.Schema({
          description: String,
