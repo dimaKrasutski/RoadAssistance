@@ -28,11 +28,11 @@ router.post('/agree_problem', function (req, res) {   //ПРЕДЛОЖЕНИЕ �
         console.log(err);
         if (!problem) return res.status(404).send('No problem found.');
 
-       let offer = {answer:"",
+       let offer = {answer:0,
             description:req.body.description,
             helper:req.body.uidHelper,
             price:req.body.price,
-            problemName:req.body.uidProblem
+            problemName:req.body.uidProblem,
         };
 
         problem.offerList.push(offer);
