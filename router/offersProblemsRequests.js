@@ -16,7 +16,7 @@ router.get('/get_offer_list',function (req,res) {
     Problem.findById(req.headers['uid'], function (err, problem) {
         if (err) return res.status(500).send('Error on the server.');
         if (!problem) return res.status(404).send('No problem found.');
-        res.status(200).json({offerList:problem.offerList});
+        res.status(200).send(problem.offerList);
     })
 });
 
@@ -68,8 +68,6 @@ router.post('/refuse_offer', function (req, res) { // ОТМЕНИТЬ ПРЕД�
     })
 
 });
-
-
 
 router.post('/offer_accept',function (req,res) { //helper принимает чей то offer,offerList очищается,uid helpera в problem.helperUid
     Problem.findById(req.body.uidProblem, function (err, problem) {
