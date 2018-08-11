@@ -12,15 +12,23 @@ var Problem = require('../collectionsMongo/Problem');
 
 var VerifyToken = require('../auth/VerifyToken');
 
+router.get('/get_offer_list',function (req,res) {
+    Problem.findById(req.headers['uid'], function (err, problem) {
+        if (err) return res.status(500).send('Error on the server.');
+        if (!problem) return res.status(404).send('No problem found.');
+        res.status(200).json({offerList:problem.offerList});
+    })
+});
+
 router.post('/agree_problem', function (req, res) {   //ПРЕДЛОЖЕНИЕ ХЕЛПЕРА ПОПАДАЕТ В OFFER-LIST
 
     Problem.findById(req.body.uidProblem, function (err, problem) {
-        var offer;
+
         if (err) return res.status(500).send('Error on the server.');
         console.log(err);
         if (!problem) return res.status(404).send('No problem found.');
 
-        offer = {answer:"",
+       let offer = {answer:"",
             description:req.body.description,
             helper:req.body.uidHelper,
             price:req.body.price,
@@ -32,18 +40,13 @@ router.post('/agree_problem', function (req, res) {   //ПРЕДЛОЖЕНИЕ �
             if(err) return "Error!";
             console.log(problemUpdated);
         });
-        for(var i=0; i<problem.offerList.length;i++){
-            if(problem.offerList[i].helper == req.body.uidHelper){
-                offer = problem.offerList[i]._id;
-            }
-        }
-        res.status(200).send({message:"Offer added",uidOffer:offer});
+        res.status(200).send({message:"Offer added"});
     })
 });
 
 router.post('/refuse_offer', function (req, res) { // ОТМЕНИТЬ ПРЕДЛОЖЕНИ HELPERA О ПОМОЩИ(ЕСЛИ ЕГО СОГЛАСИЕ ЕЩЕ НЕ ПОДТВЕРДИЛИ)
 
-
+// добавить проверку нa helpingUser: ""
     Problem.findById(req.body.uidProblem, function (err, problem) {
 
         if (err) return res.status(500).send('Error on the server.');
@@ -54,8 +57,7 @@ router.post('/refuse_offer', function (req, res) { // ОТМЕНИТЬ ПРЕД�
 
         for(let i=0;i<list.length;i++){
             let currOffer = list[i];
-            console.log(currOffer + 'deded');
-            if (currOffer['helper'] == req.body.uidHelper && currOffer._id ==req.body.uidOffer ){
+            if (currOffer['helper'] == req.body.uidHelper){
                 list.splice(currOffer,1)
             }
         }
@@ -67,13 +69,7 @@ router.post('/refuse_offer', function (req, res) { // ОТМЕНИТЬ ПРЕД�
 
 });
 
-router.get('/get_offer_list',function (req,res) {
-    Problem.findById(req.headers['uid'], function (err, problem) {
-        if (err) return res.status(500).send('Error on the server.');
-        if (!problem) return res.status(404).send('No problem found.');
-        res.status(200).json({offerList:problem.offerList});
-    })
-});
+
 
 router.post('/offer_accept',function (req,res) { //helper принимает чей то offer,offerList очищается,uid helpera в problem.helperUid
     Problem.findById(req.body.uidProblem, function (err, problem) {

@@ -2,4 +2,4 @@ module.exports = {
     'secret': 'supersecret'
 };
 
-var googleApiKey= 'AIzaSyDwDBCneJDrfCtHpTzcUPK9EYQmgk8whpw';
+const googleApiKey= 'AIzaSyDwDBCneJDrfCtHpTzcUPK9EYQmgk8whpw';

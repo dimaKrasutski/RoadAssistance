@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 const MongooseTrigger = require('mongoose-trigger');
 
 var OfferListSchema = new mongoose.Schema({
-
     answer: Number,
     description: String,
     helper: String,
