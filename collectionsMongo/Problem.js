@@ -7,8 +7,7 @@ var OfferListSchema = new mongoose.Schema({
     helper: String,
     price: Number,
     problemName: String
-
-});
+},{versionKey:false});
 
 mongoose.model('OfferList',OfferListSchema);
 
