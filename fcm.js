@@ -34,7 +34,7 @@ var sender = new gcm.Sender('AAAAHMAUjrA:APA91bFYw2_60jFAhub-S8796F-7cxo4lBH9iUr
 
 // Add the registration tokens of the devices you want to send to
 var registrationTokens = [];
-registrationTokens.push('regToken1');
+registrationTokens.push('d5XVP0kR3xs:APA91bFNmzNUZJs-em2HBzfbHHqHIP2mCvInqAg_K7SnOgmDp2Nr4mERjD2m6Uj_L9z5jN4bVkVWRzOfDPuot8ro6laZWhVbQicWcQMx0qKI6KOXYU_up_FGShEjdV3kaUm6_arqEm6ANvKyqOJHlYaDju63m4nGyA');
 
 
 sender.sendNoRetry(message, { registrationTokens: registrationTokens }, function(err, response) {
