@@ -1,4 +1,5 @@
-let cluster = require('cluster'), app = require('./app');
+const cluster = require('cluster');
+ const  app = require('./app');
 
 var express = require('express');
 app.get('/socket', (req, res) => {
