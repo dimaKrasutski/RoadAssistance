@@ -26,7 +26,7 @@ router.post('/create_problem',function (req,res) {
             helpingUser:"",
             requestingUser:req.body.requestingUser,
         offerList:[],
-            time:new Date(),
+         //   time:new Date(),
             status : 1
         },
         function (err, problem) {

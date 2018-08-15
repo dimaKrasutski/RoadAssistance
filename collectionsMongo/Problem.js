@@ -11,19 +11,7 @@ var OfferListSchema = new mongoose.Schema({
 
 mongoose.model('OfferList',OfferListSchema);
 
- // const ProblemEvents = MongooseTrigger(OfferListSchema, {
- //     partials: [
- //         {
- //             eventName: 'custom_',
- //             triggers: 'name email',
- //             select: 'email',
- //             populate: 'something'
- //         }
- //     ]
- //     });
- //
- // ProblemEvents.on('update', problem => console.log('[update] says:', problem.offerList));
- // ProblemEvents.on('remove', problem => console.log('[remove] says:', problem.offerList));
+
 
     var ProblemSchema = new mongoose.Schema({
          description: String,
@@ -35,11 +23,25 @@ mongoose.model('OfferList',OfferListSchema);
          helpingUser:String,
         requestingUser:String,
         offerList:[OfferListSchema],
-         time: Date,
+        // time: Date,
         status: Number,
 
 },{versionKey:false});
 
 mongoose.model("Problem",ProblemSchema);
+
+// const ProblemEvents = MongooseTrigger(ProblemSchema, {
+//     partials: [
+//         {
+//             eventName: 'KrasutskiEvent',
+//             triggers: 'helpingUser',
+//          //   select: 'email',
+//            // populate: 'something'
+//         }
+//     ]
+// });
+//
+// ProblemEvents.on('update', problem => console.log('[update] says:', problem));
+// ProblemEvents.on('partial:KrasutskiEvent,', problem => console.log('[partial] says:', problem));
 
  module.exports = mongoose.model('Problem');

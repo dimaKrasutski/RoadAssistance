@@ -7,7 +7,7 @@ admin.initializeApp({
     databaseURL: "https://road-assistance-1.firebaseio.com"
 });
 
-var gcm = require('node-gcm');
+const gcm = require('node-gcm');
 
 
 var message = new gcm.Message({

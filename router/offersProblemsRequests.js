@@ -25,17 +25,23 @@ router.post('/agree_problem', function (req, res) {   //ПРЕДЛОЖЕНИЕ �
     Problem.findById(req.body.uidProblem, function (err, problem) {
 
         if (err) return res.status(500).send('Error on the server.');
+
         console.log(err);
+
         if (!problem) return res.status(404).send('No problem found.');
 
-       let offer = {answer:0,
+       var offer = {
+            answer:0,
             description:req.body.description,
             helper:req.body.uidHelper,
             price:req.body.price,
             problemName:req.body.uidProblem,
         };
 
+
         problem.offerList.push(offer);
+console.log(problem);
+
         problem.save(function (err,problemUpdated) {
             if(err) return "Error!";
             console.log(problemUpdated);
@@ -71,18 +77,18 @@ router.post('/refuse_offer', function (req, res) { // ОТМЕНИТЬ ПРЕД�
 
 router.post('/offer_accept',function (req,res) { //helper принимает чей то offer,offerList очищается,uid helpera в problem.helperUid
     Problem.findById(req.body.uidProblem, function (err, problem) {
-        let helperUid;
+
         if (err) return res.status(500).send('Error on the server.');
         if (!problem) return res.status(404).send('No problem found.');
 
         let offersArr = problem.offerList ;
         for (let i=0;i<offersArr.length;i++){
             if(req.body.uidOffer == offersArr[i]._id){
-     helperUid = offersArr[i].helper;
+                problem.helpingUser= offersArr[i].helper;
      break;
             }
         }
-        problem.helpingUser=helperUid;
+        //problem.helpingUser=helperUid;
         problem.offerList = [];
         problem.save(function (err, updatedProblem) {
             if (err) return "Error!";
@@ -101,8 +107,6 @@ console.log(problem)
         let offersArr = problem.offerList ;
         for (let i=0;i<offersArr.length;i++){
             if(req.body.uidOffer == offersArr[i]._id){
-                console.log(req.body.uidOffer)
-                 console.log(offersArr[i]._id);
                 offersArr.splice(i,1);
                 break;
             }
