@@ -40,7 +40,7 @@ router.post('/agree_problem', function (req, res) {   //ПРЕДЛОЖЕНИЕ �
 
 
         problem.offerList.push(offer);
-console.log(problem);
+console.log(problem.offerList);
 
         problem.save(function (err,problemUpdated) {
             if(err) return "Error!";
