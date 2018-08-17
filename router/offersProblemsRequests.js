@@ -30,7 +30,7 @@ router.post('/agree_problem', function (req, res) {   //ПРЕДЛОЖЕНИЕ �
 
         if (!problem) return res.status(404).send('No problem found.');
 
-       var offer = {
+       let offer = {
             answer:0,
             description:req.body.description,
             helper:req.body.uidHelper,
@@ -38,13 +38,12 @@ router.post('/agree_problem', function (req, res) {   //ПРЕДЛОЖЕНИЕ �
             problemName:req.body.uidProblem,
         };
 
-
         problem.offerList.push(offer);
-console.log(problem.offerList);
 
         problem.save(function (err,problemUpdated) {
             if(err) return "Error!";
             console.log(problemUpdated);
+
         });
         res.status(200).send({message:"Offer added"});
     })

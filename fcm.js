@@ -1,11 +1,4 @@
-var admin = require("firebase-admin");
 
-var serviceAccount = require("./road-assistance-1-firebase-adminsdk-j28g9-985a9898cb");
-
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://road-assistance-1.firebaseio.com"
-});
 
 const gcm = require('node-gcm');
 
@@ -61,11 +54,12 @@ sender.send(message, { registrationTokens: registrationTokens }, 10, function (e
  // let serverkey = 'AAAAHMAUjrA:APA91bFYw2_60jFAhub-S8796F-7cxo4lBH9iUrNRQOhWg5QcaZXWkT7rwCD0VgPXXcsX-Ane2vGe3homrzjCwKlyW-4GI6hEG0pLZSmVrTGuxyHzWVzVJqWEH-xzzxLzmKu9khcK7HB';
  // let fcm = new FCM(serverkey);
  // let message = {
- //     to : '<insert-device-token>',
- //         collapse_key : '<insert-collapse-key>',
+ //     to : 'd5XVP0kR3xs:APA91bFNmzNUZJs-em2HBzfbHHqHIP2mCvInqAg_K7SnOgmDp2Nr4mERjD2m6Uj_' +
+//     'L9z5jN4bVkVWRzOfDPuot8ro6laZWhVbQicWcQMx0qKI6KOXYU_up_FGShEjdV3kaUm6_arqEm6ANvKyqOJHlYaDju63m4nGyA',
+ //         collapse_key : 'smth',
  //         data : {
- //     <random-data-key1> : '<random-data-value1>',
- //     <random-data-key2> : '<random-data-value2>'
+ //     <weather> : '<Good weather today>',
+ //
  //     },
  //     notification : {
  //            title : 'Road Assistance',
