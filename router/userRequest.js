@@ -34,6 +34,7 @@ router.post('/user_create', function(req, res) {
             currentProblem:'',
             history: {historyHelps:[],historyProblems:[]},
             rating:[],
+            deviceIdFcmToken:req.body.deviceIdFcmToken
         },
         function (err, user) {
             if (err) return res.status(500).send(err);
@@ -57,6 +58,11 @@ router.post('/login', function(req, res) {
         var token = jwt.sign({ id: user._id }, config.secret, {
             expiresIn: 86400 // expires in 24 hours
         });
+        user.deviceIdFcmToken = req.body.deviceIdFcmToken;
+        user.save(function (err, updatedUser) {
+            if (err) return res.status(500).send(err);
+        });
+
 
         res.status(200).json({ auth: true, token: token , message:"Login Ok",uid:user._id });
     });
