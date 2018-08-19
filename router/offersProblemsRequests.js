@@ -42,10 +42,9 @@ router.post('/agree_problem', function (req, res) {   //ПРЕДЛОЖЕНИЕ �
 
         problem.save(function (err,problemUpdated) {
             if(err) return "Error!";
-            console.log(problemUpdated);
-
+            res.status(200).send({msg:'offer added'});
         });
-        res.status(200).send({message:"Offer added"});
+
     })
 });
 

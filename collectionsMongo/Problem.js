@@ -11,8 +11,6 @@ var OfferListSchema = new mongoose.Schema({
 
 mongoose.model('OfferList',OfferListSchema);
 
-
-
     var ProblemSchema = new mongoose.Schema({
          description: String,
          direction:Number,
@@ -30,18 +28,16 @@ mongoose.model('OfferList',OfferListSchema);
 
 mongoose.model("Problem",ProblemSchema);
 
-// const ProblemEvents = MongooseTrigger(ProblemSchema, {
-//     partials: [
-//         {
-//             eventName: 'KrasutskiEvent',
-//             triggers: 'helpingUser',
-//          //   select: 'email',
-//            // populate: 'something'
-//         }
-//     ]
-// });
-//
-// ProblemEvents.on('update', problem => console.log('[update] says:', problem));
-// ProblemEvents.on('partial:KrasutskiEvent,', problem => console.log('[partial] says:', problem));
+const ProblemEvents = MongooseTrigger(OfferListSchema, {
+    events: {
+        remove: {
+            select: 'offerList',
+           // populate: 'something'
+        }
+    }
+});
+
+ProblemEvents.on('remove', problem => console.log('[remove] says:', problem));
+
 
  module.exports = mongoose.model('Problem');
