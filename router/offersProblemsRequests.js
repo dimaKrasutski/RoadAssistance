@@ -82,7 +82,7 @@ router.post('/offer_accept',function (req,res) { //helper принимает ч�
         let offersArr = problem.offerList ;
         for (let i=0;i<offersArr.length;i++){
             if(req.body.uidOffer == offersArr[i]._id){
-                problem.helpingUser= offersArr[i].helper;
+                problem.helpingUser = offersArr[i].helper;
      break;
             }
         }
