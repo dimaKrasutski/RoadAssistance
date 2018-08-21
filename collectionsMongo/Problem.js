@@ -28,16 +28,38 @@ mongoose.model('OfferList',OfferListSchema);
 
 mongoose.model("Problem",ProblemSchema);
 
-const ProblemEvents = MongooseTrigger(OfferListSchema, {
+const ProblemEvents = MongooseTrigger(ProblemSchema, {
     events: {
-        remove: {
-            select: 'offerList',
-           // populate: 'something'
+        create: {
+            select: 'email skills',
+            populate: {
+                path: 'skills',
+                select: 'name'
+            }
+        },
+        update: {
+            populate: 'skills'
+        },
+        remove:{
+            populate:"skills"
         }
-    }
+    },
+    partials: [
+        {
+            eventName: 'custom_event',
+            triggers: 'name',
+            select: 'name email',
+            populate: 'something' //if it is a reference...
+        }
+    ],
+    debug: false
 });
 
-ProblemEvents.on('remove', problem => console.log('[remove] says:', problem));
+ProblemEvents.on('create', data => console.log('[create] says:', data));
+ProblemEvents.on('update', data => console.log('[update] says:', data.offerList));
+ProblemEvents.on('partial:skills', data => console.log('[partial:skills] says:', data));
+ProblemEvents.on('partial:x', data => console.log('[partial:x] says:', data));
+ProblemEvents.on('remove', data => console.log('[remove] says:', data));
 
 
  module.exports = mongoose.model('Problem');
