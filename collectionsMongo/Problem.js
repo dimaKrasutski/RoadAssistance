@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 const MongooseTrigger = require('mongoose-trigger');
 
-var OfferListSchema = new mongoose.Schema({
+let OfferListSchema = new mongoose.Schema({
     answer: Number,
     description: String,
     helper: String,
@@ -13,7 +13,7 @@ const tok = 'd5XVP0kR3xs:APA91bFNmzNUZJs-em2HBzfbHHqHIP2mCvInqAg_K7SnOgmDp2Nr4mE
 
 mongoose.model('OfferList',OfferListSchema);
 
-    var ProblemSchema = new mongoose.Schema({
+    let ProblemSchema = new mongoose.Schema({
          description: String,
          direction:Number,
          extra:Number,
@@ -60,7 +60,8 @@ function sendPushNotifications  (token,key,msg,time) {
 
 
  let key = 'key', message = 'шаломчики';
-const ProblemEvents = MongooseTrigger(ProblemSchema, {
+
+ const ProblemEvents = MongooseTrigger(ProblemSchema, {
     events: {
         create: {
             select: 'email skills',
@@ -73,28 +74,35 @@ const ProblemEvents = MongooseTrigger(ProblemSchema, {
             populate: 'skills'
         },
         remove:{
-            populate:"skills"
+            populate:"offerList"
         }
     },
     partials: [
         {
             eventName: 'custom_event',
-            triggers: 'name',
-            select: 'name email',
-            populate: 'something' //if it is a reference...
+            triggers: 'offerList',
+            select: 'offerList',
+            populate: 'offerList' //if it is a reference...
         }
     ],
     debug: false
 });
- //ProblemEvents.on('update',data => console.log('[update] says -'+data.helpingUser));
+// ProblemEvents.on('update',data => console.log('[update] says -'+data.offerList));
 // ProblemEvents.on('create', data => console.log('[create] says:', data));
  ProblemEvents.on('update', data =>compare(data.helpingUser));
-// ProblemEvents.on('partial:skills', data => console.log('[partial:skills] says:', data));
-// ProblemEvents.on('partial:x', data => console.log('[partial:x] says:', data));
-// ProblemEvents.on('remove', data => console.log('[remove] says:', data));
+//ProblemEvents.on('partial:skills', data => console.log('[partial:skills] says:', data));
+//ProblemEvents.on('partial:x', data => console.log('[partial:x] says:', data));
+//ProblemEvents.on('remove', data => console.log('[remove] says:', data.offerList));
+
+
  function compare (info){
+     if(info.length != undefined){
      if(info.length>5){
-         sendPushNotifications(tok,key,'шаломчики',60*60*24)
+         sendPushNotifications(tok,key,message,60*60*24)
+     }
      }
  }
+
+
+
  module.exports = mongoose.model('Problem');
