@@ -193,6 +193,21 @@ router.post('/problems_map', function (req, res) {
     })
 })
 
+router.post('/problem_change_position',function (req,res) {
+    Problem.findById(req.body.uid,function (err,problem) {
+        if (err) return res.status(500).send('Error on the server.');
+        if (!problem) return res.status(404).send('No user found.');
+
+        problem.lat = req.body.lat;
+        problem.lng = req.body.lng;
+        problem.direction = req.body.direction;
+
+        problem.save(function (err, updatedProblem) {
+            if (err) return "Error!";
+            res.status(200).send('Problem was changed!');
+        })
+    })
+})
 router.get('/get_problem', function (req, res) {
 
     Problem.findById(req.headers['uid'], function (err, problem) {
