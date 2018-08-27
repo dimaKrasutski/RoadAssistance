@@ -6,11 +6,11 @@ let mongoose = require('mongoose');
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json()); // парсит тело только тех запросов, для которых 'Content-Type' равен 'application/json', Результат парсинга сохраняется в объекте req.body
 
-var User = require('../collectionsMongo/User');
-var Feedback = require('../collectionsMongo/Feedback');
-var Problem = require('../collectionsMongo/Problem');
-
-var VerifyToken = require('../auth/VerifyToken');
+const User = require('../collectionsMongo/User');
+const Feedback = require('../collectionsMongo/Feedback');
+const Problem = require('../collectionsMongo/Problem');
+const VerifyToken = require('../auth/VerifyToken');
+const SendFcm = require('../fcm');
 
 router.get('/get_offer_list',function (req,res) {
     Problem.findById(req.headers['uid'], function (err, problem) {
@@ -95,25 +95,31 @@ router.post('/offer_accept',function (req,res) { //helper принимает ч�
     })
 })
 
-router.post('/offer_reject',function (req,res) { //helper отменяет чей то offer, этот offer удаляется из offerList
-
+router.post('/offer_reject',function (req,res) { //helper отменяет чей то offer, этот offer удаляется из offerList и добавляется в deletedOffers
+   var currentOffer;
     Problem.findById(req.body.uidProblem, function (err, problem) {
 
         if (err) return res.status(500).send('Error on the server.');
         if (!problem) return res.status(404).send('No problem found.');
-console.log(problem)
+
         let offersArr = problem.offerList ;
         for (let i=0;i<offersArr.length;i++){
             if(req.body.uidOffer == offersArr[i]._id){
+                currentOffer = offersArr[i];
+                 problem.deletedOffers.push(offersArr[i]);
                 offersArr.splice(i,1);
                 break;
             }
         }
+        User.findById(currentOffer.helper, function (err,user) {
+            SendFcm(user.deviceIdFcmToken,"your offer was cancelled")
+        })
         problem.save(function (err, updatedProblem) {
             if (err) return "Error!";
         });
         res.status(200).json({msg:'Offer_rejected'});
     })
+
 });
 
 
