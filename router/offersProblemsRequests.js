@@ -92,6 +92,10 @@ router.post('/offer_accept',function (req,res) { //helper принимает ч�
             if (err) return "Error!";
         });
         res.status(200).json({msg:'Offer_accepted'});
+
+       User.findById(problem.helpingUser,function (err,user) {
+           SendFcm(user.deviceIdFcmToken,'your offer was accepted')
+       })
     })
 })
 

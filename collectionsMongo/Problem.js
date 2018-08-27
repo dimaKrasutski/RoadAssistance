@@ -26,7 +26,7 @@ const tok = 'd5XVP0kR3xs:APA91bFNmzNUZJs-em2HBzfbHHqHIP2mCvInqAg_K7SnOgmDp2Nr4mE
             }
         },
         update: {
-            populate: 'offerList'
+            populate: 'helpingUser'
         },
         remove:{
             populate:'offerList',
@@ -37,10 +37,7 @@ const tok = 'd5XVP0kR3xs:APA91bFNmzNUZJs-em2HBzfbHHqHIP2mCvInqAg_K7SnOgmDp2Nr4mE
     debug: false
 });
 
- //ProblemEvents.on('remove', data =>compare(data.helpingUser));
-ProblemEvents.on('remove', data=>console.log(data.offerList));
-//ProblemEvents.on('remove',data=>compare())
-//ProblemEvents.on('update',data=>console.log(data.offerList));
+ ProblemEvents.on('update',data=>console.log(data));
  
 function offerDeleted() {
     
