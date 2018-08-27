@@ -41,6 +41,10 @@ router.post('/agree_problem', function (req, res) {   //ПРЕДЛОЖЕНИЕ �
 
         problem.offerList.push(offer);
 
+        User.findById(problem.requestingUser,function (err,user) {
+            SendFcm(user.deviceIdFcmToken,'New offer was added!')
+        })
+
         problem.save(function (err,problemUpdated) {
             if(err) return "Error!";
             res.status(200).send({msg:'offer added'});
