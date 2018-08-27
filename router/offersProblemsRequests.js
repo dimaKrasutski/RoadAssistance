@@ -74,6 +74,7 @@ router.post('/refuse_offer', function (req, res) { // ОТМЕНИТЬ ПРЕД�
 });
 
 router.post('/offer_accept',function (req,res) { //helper принимает чей то offer,offerList очищается,uid helpera в problem.helperUid
+
     Problem.findById(req.body.uidProblem, function (err, problem) {
 
         if (err) return res.status(500).send('Error on the server.');
@@ -83,20 +84,23 @@ router.post('/offer_accept',function (req,res) { //helper принимает ч�
         for (let i=0;i<offersArr.length;i++){
             if(req.body.uidOffer == offersArr[i]._id){
                 problem.helpingUser = offersArr[i].helper;
-     break;
+             break;
             }
         }
-        //problem.helpingUser=helperUid;
+
         problem.offerList = [];
         problem.save(function (err, updatedProblem) {
             if (err) return "Error!";
-        });
-        res.status(200).json({msg:'Offer_accepted'});
 
-       User.findById(problem.helpingUser,function (err,user) {
-           SendFcm(user.deviceIdFcmToken,'your offer was accepted')
-       })
+        });
+
+        User.findById(problem.helpingUser,function (err,user) {
+            SendFcm(user.deviceIdFcmToken,'your offer was accepted')
+
+        })
+        res.status(200).json({msg:'Offer_accepted'});
     })
+
 })
 
 router.post('/offer_reject',function (req,res) { //helper отменяет чей то offer, этот offer удаляется из offerList и добавляется в deletedOffers

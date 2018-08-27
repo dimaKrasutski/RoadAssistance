@@ -27,7 +27,8 @@ router.post('/create_problem',function (req,res) {
             requestingUser:req.body.requestingUser,
         offerList:[],
          //   time:new Date(),
-            status : 1
+            status : 1,
+        deletedOffers: []
         },
         function (err, problem) {
             User.findById(req.body.requestingUser, function (err, user) {
