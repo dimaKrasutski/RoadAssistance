@@ -210,7 +210,7 @@ router.post('/problem_change_position',function (req,res) {
 
            for(let i=0;i<updatedProblem.offerList.length;i++){
                    User.findById(updatedProblem.offerList[i].helper,function (err,user) {
-                       SendFcm(user.deviceIdFcmToken,'Problem was changed')
+                       SendFcm(user.deviceIdFcmToken,updatedProblem.toString())
                    })
             }
 

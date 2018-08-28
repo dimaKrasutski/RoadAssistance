@@ -5,13 +5,13 @@ var express = require('express'),
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
-var VerifyToken = require('../auth/VerifyToken'),
+const VerifyToken = require('../auth/VerifyToken'),
     User = require('../collectionsMongo/User'),
     Problem = require('../collectionsMongo/Problem');
     Feedback = require('../collectionsMongo/Feedback');
 
-    var jwt = require('jsonwebtoken');
-     bcrypt = require('bcryptjs');
+    var jwt = require('jsonwebtoken'),
+     bcrypt = require('bcryptjs'),
      config = require('../config');
 
 router.post('/user_create', function(req, res) {
@@ -75,8 +75,8 @@ router.get('/user_logout', function(req, res) {
 router.post('/user_edit_info',function (req,res) {
     User.findById(req.body.uid ,function (err, user) {
         if (err) return handleError(err);
-        var curr = user.car;
-        var requestBody = req.body;
+        let curr = user.car;
+        let requestBody = req.body;
 
         user.phone = requestBody.phone;
         user.volunteer = requestBody.volunteer;
