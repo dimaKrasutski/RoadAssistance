@@ -9,6 +9,8 @@ router.use(bodyParser.json()); // парсит тело только тех за
 var User = require('../collectionsMongo/User');
 var Feedback = require('../collectionsMongo/Feedback');
 var Problem = require('../collectionsMongo/Problem');
+const SendFcm = require('../fcm');
+
 
 var geodist = require('geodist')
 
@@ -202,10 +204,19 @@ router.post('/problem_change_position',function (req,res) {
         problem.lng = req.body.lng;
         problem.direction = req.body.direction;
 
+
         problem.save(function (err, updatedProblem) {
             if (err) return "Error!";
+
+           for(let i=0;i<updatedProblem.offerList.length;i++){
+                   User.findById(updatedProblem.offerList[i].helper,function (err,user) {
+                       SendFcm(user.deviceIdFcmToken,'Problem was changed')
+                   })
+            }
+
             res.status(200).send('Problem was changed!');
         })
+
     })
 })
 
