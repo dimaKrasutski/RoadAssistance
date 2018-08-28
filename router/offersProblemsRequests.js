@@ -81,7 +81,7 @@ router.post('/refuse_offer', function (req, res) { // ОТМЕНИТЬ ПРЕД�
 router.post('/offer_accept',function (req,res) { //helper принимает чей то offer,offerList очищается,uid helpera в problem.helperUid
 
     Problem.findById(req.body.uidProblem, function (err, problem) {
-
+    var problemUid = req.body.problemUid;
         if (err) return res.status(500).send('Error on the server.');
         if (!problem) return res.status(404).send('No problem found.');
 
@@ -98,7 +98,7 @@ router.post('/offer_accept',function (req,res) { //helper принимает ч�
 
         });
         User.findById(problem.helpingUser,function (err,user) {
-            SendFcm(user.deviceIdFcmToken,'your offer was accepted')
+            SendFcm(user.deviceIdFcmToken,'your offer was accepted',problemUid)
         })
         res.status(200).json({msg:'Offer_accepted'});
     })

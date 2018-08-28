@@ -1,5 +1,5 @@
 
-module.exports = function (token,msg) {
+module.exports = function (token,msg,uid) {
     var admin = require("firebase-admin");
 
     var serviceAccount = require("./road-assistance-1-firebase-adminsdk-j28g9-985a9898cb");
@@ -10,7 +10,8 @@ module.exports = function (token,msg) {
     });
     let payLoad = {
         data:{
-            message: msg
+            message: msg,
+            myKey: uid
         }
     };
 
