@@ -42,7 +42,7 @@ router.post('/agree_problem', function (req, res) {   //ПРЕДЛОЖЕНИЕ �
         problem.offerList.push(offer);
 
         User.findById(problem.requestingUser,function (err,user) {
-            SendFcm(user.deviceIdFcmToken,'New offer was added!',user._id)
+            SendFcm(user.deviceIdFcmToken,'New offer was added!',user._id.toString())
         });
 
         problem.save(function (err,problemUpdated) {
@@ -81,7 +81,7 @@ router.post('/refuse_offer', function (req, res) { // ОТМЕНИТЬ ПРЕД�
 router.post('/offer_accept',function (req,res) { //helper принимает чей то offer,offerList очищается,uid helpera в problem.helperUid
 
     Problem.findById(req.body.uidProblem, function (err, problem) {
-    var problemUid = req.body.problemUid;
+    var problemUid = req.body.uidProblem;
         if (err) return res.status(500).send('Error on the server.');
         if (!problem) return res.status(404).send('No problem found.');
 
@@ -98,8 +98,8 @@ router.post('/offer_accept',function (req,res) { //helper принимает ч�
 
         });
         User.findById(problem.helpingUser,function (err,user) {
-            SendFcm(user.deviceIdFcmToken,'your offer was accepted',problemUid)
-        })
+            SendFcm(user.deviceIdFcmToken,'your offer was accepted',problemUid) //ОТПРАЛЯЕМ НОТИФИКАЦИЮ ХЕЛПЕРУ КОГДА ЕГО ОФФЕР ОДОБРИЛИ
+        });
         res.status(200).json({msg:'Offer_accepted'});
     })
 })
@@ -121,8 +121,7 @@ router.post('/offer_reject',function (req,res) { //helper отменяет че�
             }
         }
         User.findById(currentOffer.helper, function (err,user) {
-            SendFcm(user.deviceIdFcmToken,"your offer was cancelled")
-        })
+            SendFcm(user.deviceIdFcmToken,"Your offer was cancelled",req.body.uidProblem)  });   // ON_REJECT_OFFER НОТИФИКАЦИЯ ХЕЛПЕРУ ЧТО ЕГО ОФФЕР ОТМЕНИЛИ
         problem.save(function (err, updatedProblem) {
             if (err) return "Error!";
         });
