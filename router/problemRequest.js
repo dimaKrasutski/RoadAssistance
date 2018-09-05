@@ -232,9 +232,27 @@ router.post('/helper_change_position',function (req,res) {
         user.save(function (err, updatedUser) {
             if (err) return "Error!";
             res.status(200).send('User was changed!');
+            Problem.find({},function (err,problems) {
+                if (err) return res.status(500).send('Error on the server.');
+
+                for(let i=0;i<problems.length;i++) {
+                    if (req.body.uidProblem == problems[i]._id){
+                        User.findById(problems[i].requestingUser,function (err,reqUser) {
+                            SendFcm(reqUser.deviceIdFcmToken,"helper coordinates have changed",req.body.uidProblem)
+                        })
+
+                        }}
+            })
+
         })
+
+
+
+
     })
-})
+});
+
+
 router.get('/get_problem', function (req, res) {
 
     Problem.findById(req.headers['uid'], function (err, problem) {
