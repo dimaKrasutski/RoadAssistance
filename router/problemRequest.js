@@ -240,7 +240,6 @@ router.post('/helper_change_position',function (req,res) {
                         User.findById(problems[i].requestingUser,function (err,reqUser) {
                             SendFcm(reqUser.deviceIdFcmToken,"helper coordinates have changed",req.body.uidProblem)
                         })
-
                         }}
             })
 
