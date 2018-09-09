@@ -100,7 +100,7 @@ router.post('/problem_done', function (req, res) {
                 if (err) return res.status(500).send('Error on the server 1');
                 if (!user) return res.status(404).send('No user found 1');
 
-                user.currentState = '';
+               // user.currentState = '';
                 user.currentProblem = '';
                 user.history.historyProblems.push(problemUid);
                 user.save(function (err, updatedUser) {
@@ -113,7 +113,7 @@ router.post('/problem_done', function (req, res) {
                 if (err) return res.status(500).send('Error on the server 2');
                 if (!user) return res.status(404).send('No user found 2');
 
-                user.currentState = '';
+              //  user.currentState = '';
                 user.history.historyHelps.push(problemUid);
 
                 user.save(function (err, updatedUser) {

@@ -30,8 +30,8 @@ router.post('/user_create', function(req, res) {
             works:[],
             photo:'',
             position:{lat:'',lng:'',direction:''},
-            currentState:{currentProblem:'',currentSolvingProblem:''},
             currentProblem:'',
+            solvingProblem:'',
             history: {historyHelps:[],historyProblems:[]},
             rating:[],
             deviceIdFcmToken:req.body.deviceIdFcmToken

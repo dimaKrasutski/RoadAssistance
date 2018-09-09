@@ -99,6 +99,11 @@ router.post('/offer_accept',function (req,res) { //helper принимает ч�
         });
         User.findById(problem.helpingUser,function (err,user) {
             SendFcm(user.deviceIdFcmToken,'your offer was accepted',problemUid) //ОТПРАЛЯЕМ НОТИФИКАЦИЮ ХЕЛПЕРУ КОГДА ЕГО ОФФЕР ОДОБРИЛИ
+            user.solvingProblem = problemUid;
+            user.save(function (err, updatedUser) {
+                if (err) return "Error!";
+
+            });
         });
         res.status(200).json({msg:'Offer_accepted'});
     })
