@@ -216,7 +216,7 @@ router.post('/problem_change_position',function (req,res) {
 
            for(let i=0;i<updatedProblem.offerList.length;i++){
                    User.findById(updatedProblem.offerList[i].helper,function (err,user) {
-                       SendFcm(user.deviceIdFcmToken,'Problem was changed',updatedProblem._id) // PROBLEM_CHANGE_POSITION ОТПРАВЛЯЕМ НОТИФИКАЦИИ  ВСЕМ ХЕЛПЕРАМ О ТОМ ЧТО ПРОБЛЕМА ИЗМЕНИЛАСЬ
+                       SendFcm(user.deviceIdFcmToken,'Problem was changed',updatedProblem._id.toString()) // PROBLEM_CHANGE_POSITION ОТПРАВЛЯЕМ НОТИФИКАЦИИ  ВСЕМ ХЕЛПЕРАМ О ТОМ ЧТО ПРОБЛЕМА ИЗМЕНИЛАСЬ
                    })
             }
 
@@ -244,7 +244,7 @@ router.post('/helper_change_position',function (req,res) {
                 for(let i=0;i<problems.length;i++) {
                     if (req.body.uidProblem == problems[i]._id){
                         User.findById(problems[i].requestingUser,function (err,reqUser) {
-                            SendFcm(reqUser.deviceIdFcmToken,"helper coordinates have changed",req.body.uidProblem)
+                            SendFcm(reqUser.deviceIdFcmToken,"helper coordinates have changed",req.body.uidProblem.toString())
                         })
                         }}
             })
