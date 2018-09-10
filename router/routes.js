@@ -36,8 +36,8 @@ router.post('/get_feedbacks', function (req, res) {
     var fbs = [];
 
     Feedback.find({}, function (err, feedback) {
-        if (err) return res.status(500).send('Error on the server.');
-        if (!feedback) return res.status(404).send('No feedback found.');
+        if (err) return res.status(500).send({message:'Error on the server'});
+        if (!feedback) return res.status(404).send({message:'No feedback found'});
 
         for (let i=0;i<feedback.length;i++){
             if(req.body.uid == feedback[i].userAbout )

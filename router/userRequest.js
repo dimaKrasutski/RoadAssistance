@@ -60,7 +60,7 @@ router.post('/login', function(req, res) {
         });
         user.deviceIdFcmToken = req.body.deviceIdFcmToken;
         user.save(function (err, updatedUser) {
-            if (err) return res.status(500).send({messgae:err});
+            if (err) return res.status(500).send({message:err});
         });
 
 
