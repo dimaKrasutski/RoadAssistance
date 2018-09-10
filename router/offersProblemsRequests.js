@@ -148,8 +148,8 @@ router.get('/reject_help', function (req, res) {
         });
 
         Problem.findById(ProblemUid,function (err,problem) {
-            if (err) return res.status(500).send('Error on the server.');
-            if (!problem) return res.status(404).send('No problem found.');
+            if (err) return res.status(500).send({message:'Error on the server'});
+            if (!problem) return res.status(404).send({message:'No problem found'});
 
             problem.helpingUser = '';
             problem.save(function (err,updatedProblem) {
