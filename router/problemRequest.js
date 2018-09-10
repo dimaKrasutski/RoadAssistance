@@ -203,8 +203,8 @@ router.post('/problems_map', function (req, res) {
 
 router.post('/problem_change_position',function (req,res) {
     Problem.findById(req.body.uid,function (err,problem) {
-        if (err) return res.status(500).send('Error on the server.');
-        if (!problem) return res.status(404).send('No problem found.');
+        if (err) return res.status(500).send({message:'Error on the server'});
+        if (!problem) return res.status(404).send({message:'No problem found'});
 
         problem.lat = req.body.lat;
         problem.lng = req.body.lng;
@@ -220,7 +220,7 @@ router.post('/problem_change_position',function (req,res) {
                    })
             }
 
-            res.status(200).send('Problem was changed!');
+            res.status(200).send({message:'Problem was changed!'});
         })
 
     })
@@ -228,8 +228,8 @@ router.post('/problem_change_position',function (req,res) {
 
 router.post('/helper_change_position',function (req,res) {
     User.findById(req.body.uid,function (err,user) {
-        if (err) return res.status(500).send('Error on the server.');
-        if (!user) return res.status(404).send('No user found.');
+        if (err) return res.status(500).send({message:'Error on the server'});
+        if (!user) return res.status(404).send({message:'No user found'});
 
         user.position.lat = req.body.lat;
         user.position.lng = req.body.lng;
@@ -237,9 +237,9 @@ router.post('/helper_change_position',function (req,res) {
 
         user.save(function (err, updatedUser) {
             if (err) return "Error!";
-            res.status(200).send('User was changed!');
+            res.status(200).send({message:'User was changed!'});
             Problem.find({},function (err,problems) {
-                if (err) return res.status(500).send('Error on the server.');
+                if (err) return res.status(500).send({message:'Error on the server'});
 
                 for(let i=0;i<problems.length;i++) {
                     if (req.body.uidProblem == problems[i]._id){

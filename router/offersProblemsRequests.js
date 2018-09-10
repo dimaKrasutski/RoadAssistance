@@ -135,5 +135,12 @@ router.post('/offer_reject',function (req,res) { //helper отменяет че�
 
 });
 
+router.get('/reject_help', function (req, res) {
 
+    Problem.findById(req.headers['uid'], function (err, problem) {
+        if (err) return res.status(500).send('Error on the server.');
+        if (!problem) return res.status(404).send('No problem found.');
+        res.status(200).json({currentProblem:problem});
+    })
+});
 module.exports = router;
