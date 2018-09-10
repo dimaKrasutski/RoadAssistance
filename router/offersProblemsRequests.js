@@ -137,10 +137,27 @@ router.post('/offer_reject',function (req,res) { //helper отменяет че�
 
 router.get('/reject_help', function (req, res) {
 
-    Problem.findById(req.headers['uid'], function (err, problem) {
+    User.findById(req.headers['uid'], function (err, user) {
         if (err) return res.status(500).send('Error on the server.');
-        if (!problem) return res.status(404).send('No problem found.');
-        res.status(200).json({currentProblem:problem});
+        if (!user) return res.status(404).send('No problem found.');
+
+        const ProblemUid =  user.solvingProblem;
+        user.solvingProblem = '';
+        user.save(function (err, updatedUser) {
+            if (err) return "Error!";
+        });
+
+        Problem.findById(ProblemUid,function (err,problem) {
+            if (err) return res.status(500).send('Error on the server.');
+            if (!problem) return res.status(404).send('No problem found.');
+
+            problem.helpingUser = '';
+            problem.save(function (err,updatedProblem) {
+                if (err) return "Error!";
+            })
+        });
+
+        res.status(200).json({message:'Help_Rejected'});
     })
 });
 module.exports = router;
