@@ -67,7 +67,7 @@ router.post('/problem_cancel',function (req,res) {
         Problem.findById(req.body.problemUid, function (err, problem) {
             if (problem.helpingUser !== "") {
                 User.findById(problem.helpingUser, function (err, user) {
-                    user.currentState['currentSolvingProblem'] = ''
+                    user.solvingProblem = ''
                 })
             }
         });
@@ -113,7 +113,7 @@ router.post('/problem_done', function (req, res) {
                 if (err) return res.status(500).send('Error on the server 2');
                 if (!user) return res.status(404).send('No user found 2');
 
-              //  user.currentState = '';
+               user.solvingProblem = '';
                 user.history.historyHelps.push(problemUid);
 
                 user.save(function (err, updatedUser) {
