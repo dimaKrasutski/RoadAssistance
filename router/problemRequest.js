@@ -67,8 +67,14 @@ router.post('/problem_cancel',function (req,res) {
         Problem.findById(req.body.problemUid, function (err, problem) {
             if (problem.helpingUser !== "") {
                 User.findById(problem.helpingUser, function (err, user) {
-                    user.solvingProblem = ''
+                    user.solvingProblem = '';
+
+                    user.save(function (err, updatedUser) {
+                        if (err) return "Error Motherfucker!"
+                    });
                 })
+
+
             }
         });
 
@@ -218,7 +224,7 @@ router.post('/problem_change_position',function (req,res) {
         })
 
     })
-})
+});
 
 router.post('/helper_change_position',function (req,res) {
     User.findById(req.body.uid,function (err,user) {
