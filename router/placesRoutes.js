@@ -49,7 +49,7 @@ router.post('/download_places', function (req, res) {
 
         if(err){
             console.log(err);
-            res.send('Something went wrong')
+            res.send({message:'Something went wrong'})
         }
 
         for(let i=0;i<places.length;i++){
@@ -58,7 +58,7 @@ router.post('/download_places', function (req, res) {
             if(  distance <= radius/1000  && currPlace.type == type && currPlace.shabbat == shabbat){
                 placesToClient.push(places[i])
             };
-            res.status(200).send(places);
+            res.status(200).send({message:places});
 
         }
     })
@@ -67,8 +67,8 @@ router.post('/download_places', function (req, res) {
 router.get('/get_place', function (req, res) {
 
     Place.findById(req.headers['uid'], function (err, place) {
-        if (err) return res.status(500).send('Error on the server.');
-        if (!place) return res.status(404).send('No place found.');
+        if (err) return res.status(500).send({message:'Error on the server'});
+        if (!place) return res.status(404).send({message:'No place found'});
         res.status(200).json({currentPlace:place});
     })
 })

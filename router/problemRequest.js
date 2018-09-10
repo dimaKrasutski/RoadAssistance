@@ -34,14 +34,14 @@ router.post('/create_problem',function (req,res) {
         },
         function (err, problem) {
             User.findById(req.body.requestingUser, function (err, user) {
-                if (err) return res.status(500).send('Error on the server.');
-                console.log(err)
-                if (!user) return res.status(404).send('No user found.');
+                if (err) return res.status(500).send({message:'Error on the server'});
+                console.log(err);
+                if (!user) return res.status(404).send({message:'No user found'});
 
                 user.currentProblem = problem._id;
 
                 user.save(function (err, updatedUser) {
-                    if (err) return "Error Motherfucker!"
+                    if (err) return err;
                 });
 
             if (err) return res.status(500).send(err);
@@ -55,8 +55,8 @@ router.post('/create_problem',function (req,res) {
 router.post('/problem_cancel',function (req,res) {
 
     User.findById(req.body.uid, function (err, user) {
-        if (err) return res.status(500).send('Error on the server.');
-        if (!user) return res.status(404).send('No user found.');
+        if (err) return res.status(500).send({message:'Error on the server.'});
+        if (!user) return res.status(404).send({message:'No user found'});
 
         user.currentProblem = "";
 
@@ -79,8 +79,8 @@ router.post('/problem_cancel',function (req,res) {
         });
 
         Problem.findByIdAndRemove(req.body.problemUid, function (err, problem) {
-            if (err) return res.status(500).send('Error on the server.');
-            if (!user) return res.status(404).send('Problem user found.');
+            if (err) return res.status(500).send({message:'Error on the server'});
+            if (!user) return res.status(404).send({message:'Problem user found'});
 
             res.status(200).json({message: 'Problem Cancelled'})
         })
@@ -103,8 +103,8 @@ router.post('/problem_done', function (req, res) {
             });
 
             User.findById(requesting, function (err, user) {
-                if (err) return res.status(500).send('Error on the server 1');
-                if (!user) return res.status(404).send('No user found 1');
+                if (err) return res.status(500).send({message:'Error on the server 1'});
+                if (!user) return res.status(404).send({message:'No user found 1'});
 
                // user.currentState = '';
                 user.currentProblem = '';
@@ -116,8 +116,8 @@ router.post('/problem_done', function (req, res) {
 
             User.findById(helping, function (err, user) {
 
-                if (err) return res.status(500).send('Error on the server 2');
-                if (!user) return res.status(404).send('No user found 2');
+                if (err) return res.status(500).send({message:'Error on the server 2'});
+                if (!user) return res.status(404).send({message:'No user found 2'});
 
                user.solvingProblem = '';
                 user.history.historyHelps.push(problemUid);
@@ -141,7 +141,7 @@ router.post('/download_problems', function (req, res) {
 
         Problem.find({},function (err,problems) {
 
-                 if(err){res.send('Something went wrong')}
+                 if(err){res.send({message:'Something went wrong'})}
                   for(let i=0;i<problems.length;i++){
 
                                   let currProblem = problems[i];
@@ -170,7 +170,7 @@ router.post('/problems_map', function (req, res) {
     var problemsToClient = [];
     Problem.find({},function (err, problems) {
         if (err) {
-            res.send('Something went wrong')} 
+            res.send({message:'Something went wrong'})}
         for (let i = 0; i < problems.length; i++) {
             let currProblem = problems[i];
 
@@ -197,7 +197,7 @@ router.post('/problems_map', function (req, res) {
                  problemsToClient[i].status = undefined
             }
         }).then(function () {
-        res.status(200).send(problemsToClient);
+        res.status(200).send({message:problemsToClient});
     })
 })
 
@@ -261,8 +261,8 @@ router.post('/helper_change_position',function (req,res) {
 router.get('/get_problem', function (req, res) {
 
     Problem.findById(req.headers['uid'], function (err, problem) {
-        if (err) return res.status(500).send('Error on the server.');
-        if (!problem) return res.status(404).send('No problem found.');
+        if (err) return res.status(500).send({message:'Error on the server'});
+        if (!problem) return res.status(404).send({message:'No problem found'});
         res.status(200).json({currentProblem:problem});
     })
 });

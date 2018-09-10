@@ -37,7 +37,7 @@ router.post('/user_create', function(req, res) {
             deviceIdFcmToken:req.body.deviceIdFcmToken
         },
         function (err, user) {
-            if (err) return res.status(500).send(err);
+            if (err) return res.status(500).send({message:err});
             // create a token
             var token = jwt.sign({ id: user._id }, config.secret, {
                 expiresIn: 200000 // expires in 24 hours
@@ -49,8 +49,8 @@ router.post('/user_create', function(req, res) {
 
 router.post('/login', function(req, res) {
     User.findOne({ login: req.body.login }, function (err, user) {
-        if (err) return res.status(500).send('Error on the server.');
-        if (!user) return res.status(404).send('No user found.');
+        if (err) return res.status(500).send({message:'Error on the server'});
+        if (!user) return res.status(404).send({message:'No user found'});
 
         var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
 
@@ -60,7 +60,7 @@ router.post('/login', function(req, res) {
         });
         user.deviceIdFcmToken = req.body.deviceIdFcmToken;
         user.save(function (err, updatedUser) {
-            if (err) return res.status(500).send(err);
+            if (err) return res.status(500).send({messgae:err});
         });
 
 
@@ -94,7 +94,7 @@ router.post('/user_edit_info',function (req,res) {
         curr['year'] = requestBody.year;
 
         user.save(function (err, updatedUser) {
-            if (err) return res.status(500).send(err);
+            if (err) return res.status(500).send({message:err});
             //         Changed by Igor
             res.status(200).send({message:"User Update"});
         });
@@ -103,8 +103,8 @@ router.post('/user_edit_info',function (req,res) {
 
 router.post('/user_edit_photo',function(req, res) {
     User.findById(req.body.uid, function (err, user) {
-        if (err) return res.status(500).send('Error on the server.');
-        if (!user) return res.status(404).send('No user found.');
+        if (err) return res.status(500).send({message:'Error on the server'});
+        if (!user) return res.status(404).send({message:'No user found'});
 
         user.photo = req.body.photo;
 
@@ -118,8 +118,8 @@ router.post('/user_edit_photo',function(req, res) {
 
 router.get('/get_user',function (req,res) {
     User.findById(req.headers['uid'], function (err, user) {
-        if (err) return res.status(500).send('Error on the server.');
-        if (!user) return res.status(404).send('No user found.');
+        if (err) return res.status(500).send({message:'Error on the server'});
+        if (!user) return res.status(404).send({message:'No user found'});
         res.status(200).send({currentUser:user});
         });
 
