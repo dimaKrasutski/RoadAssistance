@@ -203,6 +203,7 @@ router.post('/problems_map', function (req, res) {
 
 router.post('/problem_change_position',function (req,res) {
     Problem.findById(req.body.uid,function (err,problem) {
+
         if (err) return res.status(500).send({message:'Error on the server'});
         if (!problem) return res.status(404).send({message:'No problem found'});
 
@@ -212,19 +213,24 @@ router.post('/problem_change_position',function (req,res) {
 
 
         problem.save(function (err, updatedProblem) {
+
             if (err) return "Error!";
-console.log(updatedProblem.offerList.length);
+            console.log(updatedProblem.offerList.length);
             if(updatedProblem.offerList.length > 0){
-           for(let i=0;i<updatedProblem.offerList.length;i++){
-                   User.findById(updatedProblem.offerList[i].helper,function (err,user) {
-                       SendFcm(user.deviceIdFcmToken,'Problem was changed',updatedProblem._id.toString()) // PROBLEM_CHANGE_POSITION ОТПРАВЛЯЕМ НОТИФИКАЦИИ  ВСЕМ ХЕЛПЕРАМ О ТОМ ЧТО ПРОБЛЕМА ИЗМЕНИЛАСЬ
-                   })
-            }}
-            else
-                SendFcm(updatedProblem.helpingUser,"Problem was changed",updatedProblem._id.toString());
+                for(let i=0;i<updatedProblem.offerList.length;i++){
+                    User.findById(updatedProblem.offerList[i].helper,function (err,user) {
+                        SendFcm(user.deviceIdFcmToken,'Problem was changed',updatedProblem._id.toString()) // PROBLEM_CHANGE_POSITION ОТПРАВЛЯЕМ НОТИФИКАЦИИ  ВСЕМ ХЕЛПЕРАМ О ТОМ ЧТО ПРОБЛЕМА ИЗМЕНИЛАСЬ
+                    })
+                }}
+
+            else SendFcm(updatedProblem.helpingUser,"Problem was changed",updatedProblem._id.toString());
+
+        });
+
+
 
             res.status(200).send({message:'Problem was changed!'});
-        })
+
 
     })
 });
