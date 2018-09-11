@@ -219,7 +219,9 @@ router.post('/problem_change_position',function (req,res) {
             if(updatedProblem.offerList.length > 0){
                 for(let i=0;i<updatedProblem.offerList.length;i++){
                     User.findById(updatedProblem.offerList[i].helper,function (err,user) {
-                        SendFcm(user.deviceIdFcmToken,'Problem was changed',updatedProblem._id.toString()) // PROBLEM_CHANGE_POSITION ОТПРАВЛЯЕМ НОТИФИКАЦИИ  ВСЕМ ХЕЛПЕРАМ О ТОМ ЧТО ПРОБЛЕМА ИЗМЕНИЛАСЬ
+                        console.log(user.deviceIdFcmToken);
+                        console.log(user.deviceIdFcmToken.toString());
+                        SendFcm(user.deviceIdFcmToken.toString(),'Problem was changed',updatedProblem._id.toString()) // PROBLEM_CHANGE_POSITION ОТПРАВЛЯЕМ НОТИФИКАЦИИ  ВСЕМ ХЕЛПЕРАМ О ТОМ ЧТО ПРОБЛЕМА ИЗМЕНИЛАСЬ
                     })
                 }}
 
