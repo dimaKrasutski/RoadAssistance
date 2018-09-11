@@ -213,14 +213,13 @@ router.post('/problem_change_position',function (req,res) {
 
         problem.save(function (err, updatedProblem) {
             if (err) return "Error!";
-
-            if(updatedProblem.offerList.length != 0){
+console.log(updatedProblem.offerList.length);
+            if(updatedProblem.offerList.length > 0){
            for(let i=0;i<updatedProblem.offerList.length;i++){
                    User.findById(updatedProblem.offerList[i].helper,function (err,user) {
                        SendFcm(user.deviceIdFcmToken,'Problem was changed',updatedProblem._id.toString()) // PROBLEM_CHANGE_POSITION ОТПРАВЛЯЕМ НОТИФИКАЦИИ  ВСЕМ ХЕЛПЕРАМ О ТОМ ЧТО ПРОБЛЕМА ИЗМЕНИЛАСЬ
                    })
             }}
-
             else
                 SendFcm(updatedProblem.helpingUser,"Problem was changed",updatedProblem._id.toString());
 
