@@ -90,7 +90,7 @@ router.post('/problem_cancel',function (req,res) {
 
 router.post('/problem_done', function (req, res) {
         let problemUid =  req.body.problemUid;
-        let requesting,helping =0;
+        let requesting,helping;
 
         Problem.findById(problemUid, function (err, problem) {
             helping = problem.helpingUser;
@@ -113,7 +113,7 @@ router.post('/problem_done', function (req, res) {
             });
 
             User.findById(helping, function (err, user) {
-
+                SendFcm(helping.deviceIdFcmToken,'Problem was succesfully finished',problemUid);
                 if (err) return res.status(500).send({message:'Error on the server 2'});
                 if (!user) return res.status(404).send({message:'No helping user found'});
 
@@ -124,7 +124,7 @@ router.post('/problem_done', function (req, res) {
                     if (err) return "Error!";
                     res.status(200).send({message: "Problem done!"});
                 })
-              SendFcm(helping.deviceIdFcmToken,'Problem was succesfully finished',problemUid)
+
             });
         });
     });
