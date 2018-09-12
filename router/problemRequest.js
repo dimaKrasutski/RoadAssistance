@@ -66,15 +66,14 @@ router.post('/problem_cancel',function (req,res) {
 
         Problem.findById(req.body.problemUid, function (err, problem) {
             if (problem.helpingUser !== "") {
-                User.findById(problem.helpingUser, function (err, user) {
-                    user.solvingProblem = '';
+                User.findById(problem.helpingUser, function (err, userHelping) {
+                    userHelping.solvingProblem = '';
 
-
-                    user.save(function (err, updatedUser) {
+                    userHelping.save(function (err, updatedUser) {
                         if (err) return "Error Motherfucker!"
+                        SendFcm(updatedUser.deviceIdFcmToken,'Problem was cancelled Bro!',req.body.problemUid);
                     });
                 })
-                SendFcm(user.deviceIdFcmToken,'Problem was cancelled Bro!',req.body.problemUid);
             }
         });
 
