@@ -113,10 +113,11 @@ router.post('/problem_done', function (req, res) {
             });
 
             User.findById(helping, function (err, user) {
-                SendFcm(helping.deviceIdFcmToken,'Problem was succesfully finished',problemUid);
+
                 if (err) return res.status(500).send({message:'Error on the server 2'});
                 if (!user) return res.status(404).send({message:'No helping user found'});
 
+                SendFcm(helping.deviceIdFcmToken,'Problem was succesfully finished',problemUid);
                user.solvingProblem = '';
                 user.history.historyHelps.push(problemUid);
 
