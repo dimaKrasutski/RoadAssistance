@@ -226,6 +226,7 @@ router.post('/problem_change_position',function (req,res) {
                     })
                 }}
 
+                console.log('problem.helpingUser = '+updatedProblem.helpingUser);
             else SendFcm(updatedProblem.helpingUser,"Problem was changed",updatedProblem._id.toString());
 
         });
