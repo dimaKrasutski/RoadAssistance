@@ -22,6 +22,7 @@ module.exports = function (token,msg,uid) {
 
     admin.messaging().sendToDevice(token,payLoad,options).then(function (response) {
         console.log('Success FCM' + '-' +response)
+        console.log(JSON.stringify(response))
     }).catch(function (error) {
         console.log('Error FCM' +'-' +error)
     });
