@@ -69,12 +69,12 @@ router.post('/problem_cancel',function (req,res) {
                 User.findById(problem.helpingUser, function (err, user) {
                     user.solvingProblem = '';
 
+
                     user.save(function (err, updatedUser) {
                         if (err) return "Error Motherfucker!"
                     });
                 })
-
-
+                SendFcm(user.deviceIdFcmToken,'Problem was cancelled Bro!',req.body.problemUid);
             }
         });
 
@@ -104,9 +104,8 @@ router.post('/problem_done', function (req, res) {
 
             User.findById(requesting, function (err, user) {
                 if (err) return res.status(500).send({message:'Error on the server 1'});
-                if (!user) return res.status(404).send({message:'No user found 1'});
+                if (!user) return res.status(404).send({message:'No requesting user found '});
 
-               // user.currentState = '';
                 user.currentProblem = '';
                 user.history.historyProblems.push(problemUid);
                 user.save(function (err, updatedUser) {
@@ -117,7 +116,7 @@ router.post('/problem_done', function (req, res) {
             User.findById(helping, function (err, user) {
 
                 if (err) return res.status(500).send({message:'Error on the server 2'});
-                if (!user) return res.status(404).send({message:'No user found 2'});
+                if (!user) return res.status(404).send({message:'No helping user found'});
 
                user.solvingProblem = '';
                 user.history.historyHelps.push(problemUid);
@@ -126,6 +125,7 @@ router.post('/problem_done', function (req, res) {
                     if (err) return "Error!";
                     res.status(200).send({message: "Problem done!"});
                 })
+              SendFcm(helping.deviceIdFcmToken,'Problem was succesfully finished',problemUid)
             });
         });
     });
