@@ -227,8 +227,11 @@ router.post('/problem_change_position',function (req,res) {
                 }}
 
 
-            else SendFcm(updatedProblem.helpingUser.deviceIdFcmToken,"Problem was changed",updatedProblem._id.toString());
-            console.log('problem.helpingUser = '+ updatedProblem.helpingUser);
+            else User.findById(updatedProblem.helpingUser,function (err,user) {
+                SendFcm(user.deviceIdFcmToken,"Problem was changed",updatedProblem._id.toString());
+                console.log('problem.helpingUser = '+ user.deviceIdFcmToken);
+            })
+
         });
             res.status(200).send({message:'Problem was changed!'});
 
