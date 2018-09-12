@@ -229,7 +229,8 @@ router.post('/problem_change_position',function (req,res) {
 
             else User.findById(updatedProblem.helpingUser,function (err,user) {
                 SendFcm(user.deviceIdFcmToken,"Problem was changed",updatedProblem._id.toString());
-                console.log('problem.helpingUser = '+ user.deviceIdFcmToken);
+                console.log('problem.helpingUser = '+ updatedProblem.helpingUser);
+                console.log('user.deviceFcmToken = '+ user.deviceIdFcmToken);
             })
 
         });
