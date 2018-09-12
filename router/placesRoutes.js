@@ -58,7 +58,7 @@ router.post('/download_places', function (req, res) {
             if(  distance <= radius/1000  && currPlace.type == type && currPlace.shabbat == shabbat){
                 placesToClient.push(places[i])
             };
-            res.status(200).send({message:places});
+            res.status(200).send({message:placesToClient});
 
         }
     })

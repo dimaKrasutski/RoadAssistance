@@ -12,7 +12,7 @@ var Problem = require('../collectionsMongo/Problem');
 const SendFcm = require('../fcm');
 
 
-var geodist = require('geodist')
+var geodist = require('geodist');
 
 var VerifyToken = require('../auth/VerifyToken');
 
