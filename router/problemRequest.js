@@ -258,9 +258,9 @@ router.post('/helper_change_position',function (req,res) {
 
             Problem.findById(ProblemUid,function (err,problem) {
                if (err) return res.status(500).send({message:'Error on the server'});
-
+ let dir = req.body.direction
                 User.findById(problem.requestingUser,function (err,reqUser) {
-                    SendFcm(reqUser.deviceIdFcmToken,"helper coordinates have changed",req.body.lat.toString(),req.body.lng.toString(),req.body.direction.toString());
+                    SendFcm(reqUser.deviceIdFcmToken,"helper coordinates have changed",req.body.lat.toString(),req.body.lng.toString(),dir.toString());
                 })
             });
     })
