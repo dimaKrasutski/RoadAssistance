@@ -23,8 +23,8 @@ module.exports = function (token,msg,uid,lt,lg,direct) {
         timeToLive:60*60*24
     };
 
-    admin.messaging().sendToDevice(token,JSON.stringify(payLoad),options).then(function (response) {
-        console.log('Success FCM' + '-' +response)
+    admin.messaging().sendToDevice(token,payLoad,options).then(function (response) {
+        console.log('Success FCM' + '-' +response);
         console.log(JSON.stringify(response))
     }).catch(function (error) {
         console.log('Error FCM' +'-' +error)
