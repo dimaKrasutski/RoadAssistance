@@ -241,6 +241,7 @@ router.post('/problem_change_position',function (req,res) {
 });
 
 router.post('/helper_change_position',function (req,res) {
+
     User.findById(req.body.uid,function (err,user) {
         if (err) return res.status(500).send({message:'Error on the server'});
         if (!user) return res.status(404).send({message:'No user found'});
@@ -249,20 +250,27 @@ router.post('/helper_change_position',function (req,res) {
         user.position.lng = req.body.lng;
         user.position.direction = req.body.direction;
 
+        let userCoordsObj = {
+            lat:req.body.lat,
+            lng:req.body.lng,
+            direction:req.body.direction
+        }
+
         user.save(function (err, updatedUser) {
             if (err) return "Error!";
-            res.status(200).send({message:'User was changed!'});
+
             Problem.find({},function (err,problems) {
                 if (err) return res.status(500).send({message:'Error on the server'});
 
                 for(let i=0;i<problems.length;i++) {
                     if (req.body.uidProblem == problems[i]._id){
                         User.findById(problems[i].requestingUser,function (err,reqUser) {
-                            SendFcm(reqUser.deviceIdFcmToken,"helper coordinates have changed",req.body.uidProblem.toString())
+                            SendFcm(reqUser.deviceIdFcmToken,"helper coordinates have changed",userCoordsObj)
                         })
                         }}
             })
         })
+        res.status(200).send({message:'Helping User Position was changed!'});
     })
 });
 
