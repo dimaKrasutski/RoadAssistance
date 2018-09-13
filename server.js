@@ -49,34 +49,7 @@ if (cluster.isMaster) {
 
 
 
-// var admin = require("firebase-admin");
-//
-// var serviceAccount = require("./road-assistance-1-firebase-adminsdk-j28g9-985a9898cb");
-//
-// admin.initializeApp({
-//     credential: admin.credential.cert(serviceAccount),
-//     databaseURL: "https://road-assistance-1.firebaseio.com"
-// });
-//
-// var registartionToken = 'd5XVP0kR3xs:APA91bFNmzNUZJs-em2HBzfbHHqHIP2mCvInqAg_K7SnOgmDp2Nr4mERjD2m6Uj_' +
-//     'L9z5jN4bVkVWRzOfDPuot8ro6laZWhVbQicWcQMx0qKI6KOXYU_up_FGShEjdV3kaUm6_arqEm6ANvKyqOJHlYaDju63m4nGyA';
-//
-// var payLoad = {
-//     data:{
-//         myKey1: "Hello Igor and Investors"
-//     }
-// };
-//
-// var options = {
-//     priority:"high",
-//     timeToLive:60 * 60 * 24
-// }
-//
-// admin.messaging().sendToDevice(registartionToken,payLoad,options).then(function (response) {
-//     console.log('Success' + ':::' +response)
-// }).catch(function (error) {
-//  console.log('Error' +':' +error)
-// });
+
 
 
 

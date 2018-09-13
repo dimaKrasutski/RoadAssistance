@@ -260,12 +260,14 @@ router.post('/helper_change_position',function (req,res) {
             if (err) return "Error!";
         });
 
+        res.status(200).send({message:'Helping User Position was changed!'});
+
             Problem.find(req.body.problemUid,function (err,problem) {
                 if (err) return res.status(500).send({message:'Error on the server'});
 
                         User.findById(problem.requestingUser,function (err,reqUser) {
-                            SendFcm(reqUser.deviceIdFcmToken,"helper coordinates have changed",userCoordsObj)
-                            res.status(200).send({message:'Helping User Position was changed!'});
+                            SendFcm(reqUser.deviceIdFcmToken,"helper coordinates have changed",userCoordsObj);
+
                         })
             });
 
