@@ -265,9 +265,10 @@ router.post('/helper_change_position',function (req,res) {
 
                         User.findById(problem.requestingUser,function (err,reqUser) {
                             SendFcm(reqUser.deviceIdFcmToken,"helper coordinates have changed",userCoordsObj)
+                            res.status(200).send({message:'Helping User Position was changed!'});
                         })
             });
-        res.status(200).send({message:'Helping User Position was changed!'});
+
     })
 });
 
