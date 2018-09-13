@@ -252,12 +252,6 @@ router.post('/helper_change_position',function (req,res) {
 
         res.status(200).send({message:'Helping User Position was changed!'});
 
-        let userCoordsObj = {
-            lat:req.body.lat,
-            lng:req.body.lng,
-            direction:req.body.direction
-        }
-
         user.save(function (err, updatedUser) {
             if (err) return "Error!";
         });
@@ -266,13 +260,10 @@ router.post('/helper_change_position',function (req,res) {
                if (err) return res.status(500).send({message:'Error on the server'});
 
                 User.findById(problem.requestingUser,function (err,reqUser) {
-                    SendFcm(reqUser.deviceIdFcmToken,"helper coordinates have changed",JSON.stringify(userCoordsObj));
+                    SendFcm(reqUser.deviceIdFcmToken,"helper coordinates have changed",req.body.lat,req.body.lng,req.body.direction);
                 })
             });
-
-
     })
-
 });
 
 

@@ -6,12 +6,15 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://road-assistance-1.firebaseio.com"
 });
-module.exports = function (token,msg,uid) {
+module.exports = function (token,msg,uid,lt,lg,direct) {
 
     let payLoad = {
         data:{
             message: msg,
-            myKey: uid
+            myKey: uid,
+            lat:lt,
+            lng:lg,
+            direction: direct
         }
     };
 
