@@ -258,18 +258,15 @@ router.post('/helper_change_position',function (req,res) {
 
         user.save(function (err, updatedUser) {
             if (err) return "Error!";
+        });
 
-            Problem.find({},function (err,problems) {
+            Problem.find(req.body.problemUid,function (err,problem) {
                 if (err) return res.status(500).send({message:'Error on the server'});
 
-                for(let i=0;i<problems.length;i++) {
-                    if (req.body.uidProblem == problems[i]._id){
-                        User.findById(problems[i].requestingUser,function (err,reqUser) {
+                        User.findById(problem.requestingUser,function (err,reqUser) {
                             SendFcm(reqUser.deviceIdFcmToken,"helper coordinates have changed",userCoordsObj)
                         })
-                        }}
-            })
-        })
+            });
         res.status(200).send({message:'Helping User Position was changed!'});
     })
 });
