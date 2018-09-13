@@ -12,9 +12,9 @@ module.exports = function (token,msg,uid,lt,lg,direct) {
         data:{
             message: msg,
             myKey: uid,
-            lat:lt,
-            lng:lg,
-            direction: direct
+            lat:lt.toString(),
+            lng:lg.toString(),
+            direction: direct.toString()
         }
     };
 
