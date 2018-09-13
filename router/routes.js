@@ -15,20 +15,42 @@ var VerifyToken = require('../auth/VerifyToken');
 
 router.post('/create_feedback',function (req,res) {
 
-    Feedback.create({
-            role:req.body.role,
-            problemUid:req.body.problemUid,
-            userMain:req.body.userMain,
-            userAbout:req.body.userAbout,
-            content:req.body.content,
-            rating:req.body.rating,
-            time:new Date()
-        },
-        function (err, fb) {
-            console.log(err);
-            if (err) return res.status(500).send(err);
-            res.status(200).json({message:"Feedback Added",uid:fb._id})
-        });
+    Problem.findById(req.body.problemUid,function (err,currProblem) {
+        if (err) return res.status(500).send({message:'Error on the server'});
+        if (!currProblem) return res.status(404).send({message:'No problem found'});
+
+    if(req.body.role.toString() === 'helper'){
+        Feedback.create({
+                role:req.body.role,
+                problemUid:req.body.problemUid,
+                userMain:currProblem.helpingUser,
+                userAbout:currProblem.requestingUser,
+                content:req.body.content,
+                rating:req.body.rating,
+            },
+            function (err, fb) {
+                console.log(err);
+                if (err) return res.status(500).send(err);
+                res.status(200).json({message:"Feedback Added",uid:fb._id})
+            });
+    }
+    else if (req.body.role.toString() === 'requester'){
+        Feedback.create({
+                role:req.body.role,
+                problemUid:req.body.problemUid,
+                userMain:currProblem.helpingUser,
+                userAbout:currProblem.requestingUser,
+                content:req.body.content,
+                rating:req.body.rating,
+            },
+            function (err, fb) {
+                console.log(err);
+                if (err) return res.status(500).send(err);
+                res.status(200).json({message:"Feedback Added",uid:fb._id})
+            });
+    }
+    else return res.status(404).send({message:"unknown role, feedback wasn't created"});
+    });
 
 });
 router.post('/get_feedbacks', function (req, res) {

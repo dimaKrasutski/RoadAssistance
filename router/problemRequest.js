@@ -276,19 +276,6 @@ router.get('/get_problem', function (req, res) {
     })
 });
 
-
-
-router.get('/ebis_vse_konem', function (req, res) {
-
-    User.findById(req.headers['uid'], function (err, user) {
-        if (err) return res.status(500).send({message:'Error on the server'});
-        if (!user) return res.status(404).send({message:'No user found'});
-        SendFcm(user.deviceIdFcmToken,"wdeded",user._id.toString());
-        res.status(200).json({message:"vse zaebis"});
-    })
-});
-
-
 module.exports = router;
 
 
