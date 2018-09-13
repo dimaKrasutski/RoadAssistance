@@ -260,7 +260,7 @@ router.post('/helper_change_position',function (req,res) {
                if (err) return res.status(500).send({message:'Error on the server'});
 
                 User.findById(problem.requestingUser,function (err,reqUser) {
-                    SendFcm(reqUser.deviceIdFcmToken,"helper coordinates have changed",req.body.lat,req.body.lng,req.body.direction);
+                    SendFcm(reqUser.deviceIdFcmToken,"helper coordinates have changed",req.body.lat.toString(),req.body.lng.toString(),req.body.direction.toString());
                 })
             });
     })
