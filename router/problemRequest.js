@@ -14,7 +14,7 @@ const User = require('../collectionsMongo/User'),
 
 const Geodist = require('geodist'),
       VerifyToken = require('../auth/VerifyToken');
-
+//OK
 router.post('/create_problem',function (req,res) {
 
     Problem.create({
@@ -27,7 +27,6 @@ router.post('/create_problem',function (req,res) {
             helpingUser:"",
             requestingUser:req.body.requestingUser,
         offerList:[],
-         //   time:new Date(),
             status : 1,
         deletedOffers: []
         },

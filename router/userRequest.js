@@ -45,7 +45,7 @@ router.post('/user_create', function(req, res) {
             //  res.status(200).send({ auth: true, token: token });
             res.status(200).json({auth:true,token:token, message:"User Added",uid:user._id})
         });
-});
+});        //OK
 
 router.post('/login', function(req, res) {
     User.findOne({ login: req.body.login }, function (err, user) {
@@ -114,7 +114,7 @@ router.post('/user_edit_photo',function(req, res) {
         })
 
     });
-});
+});         //OK
 
 router.get('/get_user',function (req,res) {
     User.findById(req.headers['uid'], function (err, user) {

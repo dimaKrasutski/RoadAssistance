@@ -20,7 +20,7 @@ Router.get('/get_offer_list',function (req,res) {
         res.status(200).send(problem.offerList);
     })
 });
-
+// OK
 Router.post('/agree_problem', function (req, res) {   //ПРЕДЛОЖЕНИЕ ХЕЛПЕРА ПОПАДАЕТ В OFFER-LIST
 
     Problem.findById(req.body.uidProblem, function (err, problem) {
@@ -52,7 +52,7 @@ Router.post('/agree_problem', function (req, res) {   //ПРЕДЛОЖЕНИЕ �
 
     })
 });
-
+// OK
 Router.post('/refuse_offer', function (req, res) { // ОТМЕНИТЬ ПРЕДЛОЖЕНИ HELPERA О ПОМОЩИ(ЕСЛИ ЕГО СОГЛАСИЕ ЕЩЕ НЕ ПОДТВЕРДИЛИ)
 
 // добавить проверку нa helpingUser: ""
@@ -66,7 +66,7 @@ Router.post('/refuse_offer', function (req, res) { // ОТМЕНИТЬ ПРЕД�
 
         for(let i=0;i<list.length;i++){
             let currOffer = list[i];
-            if (currOffer['helper'] == req.body.uidHelper){
+            if (currOffer['helper'] == req.body.uidHelper && currOffer.helpingUser == '') {
                 list.splice(currOffer,1)
             }
         }
@@ -110,7 +110,7 @@ Router.post('/offer_accept',function (req,res) { //helper принимает ч�
 })
 
 Router.post('/offer_reject',function (req,res) { //helper отменяет чей то offer, этот offer удаляется из offerList и добавляется в deletedOffers
-   var currentOffer;
+   let currentOffer;
     Problem.findById(req.body.uidProblem, function (err, problem) {
 
         if (err) return res.status(500).send('Error on the server.');
