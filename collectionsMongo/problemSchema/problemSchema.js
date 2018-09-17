@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
-let OfferListSchema= require('./offerListSchema');
-let DeletedOffers = require('./deletedOffers');
+const mongoose = require('mongoose');
+const OfferListSchema= require('./offerListSchema');
+const DeletedOffers = require('./deletedOffers');
 
 let ProblemSchema = new mongoose.Schema({
     description: String,

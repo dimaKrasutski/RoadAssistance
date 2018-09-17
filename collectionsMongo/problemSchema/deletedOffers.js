@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
  let DeletedOffers = new mongoose.Schema({
      answer:0,

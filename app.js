@@ -1,10 +1,10 @@
-var express = require('express');
-var app = express();
-var db = require('./db');
+const express = require('express'),
+      app = express(),
+      db = require('./db');
 
 
 
-let Routes = require('./router/mainRoutes'),
+const Routes = require('./router/mainRoutes'),
  Problems = require('./router/problemRequest'),
  Users = require('./router/userRequest'),
  OffersProblems = require('./router/offersProblemsRequests'),

@@ -1,19 +1,19 @@
-let express = require('express');
-let router = express.Router();
-let bodyParser = require('body-parser');
-let mongoose = require('mongoose');
+const Express = require('express'),
+      Router = Express.Router(),
+      BodyParser = require('body-parser'),
+      Mongoose = require('mongoose');
 
-router.use(bodyParser.urlencoded({ extended: false }));
-router.use(bodyParser.json()); // парсит тело только тех запросов, для которых 'Content-Type' равен 'application/json', Результат парсинга сохраняется в объекте req.body
+router.use(BodyParser.urlencoded({ extended: false }));
+router.use(BodyParser.json()); // парсит тело только тех запросов, для которых 'Content-Type' равен 'application/json', Результат парсинга сохраняется в объекте req.body
 
-const User = require('../collectionsMongo/User');
-const Feedback = require('../collectionsMongo/Feedback');
-const Problem = require('../collectionsMongo/Problem');
-const VerifyToken = require('../auth/VerifyToken');
-const SendFcm = require('../fcm');
+const User = require('../collectionsMongo/User'),
+      Feedback = require('../collectionsMongo/Feedback'),
+      Problem = require('../collectionsMongo/Problem'),
+      VerifyToken = require('../auth/VerifyToken'),
+      SendFcm = require('../fcm');
 const tok = 'd5XVP0kR3xs:APA91bFNmzNUZJs-em2HBzfbHHqHIP2mCvInqAg_K7SnOgmDp2Nr4mERjD2m6Uj_L9z5jN4bVkVWRzOfDPuot8ro6laZWhVbQicWcQMx0qKI6KOXYU_up_FGShEjdV3kaUm6_arqEm6ANvKyqOJHlYaDju63m4nGyA';
 
-router.get('/get_offer_list',function (req,res) {
+Router.get('/get_offer_list',function (req,res) {
     Problem.findById(req.headers['uid'], function (err, problem) {
         if (err) return res.status(500).send('Error on the server.');
         if (!problem) return res.status(404).send('No problem found.');
@@ -21,7 +21,7 @@ router.get('/get_offer_list',function (req,res) {
     })
 });
 
-router.post('/agree_problem', function (req, res) {   //ПРЕДЛОЖЕНИЕ ХЕЛПЕРА ПОПАДАЕТ В OFFER-LIST
+Router.post('/agree_problem', function (req, res) {   //ПРЕДЛОЖЕНИЕ ХЕЛПЕРА ПОПАДАЕТ В OFFER-LIST
 
     Problem.findById(req.body.uidProblem, function (err, problem) {
 
@@ -53,7 +53,7 @@ router.post('/agree_problem', function (req, res) {   //ПРЕДЛОЖЕНИЕ �
     })
 });
 
-router.post('/refuse_offer', function (req, res) { // ОТМЕНИТЬ ПРЕДЛОЖЕНИ HELPERA О ПОМОЩИ(ЕСЛИ ЕГО СОГЛАСИЕ ЕЩЕ НЕ ПОДТВЕРДИЛИ)
+Router.post('/refuse_offer', function (req, res) { // ОТМЕНИТЬ ПРЕДЛОЖЕНИ HELPERA О ПОМОЩИ(ЕСЛИ ЕГО СОГЛАСИЕ ЕЩЕ НЕ ПОДТВЕРДИЛИ)
 
 // добавить проверку нa helpingUser: ""
     Problem.findById(req.body.uidProblem, function (err, problem) {
@@ -78,7 +78,7 @@ router.post('/refuse_offer', function (req, res) { // ОТМЕНИТЬ ПРЕД�
 
 });
 
-router.post('/offer_accept',function (req,res) { //helper принимает чей то offer,offerList очищается,uid helpera в problem.helperUid
+Router.post('/offer_accept',function (req,res) { //helper принимает чей то offer,offerList очищается,uid helpera в problem.helperUid
 
     Problem.findById(req.body.uidProblem, function (err, problem) {
     var problemUid = req.body.uidProblem;
@@ -109,7 +109,7 @@ router.post('/offer_accept',function (req,res) { //helper принимает ч�
     })
 })
 
-router.post('/offer_reject',function (req,res) { //helper отменяет чей то offer, этот offer удаляется из offerList и добавляется в deletedOffers
+Router.post('/offer_reject',function (req,res) { //helper отменяет чей то offer, этот offer удаляется из offerList и добавляется в deletedOffers
    var currentOffer;
     Problem.findById(req.body.uidProblem, function (err, problem) {
 
@@ -135,7 +135,7 @@ router.post('/offer_reject',function (req,res) { //helper отменяет че�
 
 });
 
-router.get('/reject_help', function (req, res) {
+Router.get('/reject_help', function (req, res) {
 
     User.findById(req.headers['uid'], function (err, user) {
         if (err) return res.status(500).send('Error on the server.');
@@ -160,4 +160,4 @@ router.get('/reject_help', function (req, res) {
         res.status(200).json({message:'Help_Rejected'});
     })
 });
-module.exports = router;
+module.exports = Router;

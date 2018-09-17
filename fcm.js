@@ -1,6 +1,5 @@
-var admin = require("firebase-admin");
-
-var serviceAccount = require("./road-assistance-1-firebase-adminsdk-j28g9-985a9898cb");
+const admin = require("firebase-admin"),
+      serviceAccount = require("./road-assistance-1-firebase-adminsdk-j28g9-985a9898cb");
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),

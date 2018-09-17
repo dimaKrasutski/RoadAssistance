@@ -1,20 +1,19 @@
-var express = require('express');
-var router = express.Router();
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
+const express = require('express'),
+      router = express.Router(),
+      bodyParser = require('body-parser'),
+      mongoose = require('mongoose');
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json()); // парсит тело только тех запросов, для которых 'Content-Type' равен 'application/json', Результат парсинга сохраняется в объекте req.body
 
-var User = require('../collectionsMongo/User');
-var Feedback = require('../collectionsMongo/Feedback');
-var Problem = require('../collectionsMongo/Problem');
-const SendFcm = require('../fcm');
+const User = require('../collectionsMongo/User'),
+      Feedback = require('../collectionsMongo/Feedback'),
+      Problem = require('../collectionsMongo/Problem'),
+      SendFcm = require('../fcm');
 
 
-var geodist = require('geodist');
-
-var VerifyToken = require('../auth/VerifyToken');
+const Geodist = require('geodist'),
+      VerifyToken = require('../auth/VerifyToken');
 
 router.post('/create_problem',function (req,res) {
 
@@ -132,9 +131,9 @@ router.post('/problem_done', function (req, res) {
 
 router.post('/download_problems', function (req, res) {
 
-        var userPosition = {lat:req.body.lat,lon:req.body.lng};
+        const userPosition = {lat:req.body.lat,lon:req.body.lng};
         let radius = req.body.radius;
-        var type  =[]= req.body.type;
+        const type  =[]= req.body.type;
 
     let compare = false;
     let problemsToClient = [];
@@ -145,7 +144,7 @@ router.post('/download_problems', function (req, res) {
                   for(let i=0;i<problems.length;i++){
 
                                   let currProblem = problems[i];
-                                  let distance = geodist(userPosition, {lat: currProblem.lat, lon: currProblem.lng },{unit:'km'});
+                                  let distance = Geodist(userPosition, {lat: currProblem.lat, lon: currProblem.lng },{unit:'km'});
                       var compareType = function () {
                           for (let i=0;i<type.length;i++){
                               if(type[i] == currProblem.problemType){
@@ -163,11 +162,11 @@ router.post('/download_problems', function (req, res) {
 
 router.post('/problems_map', function (req, res) {
 
-    var userPosition = {lat: req.body.lat, lon: req.body.lng};
+    const userPosition = {lat: req.body.lat, lon: req.body.lng};
     let radius = req.body.radius;
-    var type =[]= req.body.type;
+    const type =[]= req.body.type;
     let compare = false;
-    var problemsToClient = [];
+    const problemsToClient = [];
     Problem.find({},function (err, problems) {
         if (err) {
             res.send({message:'Something went wrong'})}
@@ -180,7 +179,7 @@ router.post('/problems_map', function (req, res) {
                         return compare = true;
 
                     }}};
-            let distance = geodist(userPosition, {lat: currProblem.lat, lon: currProblem.lng}, {unit: 'km'});
+            let distance = Geodist(userPosition, {lat: currProblem.lat, lon: currProblem.lng}, {unit: 'km'});
             if (distance <= radius / 1000 && currProblem.status == 1) {
                 compareType();
                 if(compare){

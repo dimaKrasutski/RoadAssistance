@@ -1,16 +1,15 @@
-var express = require('express');
-var router = express.Router();
-var bodyParser = require('body-parser');
+const express = require('express'),
+      router = express.Router(),
+      bodyParser = require('body-parser');
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
-var User = require('../collectionsMongo/User');
-var Feedback = require('../collectionsMongo/Feedback');
-var Problem = require('../collectionsMongo/Problem');
-var Place = require('../collectionsMongo/Places');
-
-var VerifyToken = require('../auth/VerifyToken');
+const User = require('../collectionsMongo/User'),
+      Feedback = require('../collectionsMongo/Feedback'),
+      Problem = require('../collectionsMongo/Problem'),
+      Place = require('../collectionsMongo/Places'),
+      VerifyToken = require('../auth/VerifyToken');
 
 
 router.post('/create_new_place',function (req,res) {
@@ -45,7 +44,7 @@ router.post('/download_places', function (req, res) {
     let shabbat = req.body.shabbat;
 
     Place.find({},function (err,places) {
-        var placesToClient = [];
+        let placesToClient = [];
 
         if(err){
             console.log(err);
@@ -71,6 +70,6 @@ router.get('/get_place', function (req, res) {
         if (!place) return res.status(404).send({message:'No place found'});
         res.status(200).json({currentPlace:place});
     })
-})
+});
 
 module.exports = router;

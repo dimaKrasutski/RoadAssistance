@@ -1,4 +1,4 @@
-var express = require('express'),
+const express = require('express'),
     router = express.Router(),
     bodyParser = require('body-parser');
 
@@ -10,13 +10,13 @@ const VerifyToken = require('../auth/VerifyToken'),
     Problem = require('../collectionsMongo/Problem');
     Feedback = require('../collectionsMongo/Feedback');
 
-    var jwt = require('jsonwebtoken'),
+    const jwt = require('jsonwebtoken'),
      bcrypt = require('bcryptjs'),
      config = require('../config');
 
 router.post('/user_create', function(req, res) {
 
-    var hashedPassword = bcrypt.hashSync(req.body.password, 8);
+    const hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
     User.create({
             login : req.body.login,
@@ -39,7 +39,7 @@ router.post('/user_create', function(req, res) {
         function (err, user) {
             if (err) return res.status(500).send({message:err});
             // create a token
-            var token = jwt.sign({ id: user._id }, config.secret, {
+            let token = jwt.sign({ id: user._id }, config.secret, {
                 expiresIn: 200000 // expires in 24 hours
             });
             //  res.status(200).send({ auth: true, token: token });

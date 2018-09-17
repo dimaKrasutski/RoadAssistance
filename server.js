@@ -1,35 +1,37 @@
-const cluster = require('cluster');
- const  app = require('./app');
+const Cluster = require('cluster');
+ const  App = require('./app');
 
-var express = require('express');
-app.get('/socket', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
-});
+// const Express = require('express');
+
+//  App.get('/socket', (req, res) => {
+//     res.sendFile(__dirname + '/index.html');
+// });
  // const server = require('http').createServer(app);
 
-if (cluster.isMaster) {
+if (Cluster.isMaster) {
 
 // Count the machine's CPUs
-    var cpuCount = require('os').cpus().length;
+    let cpuCount = require('os').cpus().length;
 
     // Create a worker for each CPU
-    for (var i = 0; i < cpuCount/2; i += 1) {
-        cluster.fork();
+    for (let i = 0; i < cpuCount/2; i += 1) {
+        Cluster.fork();
     }
     // делаем новый WORKER
-    cluster.on('exit', function (worker) {
+    Cluster.on('exit', function (worker) {
         console.log('Worker %d died :(', worker.id);
-        cluster.fork();
+        Cluster.fork();
 })
 } else {
-    var port = process.env.PORT || 3000;
-    var server = app.listen(port, function() {
+    const port = process.env.PORT || 3000;
+    const server = App.listen(port, function() {
         console.log('Express server listening on port ' + port);
-        console.log('Worker %d running!', cluster.worker.id);
+        console.log('Worker %d running!', Cluster.worker.id);
     });
-    const io = require('socket.io').listen(server);
 
-    var connections = [];
+
+    // const io = require('socket.io').listen(server);
+    // var connections = [];
 
     // io.sockets.on('connection',(socket) => {
     //     connections.push(socket);

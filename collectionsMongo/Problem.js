@@ -1,12 +1,12 @@
-const mongoose = require('mongoose');
+const Mongoose = require('mongoose');
 
 const OfferListSchema = require('./problemSchema/offerListSchema');
 const ProblemSchema = require('./problemSchema/problemSchema');
 const DeletedOffers = require('./problemSchema/deletedOffers');
 
-mongoose.model('DeletedOffers',DeletedOffers);
-mongoose.model('OfferList',OfferListSchema);
-mongoose.model("Problem",ProblemSchema);
+Mongoose.model('DeletedOffers',DeletedOffers);
+Mongoose.model('OfferList',OfferListSchema);
+Mongoose.model("Problem",ProblemSchema);
 
 
- module.exports = mongoose.model('Problem');
+ module.exports = Mongoose.model('Problem');

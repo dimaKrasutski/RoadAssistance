@@ -1,15 +1,15 @@
-const Express = require('express');
-const Router = Express.Router();
-const BodyParser = require('body-parser');
+const Express = require('express'),
+      Router = Express.Router(),
+      BodyParser = require('body-parser');
 
 Router.use(BodyParser.urlencoded({ extended: false }));
 Router.use(BodyParser.json());
 
-const User = require('../collectionsMongo/User');
-const Feedback = require('../collectionsMongo/Feedback');
-const Problem = require('../collectionsMongo/Problem');
-const Place = require('../collectionsMongo/Places');
-const Geodist = require('geodist');
+const User = require('../collectionsMongo/User'),
+      Feedback = require('../collectionsMongo/Feedback'),
+      Problem = require('../collectionsMongo/Problem'),
+      Place = require('../collectionsMongo/Places'),
+      Geodist = require('geodist');
 
 const VerifyToken = require('../auth/VerifyToken');
 

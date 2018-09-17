@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var FeedBackSchema = new mongoose.Schema({
+const FeedBackSchema = new mongoose.Schema({
     role:String,
     problemUid:String,
     userMain:String,
