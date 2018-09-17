@@ -3,8 +3,8 @@ const Express = require('express'),
       BodyParser = require('body-parser'),
       Mongoose = require('mongoose');
 
-router.use(BodyParser.urlencoded({ extended: false }));
-router.use(BodyParser.json()); // парсит тело только тех запросов, для которых 'Content-Type' равен 'application/json', Результат парсинга сохраняется в объекте req.body
+Router.use(BodyParser.urlencoded({ extended: false }));
+Router.use(BodyParser.json()); // парсит тело только тех запросов, для которых 'Content-Type' равен 'application/json', Результат парсинга сохраняется в объекте req.body
 
 const User = require('../collectionsMongo/User'),
       Feedback = require('../collectionsMongo/Feedback'),
@@ -81,7 +81,7 @@ Router.post('/refuse_offer', function (req, res) { // ОТМЕНИТЬ ПРЕД�
 Router.post('/offer_accept',function (req,res) { //helper принимает чей то offer,offerList очищается,uid helpera в problem.helperUid
 
     Problem.findById(req.body.uidProblem, function (err, problem) {
-    var problemUid = req.body.uidProblem;
+    let problemUid = req.body.uidProblem;
         if (err) return res.status(500).send('Error on the server.');
         if (!problem) return res.status(404).send('No problem found.');
 
