@@ -110,8 +110,9 @@ Router.post('/offer_accept',function (req,res) { //helper принимает ч�
 })
 
 Router.post('/offer_reject',function (req,res) { //helper отменяет чей то offer, этот offer удаляется из offerList и добавляется в deletedOffers
-   let currentOffer;
+
     Problem.findById(req.body.uidProblem, function (err, problem) {
+        let currentOffer;
 
         if (err) return res.status(500).send('Error on the server.');
         if (!problem) return res.status(404).send('No problem found.');
