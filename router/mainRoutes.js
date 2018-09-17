@@ -1,19 +1,19 @@
-var express = require('express');
-var router = express.Router();
-var bodyParser = require('body-parser');
+const Express = require('express');
+const Router = express.Router();
+const BodyParser = require('body-parser');
 
-router.use(bodyParser.urlencoded({ extended: false }));
-router.use(bodyParser.json());
+Router.use(BodyParser.urlencoded({ extended: false }));
+Router.use(BodyParser.json());
 
-var User = require('../collectionsMongo/User');
-var Feedback = require('../collectionsMongo/Feedback');
-var Problem = require('../collectionsMongo/Problem');
-var Place = require('../collectionsMongo/Places');
-var geodist = require('geodist');
+const User = require('../collectionsMongo/User');
+const Feedback = require('../collectionsMongo/Feedback');
+const Problem = require('../collectionsMongo/Problem');
+const Place = require('../collectionsMongo/Places');
+const Geodist = require('geodist');
 
-var VerifyToken = require('../auth/VerifyToken');
+const VerifyToken = require('../auth/VerifyToken');
 
-router.post('/create_feedback',function (req,res) {
+Router.post('/create_feedback',function (req,res) {
 
     Problem.findById(req.body.problemUid,function (err,currProblem) {
         if (err) return res.status(500).send({message:'Error on the server'});
@@ -53,7 +53,7 @@ router.post('/create_feedback',function (req,res) {
     });
 
 });
-router.post('/get_feedbacks', function (req, res) {
+Router.post('/get_feedbacks', function (req, res) {
 
     var fbs = [];
 
@@ -70,4 +70,4 @@ router.post('/get_feedbacks', function (req, res) {
 })
 
 
-module.exports = router;
+module.exports = Router;

@@ -8,6 +8,10 @@ admin.initializeApp({
 });
 module.exports = function (token,msg,uid,lt,lg,direct) {
 
+    lt = lt || 'no data';
+    lg = lg || 'no data';
+    direct = direct || 'no data';
+
     let payLoad = {
         data:{
             message: msg,

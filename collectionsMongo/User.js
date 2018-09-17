@@ -1,6 +1,6 @@
-let mongoose = require('mongoose');
+const Mongoose = require('mongoose');
 
-let UserSchema = new mongoose.Schema({
+const UserSchema = new Mongoose.Schema({
     login : String,
     password : String,
     name : String,
@@ -19,7 +19,7 @@ let UserSchema = new mongoose.Schema({
     deviceIdFcmToken:String
 }, {versionKey:false});
 
-mongoose.model('User', UserSchema);
+Mongoose.model('User', UserSchema);
 
 
-module.exports = mongoose.model('User');
+module.exports = Mongoose.model('User');
