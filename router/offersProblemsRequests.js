@@ -109,6 +109,7 @@ Router.post('/offer_accept',function (req,res) { //helper принимает ч�
     })
 })
 
+//OK
 Router.post('/offer_reject',function (req,res) { //helper отменяет чей то offer, этот offer удаляется из offerList и добавляется в deletedOffers
 
     Problem.findById(req.body.uidProblem, function (err, problem) {
