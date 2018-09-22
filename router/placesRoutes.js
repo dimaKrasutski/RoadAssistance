@@ -53,7 +53,7 @@ router.post('/download_places', function (req, res) {
 
         for(let i=0;i<places.length;i++){
             let currPlace = places[i];
-            let distance = geodist(userPosition, {lat: currPlace.lat, lon: currPlace.lng },{unit:'km'});
+            let distance = Geodist(userPosition, {lat: currPlace.lat, lon: currPlace.lng },{unit:'km'});
             if(  distance <= radius/1000  && currPlace.type == type && currPlace.shabbat == shabbat){
                 placesToClient.push(places[i])
             };
