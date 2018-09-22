@@ -10,7 +10,7 @@ const User = require('../collectionsMongo/User'),
       Problem = require('../collectionsMongo/Problem'),
       Place = require('../collectionsMongo/Places'),
       VerifyToken = require('../auth/VerifyToken');
-
+      Geodist = require('geodist');
 
 router.post('/create_new_place',function (req,res) {
 
