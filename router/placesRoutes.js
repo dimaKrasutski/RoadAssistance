@@ -55,14 +55,16 @@ router.post('/download_places', function (req, res) {
         for(let i=0;i<places.length;i++){
             let currPlace = places[i];
             const distance = Geodist(userPosition, {lat: currPlace.lat, lon: currPlace.lng },{unit:'km'});
-            if(  distance <= radius/1000  && currPlace.type === type && currPlace.shabbat === shabbat){
-                placesToClient.push(places[i])
+
+            if(  distance <= radius/1000  && currPlace.type.toString() == type.toString() && currPlace.shabbat.toString() == shabbat.toString()){
+                placesToClient.push(places[i]);
             };
 
-
         }
-        res.status(200).send({message:placesToClient});
+        res.status(200).send(placesToClient);
+
     })
+
 
 });
 router.get('/get_place', function (req, res) {
