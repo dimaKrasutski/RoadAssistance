@@ -8,14 +8,14 @@ router.use(bodyParser.json());
 const User = require('../collectionsMongo/User'),
       Feedback = require('../collectionsMongo/Feedback'),
       Problem = require('../collectionsMongo/Problem'),
-      Place = require('../collectionsMongo/Places'),
+      Places = require('../collectionsMongo/Places'),
       VerifyToken = require('../auth/VerifyToken');
       Geodist = require('geodist');
 
 router.post('/create_new_place',function (req,res) {
 
 
-    Place.create({
+    Places.create({
 
             address: req.body.address,
             email:req.body.email,
@@ -38,12 +38,13 @@ router.post('/create_new_place',function (req,res) {
 
 router.post('/download_places', function (req, res) {
 
-    let userPosition = {lat:req.body.lat,lon:req.body.lng};
-    let radius = req.body.radius;
-    let type  = req.body.type;
-    let shabbat = req.body.shabbat;
+    const userPosition = {lat:req.body.lat,lon:req.body.lng},
+        radius = req.body.radius,
+        type  = req.body.type,
+        shabbat = req.body.shabbat;
 
-    Place.find({},function (err,places) {
+
+    Places.find({},function (err,places) {
         let placesToClient = [];
 
         if(err){
@@ -53,8 +54,8 @@ router.post('/download_places', function (req, res) {
 
         for(let i=0;i<places.length;i++){
             let currPlace = places[i];
-            let distance = Geodist(userPosition, {lat: currPlace.lat, lon: currPlace.lng },{unit:'km'});
-            if(  distance <= radius/1000  && currPlace.type == type && currPlace.shabbat == shabbat){
+            const distance = Geodist(userPosition, {lat: currPlace.lat, lon: currPlace.lng },{unit:'km'});
+            if(  distance <= radius/1000  && currPlace.type === type && currPlace.shabbat === shabbat){
                 placesToClient.push(places[i])
             };
 
@@ -66,7 +67,7 @@ router.post('/download_places', function (req, res) {
 });
 router.get('/get_place', function (req, res) {
 
-    Place.findById(req.headers['uid'], function (err, place) {
+    Places.findById(req.headers['uid'], function (err, place) {
         if (err) return res.status(500).send({message:'Error on the server'});
         if (!place) return res.status(404).send({message:'No place found'});
         res.status(200).json({currentPlace:place});
