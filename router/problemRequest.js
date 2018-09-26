@@ -128,7 +128,7 @@ router.post('/problem_done', function (req, res) {
         });
     });
 
-router.post('/download_problems', function (req, res) {
+router.post('/download_problems', function (req, res) {//нужно протестировать
 
         const userPosition = {lat:req.body.lat,lon:req.body.lng};
         let radius = req.body.radius;
