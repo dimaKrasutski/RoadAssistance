@@ -43,30 +43,40 @@ router.post('/download_places', function (req, res) {
         type  = req.body.type,
         shabbat = req.body.shabbat;
 
+              Places.find({},function (err,places) {
+              let placesToClient = [];
 
-    Places.find({},function (err,places) {
-        let placesToClient = [];
+              if(err){
+                  console.log(err);
+                  res.send({message:'Something went wrong'})
+              }
 
-        if(err){
-            console.log(err);
-            res.send({message:'Something went wrong'})
-        }
+              console.log('places  :::: '+ places );
+             // console.log('shabbat === true' + shabbat==true);
+                  if(shabbat == true){
+                          for (let i = 0; i < places.length; i++) {
+                              let currPlace = places[i];
+                              const distance = Geodist(userPosition, {lat: currPlace.lat, lon: currPlace.lng}, {unit: 'km'});
 
-        for(let i=0;i<places.length;i++){
-            let currPlace = places[i];
-            const distance = Geodist(userPosition, {lat: currPlace.lat, lon: currPlace.lng },{unit:'km'});
+                              if (distance <= radius / 1000 && currPlace.type.toString() === type.toString() && shabbat === true) {
+                                  placesToClient.push(places[i]);
+                              }}
+                          res.status(200).send(placesToClient);
+                  }
+                  else
+                          for (let i = 0; i < places.length; i++) {
+                              let currPlace = places[i];
+                              const distance = Geodist(userPosition, {lat: currPlace.lat, lon: currPlace.lng}, {unit: 'km'});
 
-            if(  distance <= radius/1000  && currPlace.type.toString() == type.toString() && currPlace.shabbat.toString() == shabbat.toString()){
-                placesToClient.push(places[i]);
-            };
-
-        }
-        res.status(200).send(placesToClient);
-
-    })
-
-
+                              if (distance <= radius / 1000 && currPlace.type.toString() === type.toString()) {
+                                  placesToClient.push(places[i]);
+                              }
+                          }
+                          res.status(200).send(placesToClient);
+          })
 });
+
+
 router.get('/get_place', function (req, res) {
 
     Places.findById(req.headers['uid'], function (err, place) {
