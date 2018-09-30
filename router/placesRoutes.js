@@ -41,7 +41,7 @@ router.post('/download_places', function (req, res) {
     const userPosition = {lat:req.body.lat,lon:req.body.lng},
         radius = req.body.radius,
         type  =[]= req.body.type.split(','),
-        shabbat = req.body.shabbat;
+        shabbat = String(req.body.shabbat);
 
               Places.find({},function (err,places) {
                   let placesToClient = [];
@@ -49,32 +49,31 @@ router.post('/download_places', function (req, res) {
                       console.log(err);
                       res.send({message: 'Something went wrong'})
                   }
-                  if (shabbat == true) {
+
+                  if (shabbat === 'true') {
                       for (let i = 0; i < places.length; i++) {
 
                           let currPlace = places[i];
                           const distance = Geodist(userPosition, {lat: currPlace.lat, lon: currPlace.lng}, {unit: 'km'});
-                          if (distance <= radius / 1000 && shabbat == true ) {
+                          if (distance <= radius / 1000 && String(places[i].shabbat) === 'true' ) {
                               for (let i = 0; i < type.length; i++) {
                                   if (type[i] == currPlace.type ) {
                                       placesToClient.push(currPlace);
-                                      break;
+
                                   }
                               }
                           }
                       }
-                  }
-                  else
+                  } else  {
 
-                  for (let i = 0; i < places.length; i++) {
-                      let currPlace = places[i];
-                      const distance = Geodist(userPosition, {lat: currPlace.lat, lon: currPlace.lng}, {unit: 'km'});
-
-                      if (distance <= radius / 1000) {
-                          for (let i = 0; i < type.length; i++) {
-                              if (type[i] == currPlace.type) {
-                                  placesToClient.push(currPlace);
-                                  break
+                      for (let i = 0; i < places.length; i++) {
+                          let currPlace = places[i];
+                          const distance = Geodist(userPosition, {lat: currPlace.lat, lon: currPlace.lng}, {unit: 'km'});
+                          if (distance <= radius / 1000) {
+                              for (let i = 0; i < type.length; i++) {
+                                  if (type[i] == currPlace.type) {
+                                      placesToClient.push(currPlace);
+                                  }
                               }
                           }
                       }

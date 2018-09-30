@@ -23,5 +23,8 @@
     "promise": "^8.0.1",
     "socket.io": "^2.1.1",
     "update": "^0.7.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
   }
 }
