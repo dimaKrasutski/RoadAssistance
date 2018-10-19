@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 
-let OfferListSchema = new mongoose.Schema({
+const OfferListSchema = new mongoose.Schema({
     answer: Number,
     description: String,
     helper: String,

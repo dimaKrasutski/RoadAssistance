@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
- let DeletedOffers = new mongoose.Schema({
+ const DeletedOffers = new mongoose.Schema({
      answer:0,
      description:String,
      helper:String,

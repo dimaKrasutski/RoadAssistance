@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const OfferListSchema= require('./offerListSchema');
 const DeletedOffers = require('./deletedOffers');
 
-let ProblemSchema = new mongoose.Schema({
+const ProblemSchema = new mongoose.Schema({
     description: String,
     direction:Number,
     extra:Number,
