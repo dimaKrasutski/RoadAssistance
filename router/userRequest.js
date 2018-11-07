@@ -1,20 +1,8 @@
-const express = require('express'),
-    router = express.Router(),
-    bodyParser = require('body-parser');
+const {Router,User,Feedback,Problem,Place,Geodist,VerifyToken,SendFcm} = require('../variables');
 
-router.use(bodyParser.urlencoded({ extended: false }));
-router.use(bodyParser.json());
+    const jwt = require('jsonwebtoken'), bcrypt = require('bcryptjs'), config = require('../config');
 
-const VerifyToken = require('../auth/VerifyToken'),
-    User = require('../collectionsMongo/User'),
-    Problem = require('../collectionsMongo/Problem');
-    Feedback = require('../collectionsMongo/Feedback');
-
-    const jwt = require('jsonwebtoken'),
-     bcrypt = require('bcryptjs'),
-     config = require('../config');
-
-router.post('/user_create', function(req, res) {
+Router.post('/user_create', function(req, res) {
 
     const hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
@@ -36,18 +24,19 @@ router.post('/user_create', function(req, res) {
             rating:[],
             deviceIdFcmToken:req.body.deviceIdFcmToken
         },
+
+
         function (err, user) {
             if (err) return res.status(500).send({message:err});
             // create a token
             let token = jwt.sign({ id: user._id }, config.secret, {
-                expiresIn: 200000 // expires in 24 hours
+                expiresIn: 200000 
             });
-            //  res.status(200).send({ auth: true, token: token });
             res.status(200).json({auth:true,token:token, message:"User Added",uid:user._id})
         });
 });        //OK
 
-router.post('/login', function(req, res) {
+Router.post('/login', function(req, res) {
     User.findOne({ login: req.body.login }, function (err, user) {
         if (err) return res.status(500).send({message:'Error on the server'});
         if (!user) return res.status(404).send({message:'No user found'});
@@ -56,23 +45,22 @@ router.post('/login', function(req, res) {
 
         if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
         var token = jwt.sign({ id: user._id }, config.secret, {
-            expiresIn: 86400 // expires in 24 hours
+            expiresIn: 200000
         });
         user.deviceIdFcmToken = req.body.deviceIdFcmToken;
         user.save(function (err, updatedUser) {
             if (err) return res.status(500).send({message:err});
         });
 
-
         res.status(200).json({ auth: true, token: token , message:"Login Ok",uid:user._id });
     });
 });
 
-router.get('/user_logout', function(req, res) {
+Router.get('/user_logout', function(req, res) {
     res.status(200).send({ auth: false, token: null });
 });
 
-router.post('/user_edit_info',function (req,res) {
+Router.post('/user_edit_info',function (req,res) {
     User.findById(req.body.uid ,function (err, user) {
         if (err) return handleError(err);
         let curr = user.car;
@@ -101,7 +89,7 @@ router.post('/user_edit_info',function (req,res) {
     });
 });
 
-router.post('/user_edit_photo',function(req, res) {
+Router.post('/user_edit_photo',function(req, res) {
     User.findById(req.body.uid, function (err, user) {
         if (err) return res.status(500).send({message:'Error on the server'});
         if (!user) return res.status(404).send({message:'No user found'});
@@ -116,7 +104,7 @@ router.post('/user_edit_photo',function(req, res) {
     });
 });         //OK
 
-router.get('/get_user',function (req,res) {
+Router.get('/get_user',function (req,res) {
     User.findById(req.headers['uid'], function (err, user) {
         if (err) return res.status(500).send({message:'Error on the server'});
         if (!user) return res.status(404).send({message:'No user found'});
@@ -151,5 +139,5 @@ router.get('/get_user',function (req,res) {
 //         res.status(200).send(user);
 //     });
 // });
-module.exports = router;
+module.exports = Router;
 

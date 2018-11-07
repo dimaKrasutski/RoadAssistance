@@ -1,21 +1,7 @@
-const express = require('express'),
-      router = express.Router(),
-      bodyParser = require('body-parser'),
-      mongoose = require('mongoose');
+const {Router,User,Feedback,Problem,Place,Geodist,VerifyToken,SendFcm} = require('../variables');
 
-router.use(bodyParser.urlencoded({ extended: false }));
-router.use(bodyParser.json()); // парсит тело только тех запросов, для которых 'Content-Type' равен 'application/json', Результат парсинга сохраняется в объекте req.body
-
-const User = require('../collectionsMongo/User'),
-      Feedback = require('../collectionsMongo/Feedback'),
-      Problem = require('../collectionsMongo/Problem'),
-      SendFcm = require('../fcm');
-
-
-const Geodist = require('geodist'),
-      VerifyToken = require('../auth/VerifyToken');
 //OK
-router.post('/create_problem',function (req,res) {
+Router.post('/create_problem',function (req,res) {
 
     Problem.create({
             description: req.body.description,
@@ -50,7 +36,7 @@ router.post('/create_problem',function (req,res) {
     
     });
 
-router.post('/problem_cancel',function (req,res) {
+Router.post('/problem_cancel',function (req,res) {
 
     User.findById(req.body.uid, function (err, user) {
         if (err) return res.status(500).send({message:'Error on the server.'});
@@ -86,7 +72,7 @@ router.post('/problem_cancel',function (req,res) {
     });
 });
 
-router.post('/problem_done', function (req, res) {
+Router.post('/problem_done', function (req, res) {
         let problemUid =  req.body.problemUid;
         let requesting,helping;
 
@@ -128,7 +114,7 @@ router.post('/problem_done', function (req, res) {
         });
     });
 
-router.post('/download_problems', function (req, res) {//нужно протестировать
+Router.post('/download_problems', function (req, res) {//нужно протестировать
 
         const userPosition = {lat:req.body.lat,lon:req.body.lng};
         let radius = req.body.radius;
@@ -159,7 +145,7 @@ router.post('/download_problems', function (req, res) {//нужно протес
 
 });
 
-router.post('/problems_map', function (req, res) {
+Router.post('/problems_map', function (req, res) {
 
     const userPosition = {lat: req.body.lat, lon: req.body.lng};
     let radius = req.body.radius;
@@ -199,7 +185,7 @@ router.post('/problems_map', function (req, res) {
     })
 })
 
-router.post('/problem_change_position',function (req,res) {
+Router.post('/problem_change_position',function (req,res) {
     Problem.findById(req.body.uid,function (err,problem) {
 
         if (err) return res.status(500).send({message:'Error on the server'});
@@ -238,7 +224,7 @@ router.post('/problem_change_position',function (req,res) {
     })
 });
 
-router.post('/helper_change_position',function (req,res) {
+Router.post('/helper_change_position',function (req,res) {
     const ProblemUid = req.body.problemUid;
     User.findById(req.body.uid,function (err,user) {
         if (err) return res.status(500).send({message:'Error on the server'});
@@ -270,7 +256,7 @@ router.post('/helper_change_position',function (req,res) {
 });
 
 
-router.get('/get_problem', function (req, res) {
+Router.get('/get_problem', function (req, res) {
 
     Problem.findById(req.headers['uid'], function (err, problem) {
         if (err) return res.status(500).send({message:'Error on the server'});
@@ -279,7 +265,7 @@ router.get('/get_problem', function (req, res) {
     })
 });
 
-module.exports = router;
+module.exports = Router;
 
 
 

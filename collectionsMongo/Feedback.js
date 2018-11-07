@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 
 const FeedBackSchema = new mongoose.Schema({
-    role:String,
-    problemUid:String,
-    userMain:String,
-    userAbout:String,
-    content:String,
-    rating:Number,
-    time:Date,
+    role:{type:String,lowercase:true},
+    problemUid:{type:String},
+    userMain:{type:String},
+    userAbout:{type:String},
+    content:{type:String,lowercase:true},
+    rating:{type:Number},
+    time:{type:Date},
 },{versionKey:false});
 mongoose.model("Feedback",FeedBackSchema);
 

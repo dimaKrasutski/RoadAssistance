@@ -4,7 +4,7 @@ const express = require('express'),
 
 
 
-const Routes = require('./router/mainRoutes'),
+const MainRoutes = require('./router/mainRoutes'),
  Problems = require('./router/problemRequest'),
  Users = require('./router/userRequest'),
  OffersProblems = require('./router/offersProblemsRequests'),
@@ -12,7 +12,7 @@ const Routes = require('./router/mainRoutes'),
    // Socket  =require('./router/socket');
 
 app.use('/',OffersProblems);
-app.use('/', Routes);
+app.use('/', MainRoutes);
 app.use('/',Problems);
 app.use('/',Users);
 app.use('/',PlacesRoutes);

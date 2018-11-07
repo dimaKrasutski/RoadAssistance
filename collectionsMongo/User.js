@@ -1,22 +1,22 @@
 const Mongoose = require('mongoose');
 
 const UserSchema = new Mongoose.Schema({
-    login : String,
-    password : String,
-    name : String,
-    surname:String,
-    phoneId:String,
+    login : {type:String,required:true,unique:true,lowercase:true},
+    password : {type:String,required:true},
+    name : { type:String,required:true,lowercase:true},
+    surname:{ type:String,required:true,lowercase:true},
+    phoneId:{ type:String},
     car: { color: String, drive: String, make: String, model: String, number: String, transmission: String, year: String} ,
-    phone:String,
-    volunteer:Boolean,
+    phone:{ type:String},
+    volunteer:{ type:Boolean},
     works:[],
-    photo:String,
+    photo:{ type:String},
     position:{lat:String,lng:String,direction:String},
     currentProblem:String,
     solvingProblem:String,
     history: {historyHelps:[],historyProblems:[]},
     rating:[],
-    deviceIdFcmToken:String
+    deviceIdFcmToken:{ type:String,unique:true}
 }, {versionKey:false});
 
 Mongoose.model('User', UserSchema);

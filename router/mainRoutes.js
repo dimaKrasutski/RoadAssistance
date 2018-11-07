@@ -1,21 +1,8 @@
-const Express = require('express'),
-      Router = Express.Router(),
-      BodyParser = require('body-parser');
-
-Router.use(BodyParser.urlencoded({ extended: false }));
-Router.use(BodyParser.json());
-
-const User = require('../collectionsMongo/User'),
-      Feedback = require('../collectionsMongo/Feedback'),
-      Problem = require('../collectionsMongo/Problem'),
-      Place = require('../collectionsMongo/Places'),
-      Geodist = require('geodist');
-
-const VerifyToken = require('../auth/VerifyToken');
+ const {Router,User,Feedback,Problem,Place,Geodist,VerifyToken,SendFcm} = require('../variables');
 
 Router.post('/create_feedback',function (req,res) {
 
-    Problem.findById(req.body.problemUid,function (err,currProblem) {
+    Router.problem.findById(req.body.problemUid,function (err,currProblem) {
         if (err) return res.status(500).send({message:'Error on the server'});
         if (!currProblem) return res.status(404).send({message:'No problem found'});
 

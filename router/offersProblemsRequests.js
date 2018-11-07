@@ -1,17 +1,4 @@
-const Express = require('express'),
-      Router = Express.Router(),
-      BodyParser = require('body-parser'),
-      Mongoose = require('mongoose');
-
-Router.use(BodyParser.urlencoded({ extended: false }));
-Router.use(BodyParser.json()); // парсит тело только тех запросов, для которых 'Content-Type' равен 'application/json', Результат парсинга сохраняется в объекте req.body
-
-const User = require('../collectionsMongo/User'),
-      Feedback = require('../collectionsMongo/Feedback'),
-      Problem = require('../collectionsMongo/Problem'),
-      VerifyToken = require('../auth/VerifyToken'),
-      SendFcm = require('../fcm');
-const tok = 'd5XVP0kR3xs:APA91bFNmzNUZJs-em2HBzfbHHqHIP2mCvInqAg_K7SnOgmDp2Nr4mERjD2m6Uj_L9z5jN4bVkVWRzOfDPuot8ro6laZWhVbQicWcQMx0qKI6KOXYU_up_FGShEjdV3kaUm6_arqEm6ANvKyqOJHlYaDju63m4nGyA';
+const {Router,User,Feedback,Problem,Place,Geodist,VerifyToken,SendFcm} = require('../variables');
 
 Router.get('/get_offer_list',function (req,res) {
     Problem.findById(req.headers['uid'], function (err, problem) {

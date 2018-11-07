@@ -1,6 +1,7 @@
 const Cluster = require('cluster');
  const  App = require('./app');
 
+ 
 // const Express = require('express');
 
 //  App.get('/socket', (req, res) => {
@@ -48,6 +49,10 @@ if (Cluster.isMaster) {
     //     });
     // });
 }
+
+module.exports = ()=>{
+  
+};
 
 
 

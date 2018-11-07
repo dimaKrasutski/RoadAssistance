@@ -1,18 +1,7 @@
-const express = require('express'),
-      router = express.Router(),
-      bodyParser = require('body-parser');
+const {Router,User,Feedback,Problem,Place,Geodist,VerifyToken,SendFcm} = require('../variables');
 
-router.use(bodyParser.urlencoded({ extended: false }));
-router.use(bodyParser.json());
 
-const User = require('../collectionsMongo/User'),
-      Feedback = require('../collectionsMongo/Feedback'),
-      Problem = require('../collectionsMongo/Problem'),
-      Places = require('../collectionsMongo/Places'),
-      VerifyToken = require('../auth/VerifyToken');
-      Geodist = require('geodist');
-
-router.post('/create_new_place',function (req,res) {
+Router.post('/create_new_place',function (req,res) {
 
 
     Places.create({
@@ -36,7 +25,7 @@ router.post('/create_new_place',function (req,res) {
         });
 });
 
-router.post('/download_places', function (req, res) {
+Router.post('/download_places', function (req, res) {
 
     const userPosition = {lat:req.body.lat,lon:req.body.lng},
         radius = req.body.radius,
@@ -83,7 +72,7 @@ router.post('/download_places', function (req, res) {
 });
 
 
-router.get('/get_place', function (req, res) {
+Router.get('/get_place', function (req, res) {
 
     Places.findById(req.headers['uid'], function (err, place) {
         if (err) return res.status(500).send({message:'Error on the server'});
@@ -92,5 +81,5 @@ router.get('/get_place', function (req, res) {
     })
 });
 
-module.exports = router;
+module.exports = Router;
 

@@ -1,5 +1,5 @@
 module.exports = {
-    'secret': 'supersecret'
+    'secret': 'dima_igor'
 };
 
 const googleApiKey= 'AIzaSyDwDBCneJDrfCtHpTzcUPK9EYQmgk8whpw';

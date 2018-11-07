@@ -5,6 +5,7 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://road-assistance-1.firebaseio.com"
 });
+
 module.exports = function (token,msg,uid,lt,lg,direct) {
 
     lt = lt || 'no data';
