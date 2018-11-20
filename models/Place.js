@@ -13,6 +13,4 @@ const PlaceSchema = new mongoose.Schema({
     workTime:{type:String},
 },{versionKey:false});
 
-const Place = mongoose.model("Places",PlaceSchema);
-
-module.exports = Place;
+module.exports = Place=mongoose.model("Places",PlaceSchema);

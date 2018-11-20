@@ -96,6 +96,7 @@ Router.post('/offer_reject',function (req,res) { //requester отменяет ч
         if (err) return res.status(500).send('Error on the server.');
         if (!problem) return res.status(404).send('No problem found.');
 
+        //сделать через map
         let offersArr = problem.offerList ;
         for (let i=0;i<offersArr.length;i++){
             if(req.body.uidOffer == offersArr[i]._id){

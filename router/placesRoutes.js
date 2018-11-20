@@ -1,28 +1,21 @@
 const {Router,User,Feedback,Problem,Place,Geodist,VerifyToken,SendFcm} = require('../variables');
 
 
-Router.post('/create_new_place',function (req,res) {
+Router.post('/create_new_place',(req,res)=> {
 
-
-    Places.create({
-
-            address: req.body.address,
-            email:req.body.email,
-            lat: req.body.lat,
-            lng:req.body.lng,
-            name:req.body.name,
-            phone:req.body.phone,
-            rating: '',
-            shabbat:req.body.shabbat,
-            type: req.body.type,
-            workTime:req.body.workTime
-
-        },
-        function (err, place) {
-            console.log(err);
-            if (err) return res.status(500).send(err);
-            res.status(200).json({message: "Place Added", uid: place._id})
-        });
+  Place.create({
+      address: req.body.address,
+      email:req.body.email,
+      lat: req.body.lat,
+      lng:req.body.lng,
+      name:req.body.name,
+      phone:req.body.phone,
+      rating: '',
+      shabbat:req.body.shabbat,
+      type: req.body.type,
+      workTime:req.body.workTime
+  }).then(place=> res.status(200).json({message: "Place Added", uid: place._id}))
+      .catch(err=> res.status(500).json({message:err}))
 });
 
 Router.post('/download_places', function (req, res) {
