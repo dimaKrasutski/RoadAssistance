@@ -9,6 +9,7 @@ const FeedBackSchema = new mongoose.Schema({
     rating:{type:Number},
     time:{type:Date},
 },{versionKey:false});
-mongoose.model("Feedback",FeedBackSchema);
 
-module.exports = mongoose.model('Feedback');
+const Feedback = mongoose.model("Feedback",FeedBackSchema);
+
+module.exports = Feedback;

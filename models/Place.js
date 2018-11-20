@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const PlacesSchema = new mongoose.Schema({
+const PlaceSchema = new mongoose.Schema({
     address: { type:String},
     email:{type:String,lowercase:true},
     lat: {type:Number},
@@ -13,6 +13,6 @@ const PlacesSchema = new mongoose.Schema({
     workTime:{type:String},
 },{versionKey:false});
 
-mongoose.model("Places",PlacesSchema);
+const Place = mongoose.model("Places",PlaceSchema);
 
-module.exports = mongoose.model('Places');
+module.exports = Place;

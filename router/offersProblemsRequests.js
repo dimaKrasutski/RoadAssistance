@@ -8,37 +8,28 @@ Router.get('/get_offer_list',function (req,res) {
     })
 });
 // OK
-Router.post('/agree_problem', function (req, res) {   //ПРЕДЛОЖЕНИЕ ХЕЛПЕРА ПОПАДАЕТ В OFFER-LIST
-
-    Problem.findById(req.body.uidProblem, function (err, problem) {
-
-        if (err) return res.status(500).send('Error on the server.');
-
-        console.log(err);
-
-        if (!problem) return res.status(404).send('No problem found.');
-
-       let offer = {
+Router.post('/agree_problem', (req, res) =>{   //ПРЕДЛОЖЕНИЕ ХЕЛПЕРА ПОПАДАЕТ В OFFER-LIST
+    Problem.findById(req.body.uidProblem).then(problem =>{
+        const offer = {
             answer:0,
             description:req.body.description,
             helper:req.body.uidHelper,
             price:req.body.price,
             problemName:req.body.uidProblem,
         };
-
         problem.offerList.push(offer);
-
-        User.findById(problem.requestingUser,function (err,user) {
-            SendFcm(user.deviceIdFcmToken,'New offer was added!',user._id.toString())
-        });
-
-        problem.save(function (err,problemUpdated) {
-            if(err) return "Error!";
+       
+        problem.save().then(problemUpdated => {
             res.status(200).send({msg:'offer added'});
         });
 
+        User.findById(problem.requestingUser).then(user=>{
+            SendFcm(user.deviceIdFcmToken,'New offer was added!',user._id.toString())
+        }) 
+           
+        }).catch(error => res.status(500).json(error));
     })
-});
+
 // OK
 Router.post('/refuse_offer', function (req, res) { // ОТМЕНИТЬ ПРЕДЛОЖЕНИ HELPERA О ПОМОЩИ(ЕСЛИ ЕГО СОГЛАСИЕ ЕЩЕ НЕ ПОДТВЕРДИЛИ)
 
@@ -65,7 +56,7 @@ Router.post('/refuse_offer', function (req, res) { // ОТМЕНИТЬ ПРЕД�
 
 });
 
-Router.post('/offer_accept',function (req,res) { //helper принимает чей то offer,offerList очищается,uid helpera в problem.helperUid
+Router.post('/offer_accept',function (req,res) { //requester принимает чей то offer,offerList очищается,uid helpera в problem.helperUid
 
     Problem.findById(req.body.uidProblem, function (err, problem) {
     let problemUid = req.body.uidProblem;
@@ -97,7 +88,7 @@ Router.post('/offer_accept',function (req,res) { //helper принимает ч�
 })
 
 //OK
-Router.post('/offer_reject',function (req,res) { //helper отменяет чей то offer, этот offer удаляется из offerList и добавляется в deletedOffers
+Router.post('/offer_reject',function (req,res) { //requester отменяет чей то offer, этот offer удаляется из offerList и добавляется в deletedOffers
 
     Problem.findById(req.body.uidProblem, function (err, problem) {
         let currentOffer;
