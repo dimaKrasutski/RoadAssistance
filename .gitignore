@@ -4,6 +4,7 @@ npm-debug.log
 .serverless
 variables.env
 .idea
-desktop.ini
+/desktop.ini
 .log
 .ini
+.env
