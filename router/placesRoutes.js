@@ -25,7 +25,7 @@ Router.post('/download_places', function (req, res) {
         type  =[]= req.body.type.split(','),
         shabbat = String(req.body.shabbat);
 
-              Places.find({},function (err,places) {
+              Place.find({},function (err,places) {
                   let placesToClient = [];
                   if (err) {
                       console.log(err);

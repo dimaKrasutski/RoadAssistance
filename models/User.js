@@ -6,7 +6,7 @@ const UserSchema = new Mongoose.Schema({
     name : { type:String,required:true,lowercase:true},
     surname:{ type:String,required:true,lowercase:true},
     phoneId:{ type:String},
-    car: { color: String, drive: String, make: String, model: String, number: String, transmission: String, year: String} ,
+    car: { color: String, drive: String, make: String, model: String, number: String, transmission: String, year: String},
     phone:{ type:String},
     volunteer:{ type:Boolean},
     works:[],

@@ -1,11 +1,12 @@
 const {Router,User,Feedback,Problem,Place,Geodist,VerifyToken,SendFcm} = require('../variables');
 
-    const jwt = require('jsonwebtoken'), bcrypt = require('bcryptjs'), config = require('../config');
+    const jwt = require('jsonwebtoken'), 
+    bcrypt = require('bcryptjs'),
+    config = require('../config');
 
 Router.post('/user_create', function(req, res) {
 
     const hashedPassword = bcrypt.hashSync(req.body.password, 8);
-
     User.create({
             login : req.body.login,
             password : hashedPassword,
@@ -24,8 +25,6 @@ Router.post('/user_create', function(req, res) {
             rating:[],
             deviceIdFcmToken:req.body.deviceIdFcmToken
         },
-
-
         function (err, user) {
             if (err) return res.status(500).send({message:err});
             // create a token
