@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken'),
-      config = require('../config');
+      config = require('../router/omerAdam/edenBenZaken/db');
 
 function verifyToken(req, res, next) {
     let token = req.headers['x-access-token'];

@@ -1,4 +1,4 @@
-db.js
+
 node_modules
 .vscode
 npm-debug.log
@@ -6,10 +6,5 @@ npm-debug.log
 .log
 .idea
 .env
-
-road-assistance-1-firebase-adminsdk-j28g9-985a9898cb.json
-config.js
-
- db.js
 
 package-lock.json
