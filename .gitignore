@@ -8,4 +8,6 @@ npm-debug.log
 
  *.env
 
+ db.js
+
 package-lock.json
