@@ -4,9 +4,11 @@ node_modules
 npm-debug.log
 .serverless
 .log
+.idea
+.env
 
-
- *.env
+road-assistance-1-firebase-adminsdk-j28g9-985a9898cb.json
+config.js
 
  db.js
 
