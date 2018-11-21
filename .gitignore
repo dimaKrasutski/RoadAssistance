@@ -7,6 +7,6 @@ variables.env
 desktop.ini
 .log
 .ini
-.env
+*.env
 
 package-lock.json
