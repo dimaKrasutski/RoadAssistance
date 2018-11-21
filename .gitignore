@@ -1,12 +1,11 @@
+db.js
 node_modules
 .vscode
 npm-debug.log
 .serverless
-variables.env
-.idea
-desktop.ini
 .log
-.ini
-*.env
+
+
+ *.env
 
 package-lock.json
