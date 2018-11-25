@@ -7,7 +7,7 @@ const Cluster = require('cluster');
 console.log(db);
 
  
- const prod =process.env.NODE_ENV = "production";
+ //const prod =process.env.NODE_ENV = "production";
 
 if (Cluster.isMaster) {
 
