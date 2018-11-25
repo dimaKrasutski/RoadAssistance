@@ -2,7 +2,7 @@
 
 Router.post('/create_feedback',function (req,res) {
 
-    Router.problem.findById(req.body.problemUid,function (err,currProblem) {
+    Problem.findById(req.body.problemUid,function (err,currProblem) {
         if (err) return res.status(500).send({message:'Error on the server'});
         if (!currProblem) return res.status(404).send({message:'No problem found'});
 
