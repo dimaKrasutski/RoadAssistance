@@ -1,6 +1,8 @@
 const Cluster = require('cluster');
  const  App = require('./app');
 
+ const mongoose = require('mongoose');
+ mongoose.connect(  require('./keys/db').MongoUri ,{ useNewUrlParser: true })
  
 if (Cluster.isMaster) {
 

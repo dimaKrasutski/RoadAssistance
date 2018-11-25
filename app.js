@@ -1,6 +1,6 @@
 const express = require('express'),
       app = express(),
-      db = require('./router/omerAdam/edenBenZaken/db');
+      db = require('./keys/db');
 
 
 
