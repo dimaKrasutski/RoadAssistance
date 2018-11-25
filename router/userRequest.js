@@ -2,7 +2,7 @@ const {Router,User,Feedback,Problem,Place,Geodist,VerifyToken,SendFcm} = require
 
     const jwt = require('jsonwebtoken'), 
     bcrypt = require('bcryptjs'),
-    config = require('../keys/db');
+    config = require('../keys/db').secretKey;
 
 Router.post('/user_create', function(req, res) {
 
