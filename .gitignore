@@ -7,6 +7,6 @@ npm-debug.log
 .idea
 .env
 
-/keys/keys_dev.js
+/keys/db_dev.js
 
 package-lock.json

@@ -2,8 +2,6 @@ const express = require('express'),
       app = express(),
       db = require('./keys/db');
 
-
-
 const MainRoutes = require('./router/mainRoutes'),
  Problems = require('./router/problemRequest'),
  Users = require('./router/userRequest'),
