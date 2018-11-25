@@ -5,6 +5,8 @@ const Cluster = require('cluster');
  const db = require('./keys/db').mongoUri;
  mongoose.connect(  db ,{ useNewUrlParser: true }).then(res=>console.log("MongoDB was successfully connected"));
  
+ const prod =process.env.NODE_ENV = "production";
+
 if (Cluster.isMaster) {
 
 // Count the machine's CPUs

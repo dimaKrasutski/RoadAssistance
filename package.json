@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node server.js ",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js NPM_CONFIG_PRODUCTION=false",
-    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=true"
+    "dev": "nodemon server.js "
   },
   "author": "Krasutski Dmitri && Chigur Igor",
   "license": "ISC",
