@@ -3,7 +3,7 @@ const Cluster = require('cluster');
 
  const mongoose = require('mongoose');
  const db = require('./keys/db').mongoUri;
- mongoose.connect(  db ,{ useNewUrlParser: true }).then(res=>console.log("MongoDB was successfully connected"));
+ mongoose.connect(  db ,{ useNewUrlParser: true }).then(res=>console.log("MongoDB was successfully connected")).catch(err=>console.log(err));
  
  const prod =process.env.NODE_ENV = "production";
 
