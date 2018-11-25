@@ -13,16 +13,16 @@ Router.post('/user_create', function(req, res) {
             name : req.body.name,
             surname:req.body.surname,
             phoneId:req.body.phoneId, // IMEI телефона
-            car: {color:"", drive: '', make: '', model: '', number: '', transmission: '', year: ''},
-            phone:"",
-            volunteer:false,
-            works:[],
-            photo:'',
-            position:{lat:'',lng:'',direction:''},
-            currentProblem:'',
-            solvingProblem:'',
-            history: {historyHelps:[],historyProblems:[]},
-            rating:[],
+            // car: {color:"", drive: '', make: '', model: '', number: '', transmission: '', year: ''},
+            // phone:"",
+             volunteer:false,
+            // works:[],
+            // photo:'',
+            // position:{lat:'',lng:'',direction:''},
+            // currentProblem:'',
+            // solvingProblem:'',
+            // history: {historyHelps:[],historyProblems:[]},
+            // rating:[],
             deviceIdFcmToken:req.body.deviceIdFcmToken
         },
         function (err, user) {
@@ -43,7 +43,7 @@ Router.post('/login', function(req, res) {
         var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
 
         if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
-        var token = jwt.sign({ id: user._id }, config.secret, {
+        var token = jwt.sign({ id: user._id }, config, {
             expiresIn: 200000
         });
         user.deviceIdFcmToken = req.body.deviceIdFcmToken;
