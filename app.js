@@ -1,17 +1,17 @@
-const express = require('express'),
-      app = express(),
+const express = require('express');
+     const app = express();
     
-const MainRoutes = require('./router/mainRoutes'),
- Problems = require('./router/problemRequest'),
- Users = require('./router/userRequest'),
- OffersProblems = require('./router/offersProblemsRequests'),
-    PlacesRoutes = require('./router/placesRoutes');
+const MainRoute = require('./router/mainRoutes');
+ const ProblemReq = require('./router/problemRequest');
+const UserReq = require('./router/userRequest');
+ const OffersProblem = require('./router/offersProblemsRequests');
+    const PlacesRoute = require('./router/placesRoutes');
 
-app.use('/',OffersProblems);
-app.use('/', MainRoutes);
-app.use('/',Problems);
-app.use('/',Users);
-app.use('/',PlacesRoutes);
+app.use('/',OffersProblem);
+app.use('/', MainRoute);
+app.use('/',ProblemReq);
+app.use('/',UserReq);
+app.use('/',PlacesRoute);
 
 module.exports = app;
 

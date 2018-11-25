@@ -2,7 +2,8 @@ const Cluster = require('cluster');
  const  App = require('./app');
 
  const mongoose = require('mongoose');
- mongoose.connect(  require('./keys/db').mongoUri ,{ useNewUrlParser: true })
+ const db = require('./keys/db').mongoUri;
+ mongoose.connect(  db ,{ useNewUrlParser: true }).then(res=>console.log("MongoDB was successfully connected"));
  
 if (Cluster.isMaster) {
 
@@ -25,11 +26,6 @@ if (Cluster.isMaster) {
         console.log('Worker %d running!', Cluster.worker.id);
     });
 }
-
-module.exports = ()=>{
-  
-};
-
 
 
 

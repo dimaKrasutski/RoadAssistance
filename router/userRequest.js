@@ -28,7 +28,7 @@ Router.post('/user_create', function(req, res) {
         function (err, user) {
             if (err) return res.status(500).send({message:err});
             // create a token
-            let token = jwt.sign({ id: user._id }, config.secret, {
+            let token = jwt.sign({ id: user._id }, config, {
                 expiresIn: 200000 
             });
             res.status(200).json({auth:true,token:token, message:"User Added",uid:user._id})
