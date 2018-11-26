@@ -2,7 +2,7 @@ const Cluster = require('cluster');
  const  App = require('./app');
 
  const mongoose = require('mongoose');
- const db = require('./keys/db').mongoUri;
+ const db = require('./keys/db').mongoURI;
  mongoose.connect(  db ,{ useNewUrlParser: true }).then(res=>console.log("MongoDB was successfully connected")).catch(err=>console.log(err));
 console.log(db);
 
