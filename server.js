@@ -15,7 +15,7 @@ if (Cluster.isMaster) {
     let cpuCount = require('os').cpus().length;
 
     // Create a worker for each CPU
-    for (let i = 0; i < cpuCount/2; i += 1) {
+    for (let i = 0; i < cpuCount; i += 1) {
         Cluster.fork();
     }
     // делаем новый WORKER
@@ -30,14 +30,3 @@ if (Cluster.isMaster) {
         console.log('Worker %d running!', Cluster.worker.id);
     });
 }
-
-
-
-
-
-
-
-
-
-
-
